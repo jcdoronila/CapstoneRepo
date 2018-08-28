@@ -1,0 +1,242 @@
+include ../../../../templates/head
+
+block main    
+
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  h4
+                    | All Group Classes
+                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add')
+                      i.fa.fa-dumbbell
+                      |  Add Class
+                  thead
+                    tr
+                      th
+                        i.fa.fa-user
+                        |  Name
+                      th
+                        i.fa.fa-dumbbell
+                        |  Trainer In-charge
+                      th
+                        i.fa.fa-home
+                        |  Branch
+                      th
+                        i.fa.fa-clock
+                        |  Time
+                      th
+                        i.fa.fa-calendar-alt
+                        |  Schedule
+                      th
+                        i.fa.fa-bookmark
+                        |  Status
+                      th
+                        i.fa.fa-edit
+                        |  Action
+                  tbody
+                    tr
+                      td Zumba
+                      td John Paul
+                      td Sta. Mesa 
+                      td 8:00AM - 9:00PM
+                      td M/W/F
+                      td
+                        .switch(style='width:50px;', data-on-label="<i class=' fa fa-check'></i>", data-off-label="<i class='fa fa-times'></i>")
+                          input(type='checkbox', checked='')
+                      td
+                        button#edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit Account')
+                          i.fa.fa-edit
+                        button.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently')
+                          i.fa.fa-trash-alt
+              // /content-panel
+    // MODAL ADD MEMBER
+    #add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Schedule a Class
+          form(action='POST', method='')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Class Name
+                        select#branch.form-control
+                          option Select Class... 
+                          option Zumba
+                          option Strength Training
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Start Time
+                        input.form-control.time(type='text')
+                    .col-md-6
+                      .form-group
+                        label.control-label End Time
+                        input.form-control.time(type='text')
+                  .row
+                    .input-group
+                      span.input-group-addon
+                        | Schedule:
+                      label.checkbox
+                        | Monday
+                        input#student(type='checkbox', value='monday')
+                        span.check
+                      label.checkbox
+                        | Tuesday
+                        input#student(type='checkbox', value='tuesday')
+                        span.check
+                      label.checkbox
+                        | Wednesday
+                        input#student(type='checkbox', value='wednesday')
+                        span.check
+                      span.input-group-addon
+                      label.checkbox
+                        | Thursday
+                        input#student(type='checkbox', value='thursday')
+                        span.check
+                      label.checkbox
+                        | Friday
+                        input#student(type='checkbox', value='friday')
+                        span.check
+                      label.checkbox
+                        | Saturday
+                        input#student(type='checkbox', value='saturday')
+                        span.check
+                      span.input-group-addon
+                      label.checkbox
+                        | Sunday
+                        input#student(type='checkbox', value='sunday')
+                        span.check
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Trainer In-charge
+                        select#branch.form-control
+                          option Select Trainer... 
+                          option John Doe
+                          option Doe John
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Branch
+                        select#branch.form-control
+                          option Select Branch... 
+                          option All 
+                          option Sta. Mesa
+                          option Marikina
+                    .col-md-6
+                      .form-group
+                        label.control-label Slot
+                        input.form-control(type='number' name='slot')
+
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='button') Add Group Class
+
+//MODAL
+#edit-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Schedule a Class
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+              .row
+                .col-md-12
+                  .form-group
+                    label.control-label Class Name
+                    select#branch.form-control
+                      option Select Class... 
+                      option Zumba
+                      option Strength Training
+              .row
+                .col-md-6
+                  .form-group
+                    label.control-label Start Time
+                    input.form-control.time(type='text')
+                .col-md-6
+                  .form-group
+                    label.control-label End Time
+                    input.form-control.time(type='text')
+              .row
+                .input-group
+                  span.input-group-addon
+                    | Schedule:
+                  label.checkbox
+                    | Monday
+                    input#student(type='checkbox', value='monday')
+                    span.check
+                  label.checkbox
+                    | Tuesday
+                    input#student(type='checkbox', value='tuesday')
+                    span.check
+                  label.checkbox
+                    | Wednesday
+                    input#student(type='checkbox', value='wednesday')
+                    span.check
+                  span.input-group-addon
+                  label.checkbox
+                    | Thursday
+                    input#student(type='checkbox', value='thursday')
+                    span.check
+                  label.checkbox
+                    | Friday
+                    input#student(type='checkbox', value='friday')
+                    span.check
+                  label.checkbox
+                    | Saturday
+                    input#student(type='checkbox', value='saturday')
+                    span.check
+                  span.input-group-addon
+                  label.checkbox
+                    | Sunday
+                    input#student(type='checkbox', value='sunday')
+                    span.check
+              .row
+                .col-md-12
+                  .form-group
+                    label.control-label Trainer In-charge
+                    select#branch.form-control
+                      option Select Trainer... 
+                      option John Doe
+                      option Doe John
+              .row
+                .col-md-6
+                  .form-group
+                    label.control-label Branch
+                    select#branch.form-control
+                      option Select Branch... 
+                      option All 
+                      option Sta. Mesa
+                      option Marikina
+                .col-md-6
+                  .form-group
+                    label.control-label Slot
+                    input.form-control(type='number' name='slot')
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='button') Save
+              
+include ../../../../templates/foot
+script.
+
+   $(document).ready(function(){
+    $('#transactionDrop').addClass('active');
+    $('#trainerAssDrop').addClass('active');
+    $('#group').addClass('active');
+    });
+
+  $('#edit').click(function(){
+    $('#edit-modal').modal()
+  });

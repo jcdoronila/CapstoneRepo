@@ -1,0 +1,125 @@
+include ../../../templates/head
+append head
+  style.
+    h3 span{
+      margin-right:10px;
+    }
+
+
+block main
+   section#main-content
+       section.wrapper.site-min-height
+          .row
+            .col-lg-9.main-chart
+              .row.mtbox
+                .col-md-2.col-sm-2.box0.col-md-offset-2
+                  a(href='')
+                    .box1
+                      span.li_heart
+                      h3 210
+                    p 210 Active Members
+                .col-md-2.col-sm-2.box0
+                  a(href='')
+                    .box1
+                      span.li_calendar
+                      h3 25
+                    p 25 Active Trainers
+                .col-md-2.col-sm-2.box0
+                  a(href='')
+                    .box1
+                      span.li_vynil
+                      h3 3
+                    p 3 Active Classes
+                .col-md-2.col-sm-2.box0
+                  a
+                    .box1
+                      span.li_bubble
+                      h3 0
+                    p 0 Messages
+              .row
+                section.wrapper
+                  aside.col-lg-12.mt
+                    section.panel
+                      .panel-body
+                        #calendar.has-toolbar
+              //- .row
+              //-   section.wrapper(style='margin-top:0;')
+              //-     .border-head
+              //-       h3 Revenue
+              //-     .custom-bar-chart
+              //-       ul.y-axis
+              //-         li
+              //-           span 10.000
+              //-         li
+              //-           span 8.000
+              //-         li
+              //-           span 6.000
+              //-         li
+              //-           span 4.000
+              //-         li
+              //-           span 2.000
+              //-         li
+              //-           span 0
+              //-       .bar
+              //-         .title JAN
+              //-         .value.tooltips(data-original-title='8.500', data-toggle='tooltip', data-placement='top') 85%
+              //-       .bar
+              //-         .title FEB
+              //-         .value.tooltips(data-original-title='5.000', data-toggle='tooltip', data-placement='top') 50%
+              //-       .bar
+              //-         .title MAR
+              //-         .value.tooltips(data-original-title='6.000', data-toggle='tooltip', data-placement='top') 60%
+              //-       .bar
+              //-         .title APR
+              //-         .value.tooltips(data-original-title='4.500', data-toggle='tooltip', data-placement='top') 45%
+              //-       .bar
+              //-         .title MAY
+              //-         .value.tooltips(data-original-title='3.200', data-toggle='tooltip', data-placement='top') 32%
+              //-       .bar
+              //-         .title JUN
+              //-         .value.tooltips(data-original-title='6.200', data-toggle='tooltip', data-placement='top') 62%
+              //-       .bar
+              //-         .title JUL
+              //-         .value.tooltips(data-original-title='7.500', data-toggle='tooltip', data-placement='top') 75%
+
+            .col-lg-3.ds
+              
+              h3 
+                span.li_heart 
+                |  Membership
+              .desc
+                .thumb
+                  img.img-circle(src='assets/img/ui-divya.jpg', width='35px', height='35px', align='')
+                .details
+                  h6  Gold Membership
+              .desc
+                .thumb
+                  img.img-circle(src='assets/img/ui-divya.jpg', width='35px', height='35px', align='')
+                .details
+                  h6  Silver Membership
+              .desc
+                .thumb
+                  img.img-circle(src='assets/img/ui-divya.jpg', width='35px', height='35px', align='')
+                .details
+                  h6  Bronze Membership
+
+              h3 
+                span.li_calendar 
+                |  Class List
+              .desc
+                .thumb
+                  img.img-circle(src='assets/img/ui-divya.jpg', width='35px', height='35px', align='')
+                .details
+                  h6  Body Building
+              .desc
+                .thumb
+                  img.img-circle(src='assets/img/ui-sherman.jpg', width='35px', height='35px', align='')
+                .details
+                  h6 Aerobics
+              .desc
+                .thumb
+                  img.img-circle(src='assets/img/ui-danro.jpg', width='35px', height='35px', align='')
+                .details
+                  h6 General Training
+
+include ../../../templates/foot.pug

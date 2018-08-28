@@ -1,0 +1,196 @@
+include ../../../../templates/head
+
+block main
+  
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  h4
+                    | All Classes
+                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add')
+                      i.fa.fa-dumbbell
+                      |  Add Class
+                  thead
+                    tr
+                    
+                      th
+                        i.fa.fa-dumbbell
+                        |  Name
+                      th
+                        i.fa.fa-bookmark
+                        |  Status
+                      th
+                        i.fa.fa-edit
+                        |  Action
+                    tbody
+                      each cl in classes
+                        tr
+                          td #{cl.classname}
+                          td 
+                            span.label.label-success
+                              | Active
+                          td
+                            button#view.btn.btn-info.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='View Class', data-target='#viewmodal' data-name=cl.classname data-desc=cl.classdesc)
+                                i.fa.fa-search
+                            button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Class', data-target='#editmodal' data-name=cl.classname data-desc=cl.classdesc data-id=cl.classID )
+                                i.fa.fa-edit
+                            button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently' data-target='#deletemodal' data-id=cl.classID)
+                                i.fa.fa-trash-alt
+              // /content-panel
+
+    // MODAL DELETE
+    #deletemodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Remove Class
+          form(action='/classes/delete', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        h4 Delete this class?
+                    input.hidden#id(type='text' name='id')
+
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-default(type='submit') Delete
+
+    // MODAL ADD MEMBER
+    #add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Add Class
+          form(action='/classes', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Class Name
+                        input.form-control(type='text' name='classname')
+                  .row
+                    .col-md-12
+                      label.control-label Description
+                      .form-group
+                        textarea#prog-desc.form-control(style='resize:none', name='classdesc', rows='3')
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='submit') Add Class
+    // MODAL EDIT   MEMBER
+    #editmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Edit Class
+          form(action='/classes/edit', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  input#id.hidden(type='text' name='id')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Class Name
+                        input#name.form-control(type='text' name='classname')
+                  .row
+                    .col-md-12
+                      label.control-label Description
+                      .form-group
+                        textarea#desc.form-control(style='resize:none', name='classdesc', rows='3')
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='submit') Save
+    // MODAL VIEW
+    #viewmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Class Description
+          form(action='', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        h4 
+                          span#name
+                  //.row
+                    .col-md-12
+                      .form-group
+                        label.control-label Classes
+                        li Strength Exercise
+                        li Zumba
+                        li Pilates
+                  .row
+                    .col-md-12
+                      label.control-label Description
+                      p
+                        span#desc
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+include ../../../../templates/foot
+script.
+
+  $(document).ready(function(){
+  $('#memdrop').addClass('active');
+  $('#classes').addClass('active');
+  });
+
+  $('#viewmodal').on('show.bs.modal', function(event){
+    let button = $(event.relatedTarget) 
+    let name = button.data('name')
+    console.log(name)
+    let desc = button.data('desc')
+    console.log(desc)
+    let modal = $(this)     
+    modal.find('.modal-body span#name').text(` ${name}`)  
+    modal.find('.modal-body span#desc').text(` ${desc}`)  
+  })
+
+script.
+    $('#editmodal').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)  
+        var desc = button.data('desc')
+        console.log(desc)
+        //- var email = button.data('email')
+        //- console.log(email)
+        var name = button.data('name')
+        console.log(name)
+        //- var lname = button.data('lname')
+        //- console.log(lname)
+        var id = button.data('id')
+        console.log(id)
+
+
+        let modal = $(this)     
+        //- modal.find('.modal-body #email').val(` ${email}`)  
+        //- modal.find('.modal-body #mobile').val(` ${mobile}`)
+        modal.find('.modal-body #name').val(` ${name}`)
+        modal.find('.modal-body #desc').val(` ${desc}`)
+        modal.find('.modal-body #id').val(` ${id}`)
+    }) 
+script.
+
+    $('#deletemodal').on('show.bs.modal', function(event){
+      var button = $(event.relatedTarget)      
+      var id = button.data('id')
+      console.log(id)
+      let modal = $(this)       
+      modal.find('.modal-body #id').val(` ${id}`)
+    })
+ 

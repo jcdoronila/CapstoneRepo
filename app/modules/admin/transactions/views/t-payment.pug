@@ -1,0 +1,193 @@
+include ../../../../templates/head
+block append head
+	style.
+		.invoice-title h2, .invoice-title h3 {
+			display: inline-block;
+		}
+
+		.table > tbody > tr > .no-line {
+				border-top: none;
+		}
+
+		.table > thead > tr > .no-line {
+				border-bottom: none;
+		}
+
+		.table > tbody > tr > .thick-line {
+				border-top: 2px solid;
+		}
+
+block main      
+	section#main-content
+		section.wrapper.site-min-height
+			.row.mt
+				.col-md-12
+					.content-panel
+						.container-fluid
+							table.table.table-striped.table-advance.table-hover
+								h4
+									| Billing and Payment
+								thead
+									tr
+										th
+											i.fa.fa-user
+											|  Name
+										th
+											i.fa.fa-phone
+											|  Contact
+										th
+											i.fa.fa-coins
+											|  Amount (Peso)
+										th
+											i.fa.fa-calendar
+											|  Due Date
+										th
+											i.fa.fa-info-circle
+											|  Status
+										th
+											i.fa.fa-edit
+											|  Action
+								tbody
+									tr
+										td.hidden-phone John Doe
+										td 09999888776
+										td 5410
+										td 01/01/2018
+										td 
+											span.label.label-danger 
+												| Past Due
+										td
+											button#view.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='View Billing Description')
+												i.fa.fa-search
+											button#pay.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Pay')
+												i.fa.fa-coins
+											button#suspend.btn.btn-warning.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Suspend')
+												i.fa.fa-exclamation-circle
+											button#del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Delete')
+												i.fa.fa-trash
+
+#view-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+	.modal-dialog.modal-lg
+		.modal-content
+			.modal-header
+				button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+				h4.modal-title Bill Breakdown
+			form(action='POST', method='')
+				.modal-body
+					.container-fluid
+						.row
+							.col-xs-12
+								.pull-left
+									h1 A-TEAM FITNESS
+									address
+										strong A-Team Fitness Inc.
+										br
+										| 4408 Old. Sta. Mesa St, Newton Plaza
+										br
+										| Sta. Mesa Manila
+										br
+										abbr(title='Phone') P:
+										|  0933 412 7526
+								// /pull-left
+								.pull-right
+									h1
+										img.img-circle(src="/assets/img/icon.png", style="width:120px; float:right; margin-top:20px;", alt="")
+								// --/pull-right --
+								.clearfix
+								br
+								br
+								.row
+									.col-md-9
+										h4 [NAME OF MEMBER]
+										address
+											strong [MEMBERSHIP TYPE] - [MEMBERSHIP CATEG]
+											br
+											| [ADDRESS]
+											br
+											| [EMAIL]
+											br
+											abbr(title='Phone') P:
+											| [PHONE NUMBER]
+									.col-md-3
+										div
+											.pull-left  INVOICE DATE : 
+											.pull-right  [DATE]
+											.clearfix
+										div
+											.pull-left  DUE DATE : 
+											.pull-right  [DATE]
+											.clearfix
+										br
+										div
+										div(style='background-color:#ffbb00;color:white;padding:10px;')
+											.pull-left  Total Due : 
+											.pull-right  [TOTAL] 
+											.clearfix
+								table.table
+									thead
+										tr
+											th.text-center(style='width:60px') QTY
+											th.text-left DESCRIPTION
+											th.text-right(style='width:140px') PRICE
+											th.text-right(style='width:90px') TOTAL
+									tbody
+										tr
+											td.text-center -
+											td gold - interbranch
+											td.text-right 5000
+											td.text-right 5000
+										tr
+											td.text-center 20
+											td training session
+											td.text-right 200
+											td.text-right 4000
+										tr
+											td(colspan='2' rowspan='4')
+											td.text-right
+												strong Subtotal
+											td.text-right 4000
+										
+										tr
+											td.text-right.no-border
+												div(style='background-color:#ffbb00;color:white;padding:10px;')
+													strong Total
+											td.text-right
+												strong 9000
+						
+			.modal-footer
+				button.btn.btn-default(type='button', data-dismiss='modal') Close
+				button.btn.btn-primary(type='button') Print
+
+			//- MODAL PAYMENT
+#pay-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+	.modal-dialog.modal-sm
+		.modal-content
+			.modal-header
+				button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+				h4.modal-title 	Payment
+			form(action='POST', method='')
+				.modal-body
+					.container-fluid
+						.row
+							p You are about to pay a member of his bills. Do you wish to proceed?
+						br
+			.modal-footer
+				button.btn.btn-default(type='button', data-dismiss='modal') Close
+				button.btn.btn-primary(type='button') Pay
+					
+                      
+include ../../../../templates/foot
+
+script.
+	$(document).ready(function(){
+	$('#transactionDrop').addClass('active');
+	$('#payment').addClass('active');
+	});
+
+
+	$('#view').click(function(){
+		$('#view-modal').modal();
+	});
+	$('#pay').click(function(){
+		$('#pay-modal').modal();
+	});

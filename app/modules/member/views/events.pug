@@ -1,0 +1,51 @@
+include ../../../templates/mem-head
+
+block main   
+  .container
+    .content
+      .row.centered
+        h3
+          strong ACTIVE EVENTS
+        br
+        .search-container
+          form(action='#')          
+            .container
+              .col-md-2(style="position:relative; left:450px;")  
+                input.form-control.t-search(type='text', name='search', placeholder='Search...' style="width:160px")
+              .col-md-1(style="position:relative; left:450px;")  
+                .form-control.btn-primary(style="width:40px; position:relative; left:-40px;")
+                  i.fa.fa-search
+        br
+        br
+        .col-lg-4.col-md-4.col-sm-4.mb
+          .content-panel.pn(style="background-color:gray; padding:0; color:white; padding-top: 20px;")
+            h3 KICK BOXING
+            h6(style="margin:0!important") SAT/SUN - 1:30PM-4:30PM
+            | TUE/FRI - 8:00AM-10:30AM
+            .btn-block.btn-primary(style="position:relative; top:25px; padding:5px; font-weight: bold;" data-toggle="modal" data-target="#modal")
+              i.fa.fa-search(style="padding-right:10px; ")
+              | View
+            .content-panel(style="margin:0!important; height: 90px; color:#797979;padding:6px 10px; position:relative; width:100%;top:25px;box-shadow:none; border-radius:0;")
+              br
+              h6(style="margin:0!important;") 
+                b Class Description:
+              | Fighting types lang pwede mag-enroll dito mga deputa kayo haha emoji
+      br
+      br
+      br
+
+#modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog.modal-sm
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4.modal-title KICKBOXING
+      form(action='', method='post')
+      .modal-body  
+        .text-center
+          h3 SLOTS LEFT:
+          h1(style="font-size:72px") 31
+          button.btn.btn-primary(type='button') Join        
+
+  
+include ../../../templates/foot

@@ -1,0 +1,169 @@
+include ../../../../templates/head
+
+block main
+
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  h4
+                    | General Fee
+                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add')
+                      i.fa.fa-plus
+                      |  Add Fee
+                  thead
+                    tr
+                      th
+                        i.fa.fa-dumbbell
+                        |  Name
+                      th
+                        i.fa.fa-coins
+                        |  Price (₱)
+                      th
+                      th
+                        i.fa.fa-clock
+                        |  Usage Duration
+                      th
+                        i.fa.fa-edit
+                        |  Action       
+                  tbody
+                    each ge in gens
+                      tr
+                        td  #{ge.genname}
+                        td #{ge.fee}
+                        td /
+                        td #{ge.genperiod} #{ge.UOM}
+                        td
+                          button.btn.btn-success.btn-xs.tooltips(data-toggle='modal', data-target='#editmodal', data-placement='top', data-original-title='Edit' data-id=ge.generalID data-genname=ge.genname)
+                            - console.log(ge.generalID)
+                            i.fa.fa-edit
+                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently' data-target='#deletemodal')
+                            i.fa.fa-trash-alt
+              // /content-panel
+    // MODAL ADD MEMBER
+    #add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Add Additional Rates
+          form(action='/general', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Name
+                        input.form-control(type='text' name='genname')
+                    .col-md-6
+                      .form-group
+                        label.control-label Duration
+                        input.form-control(type='number', min='1' name='dura')
+                    .col-md-6
+                      .form-group
+                        label.control-label Unit of Measure
+                        select#branch.form-control(name='uom')
+                          option.hidden Choose Unit... 
+                          option Seconds
+                          option Minutes
+                          option Hours
+                          option Days
+                          option Months
+                          option Session
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Price (₱)
+                        input.form-control(type='number', min='0' name='fee')
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='submit') Add Rates
+    // MODAL EDIT MEMBER
+    #editmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Add Additional Rates
+          form(action='/general/edit', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Name
+                        input#genname.form-control(type='text' name='genname')
+                    .col-md-5
+                      .form-group
+                        label.control-label Duration
+                        input.form-control(type='number', min='1' name='dura')
+                    .col-md-5
+                      .form-group
+                        label.control-label Unit of Measure
+                        select#branch.form-control(name='uom')
+                          option.hidden Choose Unit... 
+                          option Seconds
+                          option Minutes
+                          option Hours
+                          option Days
+                          option Months
+                          option Session
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Price (₱)
+                        input.form-control(type='number', min='0' name='fee')
+                        input.hidden#id(type='text' name='id')
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='submit') Save
+
+    // MODAL DELETE
+    #deletemodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Remove Rates
+          form(action='/staff/delete', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        h4 Delete this rate?
+                    input.hidden#id(type='text' name='id')
+
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-default(type='submit') Delete
+
+include ../../../../templates/foot
+
+script.
+  
+  $(document).ready(function(){
+  $('#memdrop').addClass('active');
+  $('#ratesDrop').addClass('active');
+  $('#genrates').addClass('active');
+  });
+
+  $('#editmodal').on('show.bs.modal', function(event){
+    var button = $(event.relatedTarget)      
+
+
+    var id = button.data('id')
+    var genname = button.data('genname')
+  
+ 
+    let modal = $(this)     
+    modal.find('.modal-body #id').val(` ${id}`)
+    modal.find('.modal-body #genname').val(` ${genname}`)
+  })
+

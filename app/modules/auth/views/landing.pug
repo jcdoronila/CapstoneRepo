@@ -1,0 +1,310 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title A-Team Fitness
+    link(rel='icon', type='image/png', href='../../../../landing/images/muscle.png')
+    link(rel='stylesheet', href='../../../../landing/css/bootstrap.min.css')
+    link(rel='stylesheet', href='../../../../landing/css/animate.min.css')
+    link(rel='stylesheet', href='../../../../landing/css/et-line-font.css')
+    link(rel='stylesheet', href='../../../../landing/css/font-awesome.min.css')
+    link(rel='stylesheet', href='../../../../landing/css/vegas.min.css')
+    link(rel='stylesheet', href='../../../../landing/css/style.css')
+    link(rel='stylesheet', href='../../../../assets/css/bootstrap-datepicker.css')
+    
+    link(href='https://fonts.googleapis.com/css?family=Rajdhani:400,500,700', rel='stylesheet', type='text/css')
+  body
+    // preloader section
+    section.preloader
+      .sk-circle
+        .sk-circle1.sk-child
+        .sk-circle2.sk-child
+        .sk-circle3.sk-child
+        .sk-circle4.sk-child
+        .sk-circle5.sk-child
+        .sk-circle6.sk-child
+        .sk-circle7.sk-child
+        .sk-circle8.sk-child
+        .sk-circle9.sk-child
+        .sk-circle10.sk-child
+        .sk-circle11.sk-child
+        .sk-circle12.sk-child
+    // home section
+    section#home
+      .container
+        .row
+          .col-md-offset-2.col-md-8.col-sm-12
+            .home-thumb
+              h1.wow.fadeInUp(data-wow-delay='0.4s')
+                | Welcome to
+                br
+                strong A-Team Fitness Center
+                | .
+              h3.wow.fadeInUp(data-wow-delay='0.6s')
+                strong We
+                |  get what we want, and 
+                strong yours
+                | , too.
+              a.btn.btn-lg.btn-default.smoothScroll.wow.fadeInUp.hidden-xs(href='#', data-toggle='modal', data-target='#login', data-wow-delay='0.8s') Log-in
+              a.btn.btn-lg.btn-success.smoothScroll.wow.fadeInUp(href='#', data-toggle='modal', data-target='#modal1', data-wow-delay='1.0s') Register
+    // about section
+    section#about
+      .container
+        .row
+          .col-md-6.col-sm-12
+            img.img-responsive.wow.fadeInUp(style='-webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));\
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));', src='../../../../landing/images/muscle.png', alt='About')
+          .col-md-6.col-sm-12
+            .about-thumb
+              .section-title
+                h1.wow.fadeIn(data-wow-delay='0.2s') A-Team Fitness Center
+                h3.wow.fadeInUp(data-wow-delay='0.4s') A Philippine based gym software.
+              .wow.fadeInUp(data-wow-delay='0.6s')
+                p
+                  | To be verbose, this is a fitness gym membership, trainer assignment, with billing and payment system. A software
+                  | program that caters gym users (admins, trainers, staff, and their clients) to ease their daily transactions.
+                p
+                  strong A-Team Fitness Center
+                  |  can grant interbranch membership, as well as freezing, and transferring of
+                  |                 the customer's account to another successor. This system can recommend a set to you based on your input.
+                  |                 You can also inquire a trainer based on your workout preferences. And lastly, this can record every transaction
+                  |                 made, and generate report based on the data received.
+    // footer section
+    footer
+      .container
+        .row
+          svg.svgcolor-light(preserveaspectratio='none', viewbox='0 0 100 102', height='100', width='100%', version='1.1', xmlns='http://www.w3.org/2000/svg')
+            path(d='M0 0 L50 100 L100 0 Z')
+          .col-md-4.col-sm-6
+          .col-md-1.col-sm-1
+          .col-md-4.col-sm-5
+            h2 Our Center
+            p.wow.fadeInUp(data-wow-delay='0.6s')
+              | Sta. Mesa, MNL, Philippines
+            p.copyright-text
+              | Copyright © 2018 HJRD
+              br
+              |  Designed by
+              a(rel='nofollow', href='#', target='_parent') 
+              | HJRD
+            ul.social-icon
+              li
+                a.fa.fa-facebook.wow.bounceIn(href='#', data-wow-delay='0.9s')
+              li
+                a.fa.fa-twitter.wow.bounceIn(href='#', data-wow-delay='1.2s')
+              li
+                a.fa.fa-behance.wow.bounceIn(href='#', data-wow-delay='1.4s')
+              li
+                a.fa.fa-dribbble.wow.bounceIn(href='#', data-wow-delay='1.6s')
+    // modal
+    #modal1.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog.modal-lg
+        .modal-content.modal-popup
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          form(method='POST', action='/signup')
+            h2(style='color:black; margin-left:30px;') Sign Up
+            .modal-body
+              .container-fluid
+                .row
+                  .col-xs-12
+                    h5 Personal Info
+                    hr
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label#fname.control-label First Name
+                        input.form-control(type='text' name='fname')
+                    .col-md-6
+                      .form-group
+                        label.control-label Last Name
+                        input.form-control(type='text' name='lname')
+                  .row
+                    .col-md-6
+                      .input-group
+                        .input-group-addon Gender:
+                        label.radio
+                          | Male
+                          input(type='radio', checked='', name='gen' value='male')
+                          span.dot
+                        label.radio
+                          | Female
+                          input(type='radio', name='gen' value='female')
+                          span.dot
+                    .col-md-6
+                      .form-group
+                        label.control-label Date of Birth
+                        input.date.form-control(type='text' name='bday')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Address
+                        input.form-control(type='text' name='addr')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Mobile Number
+                        input.form-control(type='text', value='+639' name=mobile)
+                    .col-md-6
+                      .form-group
+                        label.control-label Email
+                        input.form-control(type='email' name='email')
+                .row
+                  .col-md-12
+                    h5 Login Information
+                    hr
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Username
+                        input.form-control(type='text' name='username')
+                .row
+                  .col-md-12
+                    h5 More Information
+                    hr
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Membership
+                        select.form-control(name='membership')
+                          each ct in cats
+                            option.hidden Select Membership... 
+                            option(value='' + ct.memrateid) #{ct.memclassname} - #{ct.membershipname} (#{ct.memperiod} MONTHS)
+                  //- .row
+                  //-   .col-md-5
+                  //-     .form-group
+                  //-       label.control-label Type of Membership
+                  //-       select#type.form-control(name='type' value='NULL')
+                  //-         each ct in cats
+                  //-           option(value='' + ct.memrateid) #{ct.memclassname} - #{ct.membershipname} (#{ct.memperiod} Days)
+                    .col-md-7(style='color:gray; font-size:10pt')
+                      i
+                        p
+                          | Interbranch - Membership valid to all branches.
+                          br
+                          | Exclusive - Membership valid only to the branch you choose.
+                        p(style='margin:0;') Note: Rates vary on type of membership. "Interbranch" costs more.
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Branch
+                        select#branch.form-control(name='branch')
+                          each br in bras
+                            option.hidden(value='') Select Branch...
+                            option(value='' + br.branchID) #{br.branchname}
+                      i
+                        p
+                          | Only For Exclusive membership for interbranch leave it unfilled        
+                    .col-md-6
+                      .form-group
+                        label.control-label Interested Area
+                        select.form-control(name='specs')
+                          each sp in specs
+                            option.hidden(value='') Select Interest... 
+                            option(value='' + sp.specialID) #{sp.specialname}
+                    .col-md-5
+                      label.checkbox
+                        | Are you a Student?
+                        input#student(type='checkbox')
+                        span.check
+                      p#1 Uncheck if you are unwilling to provide proof.
+                    .col-md-7(style='color:gray; font-size:10pt')
+                      i
+                        p#2(style='display: none')
+                          | You can avail a student discount if we can confirm your claim. Give us proof (eg. student ID, registration
+                          | card etc.) through our branch near you.
+                          br
+                          br
+                          | Or upload a scanned photo of your ID (NOTE: We may not accept it if we think it's fraud. In case
+                          |                         that happens please consult us personally)
+                          input#file.inputfile(type='file')
+                          br
+                          b NOTE:
+                          |  We will not accept your request until you are verified.
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+              button#submit.btn.btn-primary( type='submit') Register
+    // modal
+    #login.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog.modal-sm
+        .modal-content.modal-popup
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            h2(style='color:black; margin-left:30px;') Login
+          form(action='/login', method='post')
+            .modal-body
+              .container-fluid
+                .row
+                  .col-md-12
+                    .form-group
+                      label.control-label Username
+                      input.form-control(type='text', name='userID')
+                  .col-md-12
+                    .form-group
+                      label.control-label Password
+                      input.form-control(type='password', name='password')
+                center
+                  button#submit.btn.btn-primary(type='submit') Log in
+    #success.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog.modal-sm
+        .modal-content.modal-popup
+          form(action='POST', method='')
+            .modal-body
+              .container-fluid
+                .row
+                  .col-md-12
+                    p
+                      br
+                      | Success! Your application has been sent for approval.
+                center
+                  button#submit.btn.btn-primary(type='button', data-dismiss='modal') Close
+    //- // Back top
+    a.go-top(href='#back-top')
+      i.fa.fa-angle-up
+    //- // javscript js
+
+    script(src='../../../../landing/js/jquery.js')
+    script(src='../../../../assets/js/bootstrap-datepicker.js')
+    script(src='../../../../landing/js/bootstrap.min.js')
+    script(src='../../../../landing/js/vegas.min.js')
+    script(src='../../../../landing/js/wow.min.js')
+    script(src='../../../../landing/js/smoothscroll.js')
+    script(src='../../../../landing/js/custom.js')
+
+    link(rel='stylesheet', type='text/css', href='../../../../landing/js/gritter/css/jquery.gritter.css')
+    script(type='text/javascript', src='../../../../landing/js/gritter/js/jquery.gritter.js')
+    script(type='text/javascript', src='../../../../landing/js/gritter-conf.js')
+    script.
+      $(document).ready(function () {
+      $("#login").on("show", function () {
+      $("body").addClass("modal-open");
+      }).on("hidden", function () {
+      $("body").removeClass("modal-open")
+      });
+      $('#type').click(function () {
+      if ($(this).val() == 2) {
+      $('#branch').prop("disabled", false);
+      } else {
+      $('#branch').prop("disabled", true);
+      }
+      });
+
+      $(".date").datepicker();
+
+      $(function () {
+      $("#student").click(function () {
+      if ($(this).is(":checked")) {
+      $("#2").show();
+      $("#1").hide();
+      } else {
+      $("#2").hide();
+      $("#1").show();
+      }
+      });
+      });
+      });

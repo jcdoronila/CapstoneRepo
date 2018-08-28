@@ -1,0 +1,270 @@
+include ../../../../templates/head
+
+block main
+	section#main-content
+		section.wrapper.site-min-height
+			.row.mt
+				.col-md-12
+					.content-panel
+						.container-fluid
+							table#table.table.table-striped.table-advance.table-hover
+								h4
+									| All Staffs
+									button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add')
+										i.fa.fa-user-plus
+										|  Add Staff
+								thead
+									tr
+										th
+											i.fa.fa-user
+											|  Name
+										th
+											i.fa.fa-bookmark
+											|  Status	
+										th
+											i.fa.fa-edit
+											|  Action	
+								tbody 
+									each st in staffs 
+										tr 
+											td #{st.userfname} #{st.userlname}
+											td 
+												span.label.label-success
+													| #{st.statusfront}
+											td 
+												button.btn.btn-info.btn-xs(type='button', data-toggle='modal', data-target='#viewmodal' data-email=st.useremail data-mobile=st.usermobile)
+													i.fa.fa-search
+												button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Account', data-target='#editmodal' data-email=st.useremail,
+												data-mobile=st.usermobile,data-fname=st.userfname, data-lname=st.userlname,data-id=st.userid )
+													i.fa.fa-edit
+												button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently' data-target='#deletemodal' data-id=st.userid)
+													i.fa.fa-trash-alt
+
+
+			// /content-panel
+			// MODAL ADD STAFF
+			#add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+				.modal-dialog
+					.modal-content
+						.modal-header
+							button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+							h4#myModalLabel.modal-title Register a Staff
+						form(action='/staff', method='POST')
+							.modal-body
+								.container-fluid
+									.row
+										.col-xs-12
+											h5 Personal Info
+											hr
+									.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+										.row
+											.col-md-6
+												.form-group
+													label.control-label First Name
+													input.form-control(type='text' name='sfirstName')
+											.col-md-6
+												.form-group
+													label.control-label Last Name
+													input.form-control(type='text' name='slastName')
+										.row
+											.col-md-6
+												.form-group
+													label.control-label Mobile Number
+													input.form-control(type='text', name='smobNum', value='+63')
+											.col-md-6
+												.form-group
+													label.control-label Email
+													input.form-control(type='email', name='semail')
+									.row
+										.col-md-12
+											h5 Login Information
+											hr
+									.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+										.row
+											.col-md-6
+												.form-group
+													label.control-label Username
+													input.form-control(type='text' name='username')
+											.col-md-6
+												.form-group
+													label.control-label Password
+													input.form-control(type='password' name='pass')
+										.row
+											.col-md-4
+												| Upload your Image 
+												input(type='file', name='img')
+							.modal-footer
+								button.btn.btn-default(type='button', data-dismiss='modal') Close
+								button.btn.btn-primary(type='submit') Add Staff
+
+			// VIEW STAFF
+			#viewmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+				.modal-dialog
+					.modal-content
+						.modal-header
+							button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+							h4#myModalLabel.modal-title View a Staff
+						form(action='', method='POST')
+							.modal-body
+								.container-fluid
+									.row
+										.col-md-12
+											br
+											img.img-circle(src='../assets/img/ui-sam.jpg', width='200px;', style='margin-left:30%;')
+											br
+											br
+											hr
+									.container-fluid
+										.row
+											h5
+
+												b Mobile Number:
+												span#mobile
+												br
+												br
+												b E-mail Address:
+												span#email
+												br
+												br
+							.modal-footer
+								button.btn.btn-default(type='button', data-dismiss='modal') Close
+			// MODAL EDIT STAFF
+			#editmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+				.modal-dialog
+					.modal-content
+						.modal-header
+							button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+							h4#myModalLabel.modal-title Edit Staff Information
+						form(action='/staff/edit', method='POST')
+							.modal-body
+								.container-fluid
+									.row
+										.col-xs-12
+											h5 Personal Info
+											hr
+									.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+										input.hidden#id(type='text' name='id')
+										.row
+											.col-md-6
+												.form-group
+													label.control-label First Name
+													input.form-control#fname(type='text' name='sfirstName')
+											.col-md-6
+												.form-group
+													label.control-label Last Name
+													input.form-control#lname(type='text' name='slastName')
+										.row
+											.col-md-6
+												.form-group
+													label.control-label Mobile Number
+													input.form-control#mobile(type='text' name='smobNum')
+											.col-md-6
+												.form-group
+													label.control-label Email
+													input.form-control#email(type='email' name='semail')
+									.row
+										.col-md-12
+											h5 Login Information
+											hr
+									.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+										.row
+											.col-md-6
+												.form-group
+													label.control-label Username
+													input.form-control(type='text')
+											.col-md-6
+												.form-group
+													label.control-label Password
+													input.form-control(type='password')
+										.row
+											.col-md-4
+												| Upload your Image 
+												input(type='file', name='img')
+
+							.modal-footer
+								button.btn.btn-default(type='button', data-dismiss='modal') Close
+								button.btn.btn-primary(type='submit') Save
+
+			// MODAL DELETE
+			#deletemodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+				.modal-dialog
+					.modal-content
+						.modal-header
+							button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+							h4#myModalLabel.modal-title Remove
+						form(action='/staff/delete', method='POST')
+							.modal-body
+								.container-fluid
+									.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+										.row
+											.col-md-12
+												.form-group
+													h4 Delete this staff?
+											input.hidden#id(type='text' name='id')
+
+							.modal-footer
+								button.btn.btn-default(type='button', data-dismiss='modal') Close
+								button.btn.btn-default(type='submit') Delete
+
+include ../../../../templates/foot
+script.
+	$(document).ready(function()
+	$('#memdrop').addClass('active')
+	$('#staffs').addClass('active')
+	});
+
+	$('#viewmodal').on('show.bs.modal', function(event){
+		let button = $(event.relatedTarget)     
+		let mobile = button.data('mobile')
+		console.log(mobile)
+		let email = button.data('email')
+		console.log(email)
+		var bra = button.data('bra')
+		console.log(bra)
+
+		let modal = $(this)     
+		modal.find('.modal-body span#email').text(` ${email}`)  
+		modal.find('.modal-body span#mobile').text(` ${mobile}`)
+		modal.find('.modal-body span#bra').text(` ${bra}`)
+	})
+
+script.
+	$('#editmodal').on('show.bs.modal', function(event){
+		var button = $(event.relatedTarget)      
+
+		var mobile = button.data('mobile')
+		console.log(mobile)
+		var email = button.data('email')
+		console.log(email)
+		var fname = button.data('fname')
+		console.log(fname)
+		var lname = button.data('lname')
+		console.log(lname)
+		var id = button.data('id')
+		console.log(id)
+		var fullname = fname + ' ' + lname
+
+		let modal = $(this)     
+		modal.find('.modal-body #email').val(` ${email}`)  
+		modal.find('.modal-body #mobile').val(` ${mobile}`)
+		modal.find('.modal-body #fname').val(` ${fname}`)
+		modal.find('.modal-body #lname').val(` ${lname}`)
+		modal.find('.modal-body #id').val(` ${id}`)
+	})
+
+script.
+	$('#deletemodal').on('show.bs.modal', function(event){
+		var button = $(event.relatedTarget)      
+		var id = button.data('id')
+		console.log(id)
+		let modal = $(this)     
+		modal.find('.modal-body #id').val(` ${id}`)
+	})
+
+
+
+
+
+
+
+

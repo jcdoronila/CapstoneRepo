@@ -1,0 +1,107 @@
+include ../../../templates/tr-head
+block main   
+
+  .container
+    section.wrapper.site-min-height(style='margin-top:15px;')
+      .col-lg-12
+        .row.content-panel
+          .col-md-4.profile-text.mt.mb.centered
+            h4 Gold - Interbranch
+            h6 Membership
+            h4 5
+            h6 Sessions Left
+            h4 10
+            h6 Sessions Done
+          .col-md-4.profile-text
+            h3 John Doe
+            h6
+              | Gold - Interbranch
+              br
+              |  Male - 18 yrs old
+              br
+              |  john@doe.com
+              br
+              |  0929196486
+            h3 Other Trainees:
+            p
+              a(href='#')
+                img.img-circle(style='width:40px;margin-right:5px;', src='../../../assets/img/ui-zac.jpg')
+              a(href='#')
+                img.img-circle(style='width:40px;margin-right:5px;', src='../../../assets/img/ui-sherman.jpg')
+          .col-md-4.centered
+            .profile-pic
+              p
+                img.img-circle.img-thumbnail(width=150 src='../../../assets/img/chip.png')
+              p
+                button.btn.btn-theme
+                  | Give Up Client
+      .col-lg-12.mt
+        .row.content-panel
+          .panel-heading
+            ul.nav.nav-tabs.nav-justified
+              li.active
+                a(data-toggle='tab', href='#sched') Schedule
+              li
+                a.contact-map(data-toggle='tab', href='#manage') Manage Schedule
+              li
+                a(data-toggle='tab', href='#history') History
+          .panel-body
+            .tab-content
+            
+              #sched.tab-pane.active
+                .row
+                  .col-lg-12.mt
+                    section.panel
+                      .panel-body
+                        #calendar.has-toolbar
+              #manage.tab-pane
+                .row
+                  .col-md-4(style='float:right')
+                    h4
+                      | Sessions:
+                      b(style='margin-right:10px;') 5
+                      span
+                        button.btn.btn-theme Schedule meeting
+                .row
+                  table.table
+                    thead
+                      tr
+                        th Date & Time
+                        th Status
+                        th
+                    tbody
+                      tr
+                        td 01/01/18 (8:00-9:00PM)
+                        td
+                          span.label.label-danger Reschedule
+                        td
+                          button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='#edit')
+                            i.fa.fa-pencil
+                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='#del')
+                            i.fa.fa-ban
+                      tr
+                        td 01/01/18 (8:00-9:00PM)
+                        td
+                          span.label.label-success Active
+                        td
+                          button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='#edit')
+                            i.fa.fa-pencil
+                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='#del')
+                            i.fa.fa-ban
+              #history.tab-pane
+                .row
+                  table.table
+                    thead
+                      tr
+                        th Date & Time
+                        th Status
+                        th
+                    tbody
+                      tr
+                        td 01/01/18 (8:00-9:00PM)
+                        td Success
+                        td
+                          a(style='color:rgb(18, 35, 49); cursor:pointer;', data-toggle='modal', data-target='#remove')
+                            i.fa.fa-times
+
+include ../../../templates/foot

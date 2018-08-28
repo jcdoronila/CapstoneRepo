@@ -1,0 +1,43 @@
+include ../../../templates/mem-head
+
+block main   
+  .container
+    .content
+      .row.centered
+        h3
+          strong ACTIVE CLASSES 
+        br
+        .search-container
+          form(action='#')          
+            .container
+              .col-md-2(style="position:relative; left:450px;")  
+                input.form-control.t-search(type='text', name='search', placeholder='Search...' style="width:160px")
+              .col-md-1(style="position:relative; left:450px;")  
+                .form-control.btn-primary(style="width:40px; position:relative; left:-40px;")
+                  i.fa.fa-search
+        br
+        br
+        each c in classes
+          .col-lg-4.col-md-4.col-sm-4.mb
+            .content-panel(style="background-color:gray; padding:0; color:white; padding-top: 20px;")
+              h3 #{c.classname}
+              h6(style="margin:0!important") SAT/SUN - 1:30PM-4:30PM
+              | TUE/FRI - 8:00AM-10:30AM
+              br
+              br
+              br
+              .btn-block.btn-primary(style=" padding:5px; font-weight: bold;")
+                i.fa.fa-search(style="padding-right:10px; ")
+                | View
+              .content-panel(style="margin:0!important; color:#797979;padding:5px 10px; width:100%;box-shadow:none; border-radius:0;")
+                br
+                h6(style="margin:0!important;") 
+                  b Class Description:
+                | #{c.classdesc}
+                br
+                br
+      br
+      br
+      br
+
+include ../../../templates/foot

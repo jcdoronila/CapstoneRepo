@@ -1,0 +1,131 @@
+extends ./sub-head
+
+block main
+
+	section#container
+	// header start
+	header.header.black-bg
+		.sidebar-toggle-box
+			.fa.fa-bars.tooltips(data-placement='right', data-original-title='Toggle Navigation' style="color:white;")
+		// logo start
+		a.logo(href='/')
+			img.img-circle(src='/assets/img/icon.png', style='border:3px solid white; width:30px; margin-right:10px; margin-left:10px;')
+			b  A-Team Fitness
+		// logo end
+		.top-menu
+			span#header_inbox_bar.dropdown
+				a.dropdown-toggle(data-toggle='dropdown', href='#')
+					i.fa.fa-bell
+					span.badge.bg-theme 1
+				ul.dropdown-menu.extended.inbox
+					li
+						p You have 1 new notification
+					li
+						a(href='/')
+							span.subject
+								span.from(style='margin:0;') System
+								span.time Just now
+							span.message
+								| Event at 7:30AM Tomorrow
+					li
+						a(href='/') See all pending request
+			ul.nav.pull-right.top-menu
+				li
+					a(href='/logout') 
+						i.fa.fa-sign-out-alt
+	aside
+	#sidebar.nav-collapse
+		// sidebar menu start
+		ul#nav-accordion.sidebar-menu
+			p.centered
+				a(href='/')
+					img.img-circle(src='/assets/img/friends/fr-03.jpg', width='60')
+			h5.centered ADMIN
+			li.mt
+				a#dashboard(href='/')
+					i.fa.fa-tachometer-alt
+					span Dashboard
+			li.sub-menu
+				a#memdrop(href='javascript:;')
+					i.fa.fa-wrench
+					span Maintenance
+					i.fa.fa-caret-down(style='margin-left:5px;')
+				ul.sub
+					li#staffs
+						a(href='/staff') Staffs
+					li#branch
+						a(href='/branch') Branch
+					li#classes
+						a(href='/classes') Classes
+					li#promo
+						a(href='/discount') Promo
+					li#memclass
+						a(href='/memclass') Membership Classes	
+					li#memcateg
+						a(href='/category') Membership Category
+					li.sub-menu
+						a#ratesDrop(href='javascript:;')
+							span Rates
+							i.fa.fa-caret-down(style='margin-left:5px;')
+						ul.sub
+							li#memrates
+								a(href='/membership') Membership Rates
+							li#facilityrates
+								a(href='/facility') Facility Rates
+							li#genrates
+								a(href='/general') General Fees
+					li.sub-menu
+						a#trainerDrop(href='javascript:;')
+							span Trainer
+							i.fa.fa-caret-down(style='margin-left:5px;')
+						ul.sub
+							li#specialization
+								a(href='/specialization') Specialization
+							li#trainer
+								a(href='/trainer') Trainers
+				li.sub-menu
+					a#transactionDrop(href='javascript:;')
+						i.fa.fa-book
+						span Transaction
+						i.fa.fa-caret-down(style='margin-left:5px;')
+					ul.sub
+						li#pending
+							a(href='/pending') Pending Request
+						li.sub-menu
+							a#memberDrop(href='javascript:;')
+								span Members
+								i.fa.fa-caret-down(style='margin-left:5px;')
+							ul.sub
+								li#exclusive
+									a(href='/regular') Exclusive
+								li#interbranch
+									a(href='/interregular') Interbranch
+								li#freezed
+									a(href='/freezed') Freezed
+						li.sub-menu
+							a#trainerAssDrop(href='javascript:;')
+								span Trainer Assignment
+								i.fa.fa-caret-down(style='margin-left:5px;')
+							ul.sub
+								li#pt
+									a(href='/personal') Personal Training
+								li#group
+									a(href='/t-class') Group Classes
+						li#event
+							a(href='/t-event') Event
+						li#payment
+							a(href='/payment') Payment
+					
+				li.sub-menu
+					a(href='/user')
+						i.fa.fa-user
+						span User Profile
+				li.sub-menu
+					a(href='/utilities')
+						i.fa.fa-cogs
+						span Utilities
+				li.sub-menu
+					a(href='/reports')
+						i.fa.fa-th
+						span Report
+

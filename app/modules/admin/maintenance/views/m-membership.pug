@@ -1,0 +1,190 @@
+include ../../../../templates/head
+
+block main
+
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  h4
+                    | Membership Type Rates
+                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add')
+                      i.fa.fa-plus
+                      |  Add Rate
+                  thead
+                    tr
+                      th
+                        i.fa.fa-credit-card
+                        |  Class
+                      th
+                        i.fa.fa-home
+                        |  Category
+                      th
+                        i.fa.fa-calendar-alt
+                        |  Period (Month/s)
+                      th
+                        i.fa.fa-coins
+                        |  Amount
+                      th
+                        i.fa.fa-edit
+                        |  Action
+                  each me in mems
+                    tbody
+                      tr
+                        td #{me.memclassname}
+                        td #{me.membershipname}
+                        td #{me.memperiod}
+                        td #{me.memfee}
+                        td
+                          button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Account', data-target='#editmodal' data-memname=me.memname data-id=me.memrateid)
+                            - console.log(me.memname)
+                              i.fa.fa-edit
+                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently' data-target='#deletemodal' data-id=me.memrateid)
+                              i.fa.fa-trash-alt
+              // /content-panel
+    // MODAL ADD MEMBER
+    #add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Add Rate
+          form(action='/membership', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Membership Class
+                        select#branch.form-control(name='class')
+                          each cl in classes
+                            option.hidden Choose Membership Class... 
+                            option(value=''+cl.memclassid) #{cl.memclassname}
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Membership Category
+                        select#branch.form-control(name='category')
+                          each dr in drops
+                            option.hidden Choose Category... 
+                            option(value=''+dr.membershipID) #{dr.membershipname}
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Membership Amount (₱)
+                        input.form-control(type='number' name='memfee')
+                    .col-md-6
+                      .form-group
+                        label.control-label Membership Duration (Month/s)
+                        input.form-control(type='number' name='memdura')
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='submit') Add Rate
+
+    // MODAL EDIT MEMBER
+    #editmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Edit Membership Info
+          form(action='/membership/edit', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Membership Class
+                        select#branch.form-control(name='class')
+                          each cl in classes
+                            option.hidden Choose Membership Class... 
+                            option(value=''+cl.memclassid) #{cl.memclassname}
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Membership Category
+                        select#branch.form-control(name='category')
+                          each dr in drops
+                            option.hidden Choose Category... 
+                            option(value=''+dr.membershipID) #{dr.membershipname}
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Membership Amount (₱)
+                        input.form-control(type='number' name='memfee' )
+                    .col-md-6
+                      .form-group
+                        label.control-label Membership Duration (Days)
+                        input.form-control(type='number' name='memdura')
+                        input.hidden#id(type='text' name='id')
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='submit') Save
+
+    // MODAL DELETE
+    #deletemodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Remove Membership
+          form(action='/membership/delete', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        h4 Delete this membership?
+                    input.hidden#id(type='text' name='id')
+
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-default(type='submit') Delete
+
+include ../../../../templates/foot
+
+script.
+  $(document).ready(function(){
+  $('#memdrop').addClass('active');
+  $('#memrates').addClass('active');
+  });
+  
+  $('#editmodal').on('show.bs.modal', function(event){
+    var button = $(event.relatedTarget)      
+
+
+    var memname = button.data('memname')
+    var id = button.data('id')
+  
+ 
+    let modal = $(this)     
+    modal.find('.modal-body #memname').val(` ${memname}`)
+    modal.find('.modal-body #id').val(` ${id}`)
+  })
+
+ 
+script.
+    $('#deletemodal').on('show.bs.modal', function(event){
+      var button = $(event.relatedTarget)      
+
+
+      //- var memname = button.data('memname')
+      var id = button.data('id')
+    
+   
+      let modal = $(this)     
+      //- modal.find('.modal-body #memname').val(` ${memname}`)
+      modal.find('.modal-body #id').val(` ${id}`)
+    })

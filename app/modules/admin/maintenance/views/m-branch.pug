@@ -1,0 +1,189 @@
+include ../../../../templates/head
+
+block main
+	section#main-content
+		section.wrapper.site-min-height
+			.row.mt
+				.col-md-12
+					.content-panel
+						.container-fluid
+							table.table.table-striped.table-advance.table-hover
+								
+								h4
+									| All Branch
+									button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add')
+										i.fa.fa-home
+										|  Add Branch
+								thead
+									tr
+										th
+											i.fa.fa-home
+											|  Name
+										th
+											i.fa.fa-map-marker-alt
+											|  Address
+										th
+											i.fa.fa-user
+											|  Manager
+										th
+											i.fa.fa-edit
+											|  Action
+								tbody
+									each br in branches               
+										tr
+											td #{br.branchname}
+											td #{br.branchstreetnum} #{br.branchstreetname} #{br.branchcity}
+											td #{br.userfname} #{br.userlname}
+											td
+												button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Account', data-target='#editmodal' data-id=br.branchID data-name=br.branchname data-sname=br.branchstreetname data-snum=br.branchstreetnum data-city=br.branchcity data-oldid=br.user)
+													i.fa.fa-edit
+												button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently' data-target='#deletemodal' data-id=br.branchID data-oldid=br.user)
+													i.fa.fa-trash-alt
+					// /content-panel
+					// MODAL ADD MEMBER
+					#add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+						.modal-dialog
+							.modal-content
+								.modal-header
+									button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+									h4#myModalLabel.modal-title Add Branch
+								form(action='/branch', method='POST')
+									.modal-body
+										.container-fluid
+											.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+												.row
+													.col-md-12
+														.form-group
+															label.control-label Franchise Name
+															input.form-control(type='text' name='branchname')
+												.row
+													.col-md-8
+														.form-group
+															label.control-label Full Address
+															input#snum.form-control(type='text', placeholder='Street number and address..' name='street')
+													.col-md-4
+														.form-group
+															input.form-control(style='margin-top:17%;', type='text', placeholder='City..' name='city')
+													.col-md-12
+														.form-group
+															label.control-label Staff In-charge
+															select#staff.form-control(name='user')
+																each dr in drops
+																	option.hidden(value='') Select Staff...
+																	option(value=''+dr.userid) #{dr.userfname} #{dr.userlname}
+
+									.modal-footer
+										button.btn.btn-default(type='button', data-dismiss='modal') Close
+										button.btn.btn-primary(type='submit') Add Branch
+					// MODAL EDIT Branch
+					#editmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+						.modal-dialog
+							.modal-content
+								.modal-header
+									button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+									h4#myModalLabel.modal-title Edit Branch Information
+								form(action='/branch/edit', method='POST')
+									.modal-body
+										.container-fluid
+											.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+												input.hidden#id(type='text' name='id')
+												input.hidden#oldid(type='text' name='oldid')
+												.row
+													.col-md-12
+														.form-group
+															label.control-label Franchise Name
+															input#name.form-control(type='text' name='branch')
+												.row
+													.col-md-8
+														.form-group
+															label.control-label Full Address
+															input#snum.form-control(type='text', placeholder='Street number and address..' name='street')
+													.col-md-4
+														.form-group
+															input#city.form-control(style='margin-top:17%;', type='text', placeholder='City..' name='city')
+													.col-md-12       
+														.form-group
+															label.control-label Staff In-charge
+															select#staff.form-control(name='user')
+																each dr in drops
+																	option.hidden(value='') Select Staff...
+																	option(value=''+dr.userid) #{dr.userfname} #{dr.userlname}                
+
+									.modal-footer
+										button.btn.btn-default(type='button', data-dismiss='modal') Close
+										button.btn.btn-primary(type='submit') Save
+
+					// MODAL DELETE
+					#deletemodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+						.modal-dialog
+							.modal-content
+								.modal-header
+									button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+									h4#myModalLabel.modal-title Remove Branch
+								form(action='/branch/delete', method='POST')
+									.modal-body
+										.container-fluid
+											.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+												.row
+													.col-md-12
+														.form-group
+															h4 Delete this branch?
+															input.hidden#id(type='text' name='id')
+															input.hidden#oldid(type='text' name='oldid')
+
+									.modal-footer
+										button.btn.btn-default(type='button', data-dismiss='modal') Close
+										button.btn.btn-default(type='submit') Delete
+
+include ../../../../templates/foot
+
+script.
+	$(document).ready(function(){
+	$('#memdrop').addClass('active');
+	$('#branch').addClass('active');
+	});
+	
+script.
+
+	$('#editmodal').on('show.bs.modal', function(event){
+	var button = $(event.relatedTarget)      
+
+
+	var name = button.data('name')
+	var sname = button.data('sname')
+	var id = button.data('id')
+	var snum=button.data('snum')
+	var city=button.data('city')
+	var oldid=button.data('oldid')
+
+	let modal = $(this)  
+	modal.find('.modal-body #name').val(` ${name}`)
+	modal.find('.modal-body #sname').val(` ${sname}`)
+	modal.find('.modal-body #city').val(` ${city}`)
+	modal.find('.modal-body #snum').val(` ${snum}`)
+	modal.find('.modal-body #id').val(` ${id}`)
+	modal.find('.modal-body #oldid').val(` ${oldid}`)
+		}) 
+
+
+	script.
+
+	$('#deletemodal').on('show.bs.modal', function(event){
+		var button = $(event.relatedTarget)      
+
+	//id
+	var id = button.data('id')
+	console.log(id)
+	var oldid=button.data('oldid')
+
+
+	let modal = $(this)     
+
+	modal.find('.modal-body #id').val(` ${id}`)
+	modal.find('.modal-body #oldid').val(` ${oldid}`)
+	})
+
+	$(document).ready(function(){
+	$('#memdrop').addClass('active');
+	$('#branch').addClass('active');
+	});

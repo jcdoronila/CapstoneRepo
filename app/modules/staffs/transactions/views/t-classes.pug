@@ -1,0 +1,48 @@
+include ../../../../templates/staff-head
+
+block main    
+
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  h4
+                    | All Group Classes
+                  thead
+                    tr
+                      th
+                        i.fa.fa-user
+                        |  Name
+                      th
+                        i.fa.fa-dumbbell
+                        |  Trainer In-charge
+                      th
+                        i.fa.fa-home
+                        |  Branch
+                      th
+                        i.fa.fa-clock
+                        |  Time
+                      th
+                        i.fa.fa-calendar-alt
+                        |  Schedule
+                      th
+                        i.fa.fa-bookmark
+                        |  Status
+                  tbody
+                    tr
+                      td Zumba
+                      td John Paul
+                      td Sta. Mesa 
+                      td 8:00AM - 9:00PM
+                      td M/W/F
+                      td
+                        span.label.label-success
+                          | Active
+        
+              // /content-panel
+    
+              
+include ../../../../templates/foot

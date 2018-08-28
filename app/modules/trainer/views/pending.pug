@@ -1,0 +1,98 @@
+include ../../../templates/tr-head
+block main   
+
+  .container
+    .content
+      .row
+        .col-md-12
+          .content-panel
+            h4(style='margin-left:0;') Pending Requests
+            br
+            table.table
+              thead
+                tr
+                  th Description
+                  th Action
+              tbody
+                tr
+                  td Class
+                  td
+                    button.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#view')
+                      i.fa.fa-search
+                    button.btn.btn-success.btn-xs(data-toggle='modal', data-target='#accept')
+                      i.fa.fa-check
+                    button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='#decline')
+                      i.fa.fa-times
+                tr
+                  td Trainee
+                  td
+                    button.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#view')
+                      i.fa.fa-search
+                    button.btn.btn-success.btn-xs(data-toggle='modal', data-target='#accept')
+                      i.fa.fa-check
+                    button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='#decline')
+                      i.fa.fa-times
+          
+  // Modal
+  #view.modal.fade(tabindex='-1', role='dialog', aria-labelledby='view', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title View Request
+          button.close(style='position:relative;top:-20px;', type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          .container-fluid
+            h3 Good Day!
+            h5
+              | You are invited to be the main instructor of our 
+              b ZUMBA
+              |  class on 
+              b STA.MESA.
+            br
+            h5 Consider factors below before stating your decision:
+            h5
+              b Time:
+              |  8:00AM - 9:00AM
+            h5
+              b Schedule:
+              |  Monday, Wednesday, Friday
+        .modal-footer
+          button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+
+  // Modal
+  #accept.modal.fade(tabindex='-1', role='dialog', aria-labelledby='view', aria-hidden='true')
+    .modal-dialog.modal-sm(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title Accept Request
+          button.close(style='position:relative;top:-20px;', type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        #yesno.modal-body
+          .container-fluid.text-center
+            h4
+              | You are about to 
+              b.text-success accept
+              |  the request. Are you sure?
+            button.btn.btn-success.btn-lg(type='button', data-dismiss='modal') Yes
+            button.btn.btn-secondary.btn-lg(type='button', data-dismiss='modal') No
+            
+  // Modal
+  #decline.modal.fade(tabindex='-1', role='dialog', aria-labelledby='view', aria-hidden='true')
+    .modal-dialog.modal-sm(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title Decline Request
+          button.close(style='position:relative;top:-20px;', type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        #yesno.modal-body
+          .container-fluid.text-center
+            h4
+              | You are about to 
+              b.text-danger decline
+              |  the request. Are you sure?
+            button.btn.btn-danger.btn-lg(type='button', data-dismiss='modal') Yes
+            button.btn.btn-secondary.btn-lg(type='button', data-dismiss='modal') No
+
+
+include ../../../templates/foot

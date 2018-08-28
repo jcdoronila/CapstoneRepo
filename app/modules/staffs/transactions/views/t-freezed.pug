@@ -1,0 +1,56 @@
+include ../../../../templates/staff-head
+
+block main
+
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  h4 All Freezed Members
+                  thead
+                    tr
+                      th
+                        i.fa.fa-bookmark
+                        |  ID
+                      th
+                        i.fa.fa-user
+                        |  Name
+                      th
+                        i.fa.fa-home
+                        |  Branch
+                      th
+                        i.fa.fa-phone
+                        |  Contact
+                      th
+                        i.fa.fa-bookmark
+                        |  Membership
+                      th
+                        i.fa.fa-calendar-alt
+                        |  Starting Date
+                      th
+                        i.fa.fa-calendar-alt
+                        |  End Date
+                      th
+                        i.fa.fa-edit
+                        |  Action
+                  tbody
+                    tr
+                      td 1
+                      td.hidden-phone John Doe
+                      td All
+                      td  09999888776
+                      td
+                        span.label.label-warning Gold
+                        |  - Interbranch
+                      td 06/27/18
+                      td 07/27/18
+                      td
+                        button.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Unfreeze Account')
+                          i.fa.fa-fire
+                        button.btn.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently')
+                          i.fa.fa-trash-alt
+              // /content-panel
+include ../../../../templates/foot

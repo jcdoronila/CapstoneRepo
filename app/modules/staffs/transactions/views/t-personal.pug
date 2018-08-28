@@ -1,0 +1,423 @@
+include ../../../../templates/staff-head
+
+block main
+
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  h4
+                    | Member to PT Trainer Manual Assignment
+                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='.add')
+                      i.fa.fa-user-friends
+                      |  Assign PT
+                  thead
+                    tr
+                      th
+                        i.fa.fa-user
+                        |  Member
+                      th
+                        i.fa.fa-user-friends
+                        |  Trainer In-charge
+                      th
+                        i.fa.fa-home
+                        |  Branch
+                      th
+                        i.fa.fa-edit
+                        |  Action
+                  tbody
+                    tr
+                      td John Doe
+                      td John Paul
+                      td Sta. Mesa 
+                      td
+                        button#view.btn.btn-info.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='View Account')
+                          i.fa.fa-search
+                        button#edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit Account')
+                          i.fa.fa-edit
+                        button#del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently')
+                          i.fa.fa-trash-alt
+            // /content-panel
+      
+// MODAL ADD MEM|PT ASS
+.add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Sort Trainers
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+              .row
+                .col-md-6
+                  .form-group
+                    label.control-label Branch
+                    select#branch.form-control
+                      option Sta. Mesa
+                      option Marikina
+                .col-md-6
+                  .form-group
+                    label.control-label Specialization
+                    select.form-control(id='')
+                      option Body Building
+                      option Weight Loss
+              .row
+                .input-group(style='margin-left:7%;')
+                  label.checkbox
+                    | Mon
+                    input.day(type='checkbox', value='monday')
+                    span.check
+                  label.checkbox
+                    | Tue
+                    input#day.day(type='checkbox', value='tuesday')
+                    span.check
+                  span.input-group-addon
+                  label.checkbox
+                    | Wed
+                    input.day(type='checkbox', value='wednesday')
+                    span.check
+                  label.checkbox
+                    | Thu
+                    input.day(type='checkbox', value='thursday')
+                    span.check
+                  span.input-group-addon
+                  label.checkbox
+                    | Fri
+                    input.day(type='checkbox', value='friday')
+                    span.check
+                  label.checkbox
+                    | Sat
+                    input.day(type='checkbox', value='saturday')
+                    span.check
+                  span.input-group-addon
+                  label.checkbox
+                    | Sun
+                    input.day(type='checkbox', value='sunday')
+                    span.check
+             
+              .row
+                .col-md-10
+                  label.control-label Select Member to be Assigned
+                  .form-group
+                    select#user.form-control
+                      option member1
+                      option member2
+                .col-md-2
+                  label(style='color:white;') invi hihi
+                  button.sort.btn.btn-primary(type='button' style="width:100%;") Sort 
+
+// VIEW MEM|PT ASS
+#view-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title View Training
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+              .row
+                .col-md-6
+                  .form-group.text-center
+                    label.control-label 
+                    | Trainee:
+                    b
+                      |  [Trainee Name]
+                    br
+                    br
+                    img.img-circle(src='../assets/img/ui-sam.jpg', width='200x;')
+                .col-md-6
+                  .form-group.text-center
+                    label.control-label 
+                    | Trainer:
+                    b
+                      |  [Trainer Name]
+                    br
+                    br
+                    img.img-circle(src='../assets/img/ui-sam.jpg', width='200x;')
+              hr
+              .row
+                .col-md-12
+                  p
+                    b Branch:
+                    |
+                    |  Sta Mesa
+                    br
+                    br
+                    b Sessions Bought:
+                    |
+                    |  10
+                    br
+                    br
+                    b Sessions Left:
+                    |
+                    |  5
+                    br
+                    br
+                    b Working With:
+                    |
+                    |  Weight Loss
+                    br
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button#vedit.btn.btn-primary(type='button') Edit
+      
+// MODAL edit MEM|PT ASS
+#edit-modal-reason.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Edit Assignment
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .row
+              .col-md-12
+                .form-group
+                  label.control-label Reason of Changing Trainer
+                  textarea.form-control(rows='3')
+      .modal-footer
+        //type submit dapat to
+        button.send.btn.btn-primary(type='button') Send
+
+#edit-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Sort Trainers
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+              .row
+                .col-md-6
+                  .form-group
+                    label.control-label Branch
+                    select#branch.form-control
+                      option Sta. Mesa
+                      option Marikina
+                .col-md-6
+                  .form-group
+                    label.control-label Specialization
+                    select.form-control(id='')
+                      option Body Building
+                      option Weight Loss
+              .row
+                .input-group(style='margin-left:7%;')
+                  label.checkbox
+                    | Mon
+                    input.day(type='checkbox', value='monday')
+                    span.check
+                  label.checkbox
+                    | Tue
+                    input#day.day(type='checkbox', value='tuesday')
+                    span.check
+                  span.input-group-addon
+                  label.checkbox
+                    | Wed
+                    input.day(type='checkbox', value='wednesday')
+                    span.check
+                  label.checkbox
+                    | Thu
+                    input.day(type='checkbox', value='thursday')
+                    span.check
+                  span.input-group-addon
+                  label.checkbox
+                    | Fri
+                    input.day(type='checkbox', value='friday')
+                    span.check
+                  label.checkbox
+                    | Sat
+                    input.day(type='checkbox', value='saturday')
+                    span.check
+                  span.input-group-addon
+                  label.checkbox
+                    | Sun
+                    input.day(type='checkbox', value='sunday')
+                    span.check
+             
+              .row
+                .col-md-10
+                  label.control-label Select Member to be Assigned
+                  .form-group
+                    select#user.form-control
+                      option member1
+                      option member2
+                .col-md-2
+                  label(style='color:white;') invi hihi
+                  button#sort-edit.btn.btn-primary(type='button' style="width:100%;") Sort 
+             
+                  
+                  
+// SORTED TRAINER MODAL
+.sorted.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Assign Member to Sorted Trainers
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            content-panel
+              table.table.table-striped.table-advance.table-hover
+                a#back(data-toggle='modal', data-target='.add')
+                  i.fas.fa-angle-double-left 
+                  |
+                  | 
+                  b Back
+                thead
+                  tr
+                    th
+                      i.fa.fa-user
+                      |  Trainer
+                    th
+                      i.fa.fa-edit
+                      |  Action
+                tbody
+                  tr
+                    td John Doe 
+                      a.showImg
+                        span(style='margin-left:20px; cursor:pointer;')  
+                          i.fa.fa-image 
+                          small  Show Details
+                    
+                    td
+                      button.btn.btn-info.btn-xs(href='/personal')
+                        | Assign
+
+//IMAGE + DESCRIPTION
+.showImgModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close#return(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Trainer Details
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .row(style='margin-top:15px; margin-bottom:15px;') 
+              .col-md-6
+                img(src="../../../../../assets/img/ui-sherman.jpg", alt="" width='100%', style='max-width:720px;border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;')
+              .col-md-6
+                .row
+                    h5
+                      b Name:
+                      |  John Doe
+                      br
+                      br
+                      b Gender:
+                      |  Male
+                      br
+                      br
+                      b Age:
+                      |  31
+                      br
+                      br
+                      b Mobile Number:
+                      |  09291964686
+                      br
+                      br
+                      b E-mail Address:
+                      |  johndoe@gmail.com
+                      br
+                      br
+                      b Description:
+                      |  There are many reasons why people choose to exercise. Whether you want to improve your sport performance, reduce health risks, or look and feel better I can help you achieve your goals. Using a functional, yet fun approach I’ll help give you an edge – an edge in performance, and edge in health, and an edge in life.
+                      br
+         
+include ../../../../templates/foot
+
+
+
+script.
+  $('[data-toggle="popover"]').popover();
+
+script.
+  $('#back').click(function(){
+  $('.sorted').modal('hide');
+  })
+
+script.
+  $('#return').click(function(){
+  $('.sorted').modal();
+  })
+
+script.
+  $('.showImg').click(function(){
+  $('.showImgModal').modal();
+  $('.sorted').modal('hide');
+  });
+
+script.
+  $(".sort").click(function () {
+  getArray();
+  });
+
+script.
+  function getArray(){
+  var chkArray = [];
+  $(".day:checked").each(function() {
+  chkArray.push($(this).val());
+  });
+  var selected;
+  selected = chkArray.join(',') ;
+  if(selected.length > 0){
+  //- alert("You have selected " + selected);
+  $('.sorted').modal();
+  $('.add').modal('hide');
+  }
+  else{
+  alert("Please select at least one day");
+  }
+  }
+
+script.
+  $("#sort-edit").click(function () {
+  getArray();
+  });
+
+script.
+  function getArray(){
+  var chkArray = [];
+  $(".day:checked").each(function() {
+  chkArray.push($(this).val());
+  });
+  var selected;
+  selected = chkArray.join(',') ;
+  if(selected.length > 0){
+  //- alert("You have selected " + selected);
+  $('.sorted').modal();
+  $('#edit-modal').modal('hide');
+  }
+  else{
+  alert("Please select at least one day");
+  }
+  }
+
+script.
+  $('#view').click(function(){
+    $('#view-modal').modal();
+  })
+  $('#edit').click(function(){
+    $('#edit-modal-reason').modal();
+  })
+  $('#vedit').click(function(){
+      $('#edit-modal-reason').modal();
+      $('#view-modal').modal('hide');
+  })
+  $('.send').click(function(){
+    $('#edit-modal').modal();
+    $('#edit-modal-reason').modal('hide');
+  })
+
+
+

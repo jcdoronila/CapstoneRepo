@@ -1,0 +1,443 @@
+include ../../../../templates/head
+
+block main
+
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  h4
+                    | All Trainers
+                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add')
+                      i.fa.fa-user-plus
+                      |  Add Trainer
+                  thead
+                    tr
+                      th
+                        i.fa.fa-user
+                        |  Name
+                      th
+                        i.fa.fa-calendar-alt
+                        |  Birthday
+                      th
+                        i.fa.fa-calendar-alt
+                        |  Schedule 
+                      th
+                        i.fa.fa-edit
+                        |  Action
+                  tbody
+                    each tr in trains 
+                      tr
+                        td #{tr.userfname} #{tr.userlname}
+                        td #{tr.userbday}
+                        td #{tr.userschedule}
+                        td
+                          button#view.btn.btn-info.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='View Trainer', data-target='#viewmodal' data-sched=tr.userschedule data-mob=tr.usermobile data-bra=tr.branchname data-spe=tr.specialname data-email=tr.useremail data-addr=tr.useraddress data-gen=tr.usergender)
+                            i.fa.fa-search
+                          button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Trainer', data-target='#editmodal' data-fname=tr.userfname data-mob=tr.usermobile  data-lname=tr.userlname data-email=tr.useremail data-addr=tr.useraddress data-bday=tr.userbday data-id=tr.userid)
+                            i.fa.fa-edit
+                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently' data-target='#deletemodal' data-id=tr.userid)
+                            i.fa.fa-trash-alt
+                            
+    // MODAL ADD MEMBER
+    #add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog.modal-lg
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Register a Trainer
+          form(action='/trains', method='POST')
+            .modal-body
+              .container-fluid
+                .row
+                  .col-xs-12
+                    h5 Personal Info
+                    hr
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label First Name
+                        input.form-control(type='text' name='fname')
+                    .col-md-6
+                      .form-group
+                        label.control-label Last Name
+                        input.form-control(type='text' name='lname')
+                  .row
+                    .col-md-6
+                      .input-group
+                        .input-group-addon Gender:
+                        label.radio
+                          | Male
+                          input(type='radio', checked='', name='gen' value='male')
+                          span.dot
+                        label.radio
+                          | Female
+                          input(type='radio', name='gen' value='female')
+                          span.dot
+                    .col-md-6
+                      .form-group
+                        label.control-label Date of Birth
+                        input.date.form-control(type='text' name='bday')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Address
+                        input.form-control(type='text' name='addr')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Mobile Number
+                        input.form-control(type='text', value='+63' name='mobile')
+                    .col-md-6
+                      .form-group
+                        label.control-label Email
+                        input.form-control(type='email' name='email')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Branch
+                        select#branch.form-control(name='branchid')
+                          each br in drops
+                            option.hidden Select Branch... 
+                            option(value=''+br.branchID) #{br.branchname}
+                    .col-md-6
+                      .form-group
+                        label.control-label Specialization
+                        select#branch.form-control(name='specialid')
+                          each sp in spes
+                            option.hidden Select Specialization...
+                            option(value=''+sp.specialID) #{sp.specialname}
+    
+                  .row
+                    .input-group
+                      span.input-group-addon
+                        | Work Days:
+                      label.checkbox
+                        | Monday
+                        input#student(type='checkbox', name='sched[]' ,value='Monday')
+                        span.check
+                      label.checkbox
+                        | Tuesday
+                        input#student(type='checkbox', name='sched[]', value='Tuesday')
+                        span.check
+                      label.checkbox
+                        | Wednesday
+                        input#student(type='checkbox', name='sched[]', value='Wednesday')
+                        span.check
+                      span.input-group-addon
+                      label.checkbox
+                        | Thursday
+                        input#student(type='checkbox', name='sched[]',value='Thursday')
+                        span.check
+                      label.checkbox
+                        | Friday
+                        input#student(type='checkbox', name='sched[]',value='Friday')
+                        span.check
+                      label.checkbox
+                        | Saturday
+                        input#student(type='checkbox', name='sched[]',value='Saturday')
+                        span.check
+                      span.input-group-addon
+                      label.checkbox
+                        | Sunday
+                        input#student(type='checkbox',name='sched[]', value='Sunday')
+                        span.check
+                .row
+                  .col-md-12
+                    h5 Login Information
+                    hr
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Username
+                        input.form-control(type='text' name='username')
+                    .col-md-6
+                      .form-group
+                        label.control-label Password
+                        input.form-control(type='password' name='password')
+                  .row
+                    .col-md-4
+                      label(for='file') Display Image
+                      input#file.inputfile(type='file')
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='submit') Add Trainer
+    // MODAL VIEW MEMBER
+    #viewmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Trainer Description
+          form(action='', method='POST')
+            .modal-body
+              .container-fluid
+                .row
+                  .col-md-12
+                    br
+                    img.img-circle(src='../assets/img/ui-sam.jpg', width='200x;', style='margin-left:30%;')
+                    br
+                    br
+                    hr
+                .container-fluid
+                  .row
+                    h5
+                      br
+                      b Gender:
+                      span#gen
+                      br
+                      br
+                      b Address:
+                      span#addr
+                      br
+                      br
+                      b Mobile Number:
+                      span#mob
+                      br
+                      br
+                      b E-mail Address:
+                      span#email
+                      br
+                      br
+                      b Branch:
+                      span#bra
+                      br
+                      br
+                      b Specialization:
+                      span#spe
+                      br
+                      br
+                      b Work Days:
+                      span#sched
+                      br
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+    // MODAL EDIT MEMBER
+    #editmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog.modal-lg
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Edit a Trainer
+          form(action='/trains/edit', method='POST')
+            .modal-body
+              .container-fluid
+                .row
+                  .col-xs-12
+                    h5 Personal Info
+                    hr
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')       
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label First Name
+                        input#fname.form-control(type='text' name='fname')
+                        input.hidden#id(type='text' name='id')
+                    .col-md-6
+                      .form-group
+                        label.control-label Last Name
+                        input#lname.form-control(type='text' name='lname')
+                  .row
+                    .col-md-6
+                      .input-group
+                        .input-group-addon Gender:
+                        label.radio
+                          | Male
+                          input(type='radio', checked='', name='gen' value='male')
+                          span.dot
+                        label.radio
+                          | Female
+                          input(type='radio', name='gen' value='female')
+                          span.dot
+                    .col-md-6
+                      .form-group
+                        label.control-label Date of Birth
+                        input#bday.date.form-control(type='text' name='bday')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Address
+                        input#addr.form-control(type='text' name='addr')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Mobile Number
+                        input#mob.form-control(type='text', value='+63' name='mobile')
+                    .col-md-6
+                      .form-group
+                        label.control-label Email
+                        input#email.form-control(type='email' name='email')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Branch
+                        select#branch.form-control(name='branchid')
+                          each br in drops
+                            option.hidden Select Branch... 
+                            option(value=''+br.branchID) #{br.branchname}
+                    .col-md-6
+                      .form-group
+                        label.control-label Specialization
+                        select#branch.form-control(name='specialid')
+                          each sp in spes
+                            option.hidden Select Specialization...
+                            option(value=''+sp.specialID) #{sp.specialname}
+    
+                  .row
+                    .input-group
+                      span.input-group-addon
+                        | Work Days:
+                      label.checkbox
+                        | Monday
+                        input#student(type='checkbox', name='sched[]' ,value='Monday')
+                        span.check
+                      label.checkbox
+                        | Tuesday
+                        input#student(type='checkbox', name='sched[]', value='Tuesday')
+                        span.check
+                      label.checkbox
+                        | Wednesday
+                        input#student(type='checkbox', name='sched[]', value='Wednesday')
+                        span.check
+                      span.input-group-addon
+                      label.checkbox
+                        | Thursday
+                        input#student(type='checkbox', name='sched[]',value='Thursday')
+                        span.check
+                      label.checkbox
+                        | Friday
+                        input#student(type='checkbox', name='sched[]',value='Friday')
+                        span.check
+                      label.checkbox
+                        | Saturday
+                        input#student(type='checkbox', name='sched[]',value='Saturday')
+                        span.check
+                      span.input-group-addon
+                      label.checkbox
+                        | Sunday
+                        input#student(type='checkbox',name='sched[]', value='Sunday')
+                        span.check
+                .row
+                  .col-md-12
+                    h5 Login Information
+                    hr
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Username
+                        input.form-control(type='text')
+                    .col-md-6
+                      .form-group
+                        label.control-label Password
+                        input.form-control(type='password')
+                  .row
+                    .col-md-4
+                      label(for='file') Display Image
+                      input#file.inputfile(type='file')
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='submit') Add Trainer
+
+    // MODAL DELETE
+    #deletemodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Remove Trainer
+          form(action='/trains/delete', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        h4 Delete this trainer?
+                        input.hidden#id(type='text' name='id')
+                    
+
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-default(type='submit') Delete
+
+include ../../../../templates/foot
+script.
+    
+    $(document).ready(function(){
+    $('#memdrop').addClass('active');
+    $('#trainer').addClass('active');
+    });
+
+    $('#viewmodal').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)      
+       
+        
+        var bra = button.data('bra')
+        var mob = button.data('mob')
+        var sched = button.data('sched')
+        var spe = button.data('spe')
+        var addr= button.data('addr')
+        var email= button.data('email')
+        var gen= button.data('gen')
+
+
+        let modal = $(this)  
+        modal.find('.modal-body #bra').text(` ${bra}`)   
+        modal.find('.modal-body #mob').text(` ${mob}`)
+        modal.find('.modal-body #sched').text(` ${sched}`)
+        modal.find('.modal-body #spe').text(` ${spe}`)
+        modal.find('.modal-body #addr').text(` ${addr}`)
+        modal.find('.modal-body #email').text(` ${email}`)
+        modal.find('.modal-body #gen').text(` ${gen}`)
+    }) 
+
+
+
+script.
+
+    $('#editmodal').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)      
+       
+        
+
+        var mob = button.data('mob')
+        var bday = button.data('bday')
+        var addr= button.data('addr')
+        var email= button.data('email')
+        var fname = button.data('fname')
+        var lname = button.data('lname')
+        var id = button.data('id')
+
+        let modal = $(this)  
+
+        modal.find('.modal-body #mob').val(` ${mob}`)
+        modal.find('.modal-body #fname').val(` ${fname}`)
+        modal.find('.modal-body #lname').val(` ${lname}`)
+        modal.find('.modal-body #addr').val(` ${addr}`)
+        modal.find('.modal-body #email').val(` ${email}`)
+        modal.find('.modal-body #bday').val(` ${bday}`)
+        modal.find('.modal-body #id').val(` ${id}`)
+
+    }) 
+
+script.
+
+    $('#deletemodal').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)      
+       
+        
+
+        var id = button.data('id')
+
+        let modal = $(this)  
+
+
+        modal.find('.modal-body #id').val(` ${id}`)
+
+    }) 

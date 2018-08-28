@@ -1,0 +1,96 @@
+include ../../../../templates/staff-head
+
+block main
+
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  h4
+                    | All Events
+                  thead
+                    tr
+                      th
+                        i.fa.fa-dumbbell
+                        |  Name
+                      th
+                        i.fa.fa-calendar-alt
+                        |  Start Date
+                      th
+                        i.fa.fa-calendar-alt
+                        |  End Date
+                      th
+                        i.fa.fa-home
+                        |  Location
+                      th
+                        i.fa.fa-check-double
+                        |  Availability
+                      th
+                        i.fa.fa-clock
+                        |  Time
+                      th
+                        i.fa.fa-users
+                        |  Slot Left
+                      th
+                        i.fa.fa-bookmark
+                        |  Status
+                      th
+                        i.fa.fa-edit
+                        |  Action
+                  tbody
+                    tr
+                      td Body Building
+                      td 07/05/2018
+                      td 07/05/2018
+                      td 1185 Sitio Saguipin
+                      td All
+                      td 8:00AM - 9:00PM
+                      td 51 
+                      td
+                        span.label.label-success
+                          | Active
+                      td
+                        button#view.btn.btn-info.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='View')
+                          i.fa.fa-search
+
+//MODAL
+#view-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title All Attendants
+      form(action='', method='post')
+        br
+        .container-fluid
+          table.table.table-striped.table-advance.table-hover
+            thead
+              tr
+                th 
+                  i.fa.fa-bookmark
+                  |  No.
+                th 
+                  i.fa.fa-user
+                  |  Name
+                th
+                  i.fa.fa-bookmark
+                  |  Category
+            tbody
+              tr
+                td 1.
+                td John Doe
+                td Walk-In
+                      
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') Close
+        button.btn.btn-primary(type='button') Print
+
+include ../../../../templates/foot
+
+script.
+   $('#view').click(function(){
+    $('#view-modal').modal();
+  });

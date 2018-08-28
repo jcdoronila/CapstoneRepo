@@ -1,0 +1,88 @@
+extends ./sub-head
+
+block main
+	section#container
+	// header start
+	header.header.black-bg
+		.sidebar-toggle-box
+			.fa.fa-bars.tooltips(data-placement='right', data-original-title='Toggle Navigation' style="color:white;")
+		// logo start
+		
+		a.logo(href='/')
+			img.img-circle(src='/assets/img/icon.png', style='border:3px solid white; width:30px; margin-right:10px; margin-left:10px;')
+			b  A-Team Fitness
+		// logo end
+		.top-menu
+			span#header_inbox_bar.dropdown
+				a.dropdown-toggle(data-toggle='dropdown', href='#')
+					i.fa.fa-bell
+					span.badge.bg-theme 1
+				ul.dropdown-menu.extended.inbox
+					li
+						p You have 1 new notification
+					li
+						a(href='/')
+							span.subject
+								span.from(style='margin:0;') System
+								span.time Just now
+							span.message
+								| Event at 7:30AM Tomorrow
+					li
+						a(href='/') See all pending request
+			ul.nav.pull-right.top-menu
+				li
+					a(href='/logout')
+						i.fa.fa-sign-out-alt
+	aside
+	#sidebar.nav-collapse
+		// sidebar menu start
+		ul#nav-accordion.sidebar-menu
+		
+		
+			p.centered
+				a(href='/staffs/dashboard')
+					img.img-circle(src='/assets/img/friends/fr-03.jpg', width='60')
+			h5.centered STAFF
+			li.mt
+				a.active(href='/staffs')
+					i.fa.fa-tachometer-alt
+					span Dashboard
+				li.sub-menu
+					a(href='javascript:;')
+						i.fa.fa-book
+						span Transaction
+						i.fa.fa-caret-down(style='margin-left:5px;')
+					ul.sub
+						li
+							a(href='/staffs/pending') Pending Request
+						li.sub-menu
+							a(href='javascript:;')
+								span Members
+								i.fa.fa-caret-down(style='margin-left:5px;')
+							ul.sub
+								li
+									a(href='/staffs/regular') Regular
+								li
+									a(href='/staffs/freezed') Freezed
+						li
+							a(href='/staffs/personal') PT Assignment
+						
+						li
+							a(href='/staffs/payment') Payment
+				li.sub-menu
+					a(href='/staffs/classes') 
+						i.fa.fa-dumbbell
+						span Classes
+				li.sub-menu
+					a(href='/staffs/event') 
+						i.fa.fa-calendar-alt
+						span Events
+				li.sub-menu
+					a(href='/staffs/user')
+						i.fa.fa-user
+						span User Profile
+				li.sub-menu
+					a(href='/staffs/reports')
+						i.fa.fa-th
+						span Report
+

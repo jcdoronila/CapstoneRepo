@@ -1,0 +1,30 @@
+extends ./base
+
+block main
+
+    section#container
+
+        header.header.black-bg
+            // logo start
+            a.logo(href='dash.html')
+                b A-Team Fitness
+            ul.top-menu
+                li
+                    a.nav.notify-row(href='profile.html') Profile
+                li
+                    a.nav.notify-row(href='pt.html') Personal Training
+                li
+                    a.nav.notify-row(href='classevent.html') Classes & Events
+                li
+                    a.nav.notify-row(href='announcements.html') Announcements
+                li
+                    a.nav.notify-row(href='faq.html') FAQ
+                li
+                    a.nav.notify-row.settings(href='settings.html') Settings
+                li
+                    a.nav.notify-row.log-out(href='login.html') Logout
+    footer.site-footer
+        .text-center
+            | Copyright © A-Fitness | 2018 | All Rights Reserved.
+            a.go-top(href='blank.html#')
+                i.fa.fa-angle-up

@@ -1,0 +1,201 @@
+include ../../../../templates/head
+
+block main
+
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  h4
+                    | All Promos
+                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add')
+                      i.fa.fa-plus
+                      |  Add Promo
+                  thead
+                    tr
+                      th
+                        i.fa.fa-user
+                        |  Name
+                      th
+                        i.fa.fa-calendar-alt
+                        |  Starting Date
+                      th
+                        i.fa.fa-calendar-alt
+                        |  End Date
+                      th
+                        i.fa.fa-coins
+                        |  Discount (%)
+                      th
+                        i.fa.fa-bookmark
+                        |  Status
+                      th
+                        i.fa.fa-edit
+                        |  Action
+                  tbody
+                    each ds in discounts   
+                      tr
+                        td #{ds.promoname}
+                        td #{ds.startdate}
+                        td #{ds.enddate}
+                        td #{ds.discount}
+                        td
+                          span.label.label-success
+                            | #{ds.status}                 
+                        td
+                          button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Account', data-target='#editmodal' data-id=ds.promoID data-name=ds.promoname data-sdate=ds.startdate data-edate=ds.enddate data-disc=ds.discount)
+                            i.fa.fa-edit
+                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently' data-target='#deletemodal' data-id=ds.promoID)
+                            i.fa.fa-trash-alt
+            // /content-panel
+    // MODAL ADD
+    #add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Add Promo
+          form(action='/discount', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Promo Name
+                        input#name.form-control(type='text' name='promoname')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Start Date
+                        input#sdate.form-control.date(type='text' name='startdate')
+                    .col-md-6
+                      .form-group
+                        label.control-label End Date
+                        input.form-control.date(type='text' name='enddate')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Discount (%)
+                        input#disc.form-control(type='number', min='0' name='discount')
+                    .col-md-6
+                      .form-group
+                        label.control-label Status
+                        select.form-control(id='' name='status')
+                          option.hidden Select Status..
+                          option(value='Active') Active
+                          option(value='Inactive') Inactive
+
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='submit') Add Discount
+    // MODAL EDIT
+    #editmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Add Promo
+          form(action='/discount/edit', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  input.hidden#id(type='text' name='id')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label.control-label Name
+                        input#name.form-control(type='text' name='promoname')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Start Date
+                        input#sdate.form-control.date(type='text' name='startdate')
+                    .col-md-6
+                      .form-group
+                        label.control-label End Date
+                        input#edate.form-control.date(type='text' name='enddate')
+                  .row
+                    .col-md-6
+                      .form-group
+                        label.control-label Discount (%)
+                        input#disc.form-control(type='number', min='0' name='discount')
+                    .col-md-6
+                      .form-group
+                        label.control-label Status
+                        select.form-control(id='' name='status')
+                          option.hidden Select Status..
+                          option(value='Active') Active
+                          option(value='Inactive') Inactive
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='submit') Save
+
+    // MODAL DELETE
+    #deletemodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#myModalLabel.modal-title Remove Promo
+          form(action='/discount/delete', method='POST')
+            .modal-body
+              .container-fluid
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                  .row
+                    .col-md-12
+                      .form-group
+                        h4 Delete this Promo?
+                    input.hidden#id(type='text' name='id')
+
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-default(type='submit') Delete
+
+include ../../../../templates/foot
+
+script.
+    $(document).ready(function(){
+    $('#memdrop').addClass('active');
+    $('#promo').addClass('active');
+    });
+
+    $('#editmodal').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)      
+       
+
+        //id
+        var id = button.data('id')
+        var name = button.data('name')
+        var edate = button.data('edate')
+        var sdate = button.data('sdate')
+        var disc = button.data('disc')
+        console.log(disc)
+
+        
+
+
+        let modal = $(this)     
+        modal.find('.modal-body #sdate').val(` ${sdate}`)  
+        modal.find('.modal-body #edate').val(` ${edate}`)
+        modal.find('.modal-body #disc').val(` ${disc}`)
+        modal.find('.modal-body #id').val(` ${id}`)
+        modal.find('.modal-body #name').val(` ${name}`)
+    }) 
+script.
+
+    $('#deletemodal').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)      
+       
+
+        //id
+        var id = button.data('id')
+        console.log(id)
+
+
+        let modal = $(this)     
+
+        modal.find('.modal-body #id').val(` ${id}`)
+    })

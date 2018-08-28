@@ -1,0 +1,176 @@
+include ../../../../templates/head
+
+block main
+
+	section#main-content
+		section.wrapper.site-min-height
+			.row.mt
+				.col-md-12
+					.content-panel
+						.container-fluid
+							table.table.table-striped.table-advance.table-hover
+								h4
+									| Facility Rates
+									button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#facility')
+										i.fa.fa-plus
+										|  Add Facility
+								thead
+									tr
+										th
+											i.fa.fa-dumbbell
+											|  Facility Name
+										th
+											i.fa.fa-coins
+											|  Price (₱)
+										th
+											
+										th
+											i.fa.fa-clock
+											|  Usage Duration
+										th
+											i.fa.fa-edit
+											|  Action
+								
+								tbody
+									each fc in facs
+										tr
+											td #{fc.facilitiesname}
+											td #{fc.fee} 
+											td /
+											td #{fc.period} #{fc.UOM}
+											td
+												button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Account', data-target='#editmodal' data-facname=fc.facilitiesname data-id=fc.facilitiesID)
+													i.fa.fa-edit
+												button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently' data-target='#deletemodal' data-id=fc.facilitiesID)
+													i.fa.fa-trash-alt
+				// /content-panel
+			// MODAL ADD
+	#facility.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+					h4#myModalLabel.modal-title Add Facility
+				form(action='/facility', method='POST')
+					.modal-body
+						.container-fluid
+							.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+								.row
+									.col-md-12
+										.form-group
+											label.control-label Facility Name
+											input.form-control(type='text' name='facname')
+									.col-md-6
+										.form-group
+											label.control-label Duration
+											input.form-control(type='number', min='1' name='dura')
+									.col-md-6
+										.form-group
+											label.control-label Unit of Measure
+											select#branch.form-control(name='uom')
+												option.hidden Choose Unit...
+												option(value='secs') Seconds
+												option(value='min') Minutes
+												option(value='hr') Hours
+											.row
+									.col-md-12
+										.form-group
+											label.control-label Price (₱)
+											input.form-control(type='number', min='0' name='price')
+					.modal-footer
+						button.btn.btn-default(type='button', data-dismiss='modal') Close
+						button.btn.btn-primary(type='submit') Add Facility
+		//modal edit
+	#editmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+					h4#myModalLabel.modal-title Add Facility
+				form(action='/facility/edit', method='POST')
+					.modal-body
+						.container-fluid
+							.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+								.row
+									.col-md-12
+										.form-group
+											label.control-label Facility Name
+											input#facname.form-control(type='text' name='facname')
+									.col-md-5
+										.form-group
+											label.control-label Duration
+											input#period.form-control(type='number', min='1' name='dura')
+									.col-md-5
+										.form-group
+											label.control-label Unit of Measure
+											select#branch.form-control(name='uom')
+												option.hidden Choose Unit...
+												option(value='secs') Seconds
+												option(value='min') Minutes
+												option(value='hr') Hours
+											.row
+									.col-md-12
+										.form-group
+											label.control-label Price (₱)
+											input#fee.form-control(type='number', min='0' name='price')
+											input.hidden#id(type='text' name='id')
+					.modal-footer
+						button.btn.btn-default(type='button', data-dismiss='modal') Close
+						button.btn.btn-primary(type='submit') Save
+
+	// MODAL DELETE
+	#deletemodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+					h4#myModalLabel.modal-title Remove Facility
+				form(action='/facility/delete', method='POST')
+						.modal-body
+							.container-fluid
+								.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+									.row
+										.col-md-12
+											.form-group
+												h4 Delete this facility?
+												input.hidden#id(type='text' name='id')
+	
+
+						.modal-footer
+							button.btn.btn-default(type='button', data-dismiss='modal') Close
+							button.btn.btn-default(type='submit') Delete
+
+include ../../../../templates/foot
+
+script.
+	$(document).ready(function(){
+	$('#memdrop').addClass('active');
+	$('#facilityrates').addClass('active');
+	});
+
+	$('#editmodal').on('show.bs.modal', function(event){
+		var button = $(event.relatedTarget)      
+
+
+		var facname = button.data('facname')
+		var id = button.data('id')
+	
+ 
+		let modal = $(this)     
+		modal.find('.modal-body #facname').val(` ${facname}`)
+		modal.find('.modal-body #id').val(` ${id}`)
+	})
+
+script.
+	$('#deletemodal').on('show.bs.modal', function(event){
+		var button = $(event.relatedTarget)      
+
+
+		var facname = button.data('facname')
+		var id = button.data('id')
+	
+ 
+		let modal = $(this)     
+		modal.find('.modal-body #facname').text(` ${facname}`)
+		modal.find('.modal-body #id').val(` ${id}`)
+	})

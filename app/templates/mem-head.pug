@@ -1,0 +1,62 @@
+extends ./mem-sub-head
+
+block main	
+	#navbar-hidden
+		.container
+			a.icon(href='/member')
+				img.img-circle.xs(src='../../assets/img/icon.png', style='border:3px solid white;', alt='')
+				b(style='font-size:15pt;margin-left: 10px; letter-spacing: 1px;') A-Team Fitness
+			span#header_inbox_bar.dropdown
+				a.dropdown-toggle(data-toggle='dropdown', href='#')
+					i.fa.fa-bell
+					span.badge.bg-theme 1
+				ul.dropdown-menu.extended.inbox
+					li
+						p You have 1 new notification
+					li
+						a(href='/')
+							span.subject
+								span.from(style='margin:0;') System
+								span.time Just now
+							span.message
+								| Event at 7:30AM Tomorrow
+					li
+						a(href='/') See all pending request
+			div(style='float:right')
+				each pr in profs
+					span.sm(style='font-size: 12pt;')
+						| Hello, 
+						b #{pr.userfname} #{pr.userlname}
+					span.dropdown
+						img.img-circle.dropdown-toggle(data-toggle='dropdown', src='/assets/img/ui-zac.jpg', alt='')
+						ul.dropdown-menu.extended.tasks-bar(style='z-index:2000; position:absolute; top:30px;')
+							li
+								a(href='/')
+									.task-info
+										.desc
+											span.li_pen
+											| Edit Profile
+							li
+								a(href='/logout')
+									.task-info
+										.desc
+											span.li_lock
+											| Logout
+	#navbar
+		.container
+			a(href='/member/profile')
+				span.li_heart
+				| Profile
+			a(href='/member/classes')
+				span.li_study
+				| Classes 
+			a(href='/member/events')
+				span.li_fire
+				| Events
+				Events
+			a(href='/member/trainers')
+				span.li_user
+				| Trainers
+			a(href='/member/billing')
+				span.li_news
+				| Billing

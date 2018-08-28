@@ -1,0 +1,89 @@
+include ../../../templates/mem-head
+block main   
+
+  .container
+    section.wrapper(style='margin-top:15px;')
+      .col-md-5
+        .content-panel(style="padding:30px; height:470px!important;")
+          center
+            img(src="../../../../assets/img/ui-sherman.jpg", alt="")
+            each pr in profs              
+              h4 #{pr.userfname} #{pr.userlname}
+              a
+                p(style="position:relative; bottom:10px;") Edit
+              br
+              br
+          h4 
+            i.fa.fa-dumbbell(style="margin-right: 10px;")
+            | Personal Information
+          hr
+          .row
+            .col-md-6
+              h5 
+                b Address: 
+            .col-md-6
+            each pr in profs
+              h5 #{pr.useraddress} 
+          .row
+            .col-md-6
+              h5
+                b Gender:
+            .col-md-6
+            each pr in profs
+              h5 #{pr.usergender}
+          .row
+            .col-md-6
+              h5 
+                b Birthdate: 
+            .col-md-6
+            each pr in profs
+              h5 #{pr.userbday}
+              
+      .col-md-7
+        .content-panel(style="height:470px!important;")
+          h4 
+            i.fa.fa-dumbbell(style="margin-right: 10px;")
+            | Membership Information
+          hr
+          .row
+            .col-md-6
+              h5 
+                b Membership Type: 
+            .col-md-12
+              center
+                each pr in profs
+                  h1 #{pr.memclassname} 
+                    br 
+                    | #{pr.membershipname}
+                    br
+                    br
+              center
+                button.btn.btn-success.btn-xs
+                  | Upgrade
+                button.btn.btn-primary.btn-xs
+                  | Freeze
+                button.btn.btn-danger.btn-xs
+                  | Suspend
+          br
+          .row
+            .col-md-6
+              h5 
+                b Trainer Enrolled:: 
+            .col-md-6
+              h5 Jon loben bobo
+          .row
+            .col-md-6
+              h5 
+                b Member Since: 
+            .col-md-6
+              each pr in profs
+                h5 #{pr.signdate}
+          .row
+            .col-md-6
+              h5 
+                b Membership Expiry: 
+            .col-md-6
+              each pr in profs
+                h5 #{pr.expiry}
+
+include ../../../templates/foot
