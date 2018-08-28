@@ -710,7 +710,7 @@ function viewHie(req, res, next){
 
 //view pending
 function viewPend(req, res, next){
-  db.query('SELECT * FROM tbluser WHERE usertype=8 or usertype=9',function(err, results, fields){
+  db.query('SELECT u.*,m.*,cl.*,ct.*  FROM tbluser u inner join tblmemrates m ON u.memrateid=m.memrateid inner join tblmemclass cl ON m.memclass=cl.memclassid inner join tblcat ct ON m.memcat=ct.membershipID WHERE usertype=8 or usertype=9',function(err, results, fields){
     if(err) return res.send(err);
     req.viewPend = results;
     return next();
@@ -761,7 +761,7 @@ router.post('/pending/update',useraddid ,(req, res) => {
        });
       });
   else{
-    res.redirect('/pending/none');
+    res.redirect('/pending');
   } 
       
  });
