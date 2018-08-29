@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: dbdecaps
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.19-MariaDB
+-- Server version	5.7.21-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -120,14 +120,14 @@ CREATE TABLE `tblgenera` (
   `UOM` varchar(50) DEFAULT NULL,
   `fee` int(11) DEFAULT NULL,
   PRIMARY KEY (`generalID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tblgenera`
 --
 
-INSERT INTO `tblgenera` VALUES (1,' Training Sessions',2,'Session',50);
+INSERT INTO `tblgenera` VALUES (1,'  Training Sessions',1,'Session',50),(2,'Freezing Fee',1,'Months',50);
 
 --
 -- Table structure for table `tblmemclass`
@@ -299,6 +299,7 @@ CREATE TABLE `tbluser` (
   `paymentcode` varchar(45) DEFAULT NULL,
   `signdate` date DEFAULT NULL,
   `expiry` date DEFAULT NULL,
+  `recentpay` date DEFAULT NULL,
   PRIMARY KEY (`userid`),
   KEY `branch_idx` (`branch`),
   KEY `specialization_idx` (`specialization`),
@@ -306,14 +307,14 @@ CREATE TABLE `tbluser` (
   CONSTRAINT `branch` FOREIGN KEY (`branch`) REFERENCES `tblbranch` (`branchID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `memrateid` FOREIGN KEY (`memrateid`) REFERENCES `tblmemrates` (`memrateid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `specialization` FOREIGN KEY (`specialization`) REFERENCES `tblspecial` (`specialID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tbluser`
 --
 
-INSERT INTO `tbluser` VALUES (9,NULL,NULL,'admin','12345',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(36,'Joshua','Ganila','ganila@gmail.com','12345',4,NULL,NULL,'+639123456789',NULL,NULL,NULL,NULL,NULL,'Inactive','Flash',NULL,NULL,NULL,NULL),(37,'Jethro','Samson','jethro@gmail.com','12345',3,NULL,5,'+639089765432','El Pueblo A-120 Sta. Mesa Manila','male','Monday,Tuesday,Wednesday','08/02/2018',4,NULL,'Jethpogi',NULL,NULL,NULL,NULL),(51,'Homer','Cadena','homer.keid@gmail.com','12345',4,NULL,5,'+639123214567',NULL,NULL,NULL,NULL,NULL,'Active','homiecadie',NULL,NULL,NULL,NULL),(52,'Danielle Nicole','Casadores','Casadores@gmail.com','12345',4,NULL,NULL,'+63909123432',NULL,NULL,NULL,NULL,NULL,'Inactive','Chawot',NULL,NULL,NULL,NULL),(53,'Rafh','Pabusta','Raf@gmail.com','12345',4,NULL,6,'+63909654567768',NULL,NULL,NULL,NULL,NULL,'Active','Rafhbeh',NULL,NULL,NULL,NULL),(67,'Josie','Rizal','joshuaburnay@gmail.com','12345',2,NULL,NULL,NULL,'Manila City','female',NULL,'11/01/2008',4,NULL,'JR',3,'MLJ6p98','2018-08-26','2018-09-26'),(68,'Will','Smith','johnortiz135@gmail.com','12345',2,NULL,5,NULL,'Manila City','male',NULL,'11/10/1999',4,NULL,'FLY',9,'BakZxU2','2018-08-26','2021-08-26'),(80,'Chris','Bosh','johnortiz135@gmail.com','12345',2,NULL,5,NULL,'Miami Florida','male',NULL,'07/25/1990',4,NULL,'Bosh',6,'Odfdh46','2018-08-28','2019-02-28');
+INSERT INTO `tbluser` VALUES (9,NULL,NULL,'admin','12345',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(36,'  Joshua','  Ganila','ganila@gmail.com',NULL,4,NULL,NULL,'  +639123456789',NULL,NULL,NULL,NULL,NULL,'Inactive',NULL,NULL,NULL,NULL,NULL,NULL),(37,'Jethro','Samson','jethro@gmail.com','12345',3,NULL,5,'+639089765432','El Pueblo A-120 Sta. Mesa Manila','male','Monday,Tuesday,Wednesday','08/02/2018',4,NULL,'Jethpogi',NULL,NULL,NULL,NULL,NULL),(51,'Homer','Cadena','homer.keid@gmail.com','12345',4,NULL,5,'+639123214567',NULL,NULL,NULL,NULL,NULL,'Active','homiecadie',NULL,NULL,NULL,NULL,NULL),(52,'Danielle Nicole','Casadores','Casadores@gmail.com','12345',4,NULL,NULL,'+63909123432',NULL,NULL,NULL,NULL,NULL,'Inactive','Chawot',NULL,NULL,NULL,NULL,NULL),(53,'Rafh','Pabusta','Raf@gmail.com','12345',4,NULL,6,'+63909654567768',NULL,NULL,NULL,NULL,NULL,'Active','Rafhbeh',NULL,NULL,NULL,NULL,NULL),(67,'Josie','Rizal','joshuaburnay@gmail.com','12345',2,NULL,NULL,'+639123214567','Manila City','female',NULL,'11/01/2008',4,'Active','JR',3,'MLJ6p98','2018-08-26','2018-09-26',NULL),(68,'Will','Smith','johnortiz135@gmail.com','12345',2,NULL,5,'+639089765432','Manila City','male',NULL,'11/10/1999',4,'Active','FLY',9,'BakZxU2','2018-08-26','2021-08-26',NULL),(80,'Chris','Bosh','johnortiz135@gmail.com','12345',2,NULL,5,'+63909123432','Miami Florida','male',NULL,'07/25/1990',4,'Active','Bosh',6,'Odfdh46','2018-08-28','2019-02-28',NULL),(81,'Khalid','Star','tlovince14@gmail.com','12345',2,NULL,NULL,'+639253614789','California, USA','male',NULL,'04/14/2000',4,'Active','Khalid',3,'06lgkG9','2018-08-28','2018-09-28',NULL);
 
 --
 -- Table structure for table `tbppt`
