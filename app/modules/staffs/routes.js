@@ -78,7 +78,7 @@ function s_reports(req, res) {
 function s_user(req, res) {
 	res.render('staffs/general/views/user');
 }
-	
+
 // TRANSACTIONS
 function s_freezed(req, res) {
 	res.render('staffs/transactions/views/freezed');
@@ -102,17 +102,17 @@ function s_regular(req, res) {
 	});
 }
 function s_interbranch(req, res) {
-	res.render('staffs/transactions/views/t-interregular', {
+	res.render('staffs/transactions/views/interregular', {
 		imembers: req.iMembers
 	});
 }
 function s_classes(req, res) {
-	res.render('staffs/transactions/views/t-classes', {
+	res.render('staffs/transactions/views/classes', {
 		
 	});
 }
 function s_events(req, res) {
-	res.render('staffs/transactions/views/t-event', {
+	res.render('staffs/transactions/views/event', {
 		
 	});
 }
