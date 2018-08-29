@@ -1,9 +1,8 @@
 var router = require('express').Router();
-var express = require('express');
 var authMiddleware = require('../auth/middlewares/auth');
-router.use(authMiddleware.trainerHasAuth);
-
 var indexController = require('./controllers/index');
+
+router.use(authMiddleware.trainerHasAuth);
 router.get('/', indexController);
 
 // ---------- F U N C T I O N S ---------- //

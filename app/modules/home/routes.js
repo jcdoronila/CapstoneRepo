@@ -4,7 +4,6 @@ var router = express.Router();
 var authMiddleware = require('../auth/middlewares/auth');
 var moment = require('moment');
 
-
 router.use(authMiddleware.hasAuth);
 
 var indexController = require('./controllers/index');

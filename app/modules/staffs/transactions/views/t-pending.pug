@@ -1,4 +1,4 @@
-include ../../../../templates/staff-head
+include ../../../../templates/head 
 
 block main
 	section#main-content
@@ -19,15 +19,24 @@ block main
 											i.fa.fa-edit
 											|  Action
 									tbody 
-										tr 
-											td John Doe
-											td 
-												button.btn.btn-info.btn-xs(type='button', data-toggle='modal', data-target='#viewmodal' )
-													i.fa.fa-search
-												button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Accept', data-target='#code')
-													i.fa.fa-check
-												button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Reject')
-													i.fa.fa-times
+										each pe in pends
+											tr 
+												td #{pe.userfname} #{pe.userlname}
+												td 
+													button.btn.btn-info.btn-xs(type='button', data-toggle='modal', data-target='#viewmodal', 
+													data-gen=pe.usergender, 
+													data-bd=pe.userbday , 
+													data-add=pe.useraddress , 
+													data-ph=pe.usermobile, 
+													data-em=pe.useremail, 
+													data-cl=pe.memclassname, 
+													data-ct=pe.membershipname)
+													
+														i.fa.fa-search
+													button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Accept', data-target='#code' data-id=pe.userid data-code=pe.paymentcode)
+														i.fa.fa-check
+													button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Reject')
+														i.fa.fa-times
 				// /content-panel
 
 			// VIEW
@@ -44,61 +53,58 @@ block main
 										.row
 											.col-md-6
 												h5
-													b Name: 
-													span John Doe
-													br
 													br
 													b Gender: 
-													span Male
+													span#gen
 													br
 													br
 													b Birth date: 
-													span 01/01/1999
+													span#bd
 													br
 													br
 													b Address: 
-													span Blk 19 Lot 4 Tondo City
+													span#add
 													br
 													br
 													b Mobile Phone Number: 
-													span 099999999
+													span#ph
 													br
 													br
 													b Email: 
-													span john@doe.com
+													span#em
 													br
 													br
 											.col-md-6
 												h5
-													b Membership: 
-													span Gold - Interbranch
+													b Membership Class: 
+													span#cl
 													br
 													br
-													b Branch: 
-													span Sta. Mesa City
+													b Membership Category: 
+													span#ct
 													br
 													br
-													b Interest: 
-													span Weight Loss
-													br
-													br
-													b Student?:  
-													span Yes
-													br
-													br
-										hr
-										.row
-											.col-md-12
-												b ID Given:
-												br
-												#is-not-student
-													| None
-												#is-student
-													img(src='../assets/img/id-sample.jpg', width='200x;', style='margin-left:30%;')
-												br
-												br
+							//- 						b Interest: 
+							//- 						span Weight Loss
+							//- 						br
+							//- //- 						br
+							//- 						b Student?:  
+							//- 						span Yes
+							//- 						br
+							//- 						br
+							//- 			hr
+							//- 			.row
+							//- 				.col-md-12
+							//- 					b ID Given:
+							//- 					br
+							//- 					#is-not-student
+							//- 						| None
+							//- 					#is-student
+							//- 						img(src='../assets/img/id-sample.jpg', width='200x;', style='margin-left:30%;')
+							//- 					br
+							//- 					br
 								
-							.modal-footer
+							//- .modal-footer
 								button.btn.btn-default(type='button', data-dismiss='modal') Close
 								button#accept.btn.btn-primary(type='button') Accept
 		
@@ -118,7 +124,7 @@ block main
 											.col-md-12
 												.form-group
 													h4 Delete this staff?
-											input.hidden#id(type='text' name='id')
+											input#id(type='text' name='id')
 
 							.modal-footer
 								button.btn.btn-default(type='button', data-dismiss='modal') Close
@@ -130,15 +136,17 @@ block main
 						.modal-header
 							button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 							h4#myModalLabel.modal-title Accept Membership
-						form(action='/', method='')
+						form(action='/pending/update', method='POST')
 							.modal-body
 								.container-fluid
 									.row
 										.col-md-12
 											.form-group
 												label.control-label Enter Code
-												input.form-control(type='text')
-												input.hidden#id(type='text' name='id')
+												input.form-control(type='text' name='newcode')
+												input.hidden#id(type='text' name='newid' )
+												input.hidden#thedate(type='text' name='currdate')
+												input.hidden#code(type='text' name='codenow')
 
 							.modal-footer
 								button.btn.btn-default(type='button', data-dismiss='modal') Close
@@ -146,13 +154,74 @@ block main
 
 
 include ../../../../templates/foot
-script.
-	$('#is-not-student').hide();
-	$('#is-student').show();
-	$('#accept').click(function(){
-		$('#code').modal();
-		$('#viewmodal').modal('hide');
-	});
+//- script.
+//- 	$('#is-not-student').hide();
+//- 	$('#is-student').show();
+//- 	$('#accept').click(function(){
+//- 		$('#code').modal();
+//- 		$('#viewmodal').modal('hide');
+//- 	});
 
-    
- 
+script.
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1;
+	var yyyy = today.getFullYear();
+
+	if(dd<10) {
+			dd = '0'+dd
+	} 
+
+	if(mm<10) {
+			mm = '0'+mm
+	} 
+
+	today = yyyy + '-' + mm + '-' + dd;
+
+	document.getElementById("thedate").value = today;
+
+script.
+	$(document).ready(function(){
+		$('#transactionDrop').addClass('active');
+		$('#pending').addClass('active');
+		});
+
+
+	$('#code').on('show.bs.modal', function(event){
+			var button = $(event.relatedTarget)      
+			//id
+			var id = button.data('id')
+			var code = button.data('code')
+			console.log(id)
+
+			let modal = $(this);     
+			
+			modal.find('.modal-body #id').val(` ${id}`)
+			modal.find('.modal-body #code').val(`${code}`)
+		})
+
+
+script.
+	$('#viewmodal').on('show.bs.modal', function(event){
+		var button = $(event.relatedTarget)      
+		var gen = button.data('gen')
+		var bd = button.data('bd')
+		var add = button.data('add')
+		var ph = button.data('ph')
+		var em = button.data('em')
+		var cl = button.data('cl')
+		var ct = button.data('ct')
+
+		let modal = $(this)     
+
+		modal.find('.modal-body #gen').text(` ${gen}`)
+		modal.find('.modal-body #bd').text(` ${bd}`)
+		modal.find('.modal-body #add').text(` ${add}`)
+		modal.find('.modal-body #ph').text(` ${ph}`)
+		modal.find('.modal-body #em').text(` ${em}`)	
+		modal.find('.modal-body #cl').text(` ${cl}`)
+		modal.find('.modal-body #ct').text(` ${ct}`)
+	})
+
+
+
