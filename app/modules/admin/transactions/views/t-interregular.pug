@@ -38,11 +38,11 @@ block main
                           if (br.statusfront == 'Active' || 'active')
                             span.label.label-success
                               | #{br.statusfront}
-                          else if (st.statusfront == 'Inactive' || 'inactive')
+                          else if (br.statusfront == 'Inactive' || 'inactive')
                             span.label.label-danger
                               | #{br.statusfront}    
                         td
-                          button.freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account')
+                          button.freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account',data-target='.freeze-modal', data-id=br.userid)
                             i.fa.fa-snowflake
                           button.edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit Account')
                             i.fa.fa-edit
@@ -326,9 +326,10 @@ block main
                   .form-group
                     label.control-label Duration (months)
                     input.form-control(type="number")
+                    input.id(type='text' name='id' )
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') Close
-            button.btn.btn-primary(type='button') Freeze Account
+            button.btn.btn-primary(type='submit') Freeze Account
 
 
 
@@ -555,3 +556,13 @@ script.
     $('#memberDrop').addClass('active');
     $('#interbranch').addClass('active');
     });
+
+script.
+  $('.freeze-modal').on('show.bs.modal', function(event){
+      var button = $(event.relatedTarget);
+      var id = button.data('id');
+      let modal = $(this);
+
+      modal.find('.modal-body .id').val(`${id}`);
+    })
+  

@@ -869,11 +869,11 @@ function Interregular(req, res) {
 }
 
 function Events(req, res) {
-  res.render('admin/transactions/views/t-event'
+  res.render('admin/transactions/views/t-event')
 }
 
 function GClasses(req, res) {
-  res.render('admin/transactions/views/t-classes'
+  res.render('admin/transactions/views/t-classes')
 }
 
 
