@@ -16,7 +16,7 @@ router.post('/staff', (req, res) => {
     if (err)
       console.log(err);
     else {
-      res.redirect('/staff');
+      res.redirect('/staff'); 
     }
   });
 });
@@ -676,6 +676,19 @@ function viewPay(req, res, next) {
     return next();
   })
 }
+
+//payment
+router.post('/payment',(req, res) => {
+    db.query("UPDATE tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid SET u.expiry = case when cl.memclassid = mems.memclass then u.expiry + interval mems.memperiod MONTH END where usertype=2 and userid=?", [req.body.id], (err, results, fields) => {
+      db.query("UPDATE tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid SET recentpay=CURDATE() where usertype=2 and userid=?", [req.body.id], (err, results, fields) => {
+        if (err)
+          console.log(err);
+        else {
+          res.redirect('/payment');
+        }
+      });
+      });
+  })
 
 
 //A-TEAM FITNESS FUNCTIONS
