@@ -74,7 +74,7 @@ function billing(req, res,next){
     res.render('member/views/billing',{profs: req.viewProf});
     return next();
 }
-function trainers(req, res,next){
+function trainer(req, res,next){
     res.render('member/views/trainer',{profs: req.viewProf});
     return next();
 }
@@ -83,7 +83,7 @@ function trainers(req, res,next){
 router.get('/',viewProf, dashboard);
 router.get('/profile',viewProf, profile);
 router.get('/events',viewProf, events);
-router.get('/trainers',viewProf, trainers);
+router.get('/trainers',viewProf, trainer);
 router.get('/classes',viewProf, viewClass, classes);
 router.get('/events',viewProf, events);
 router.get('/billing',viewProf, billing);

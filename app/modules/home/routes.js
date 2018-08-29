@@ -5,9 +5,10 @@ var authMiddleware = require('../auth/middlewares/auth');
 
 router.use(authMiddleware.hasAuth);
 
-//insert staff
 var indexController = require('./controllers/index');
 router.get('/', indexController);
+
+//insert staff
 
 router.post('/staff', (req, res) => {
     
@@ -21,9 +22,7 @@ router.post('/staff', (req, res) => {
       
   });
 
- //edit staff
-var indexController = require('./controllers/index');
-router.get('/', indexController);
+//edit staff
 
 router.post('/staff/edit', (req, res) => {
      db.query("UPDATE tbluser SET userfname=?, userlname=?, usermobile=?, useremail=?, userpassword=?, userusername=? WHERE userid=?",[req.body.sfirstName, req.body.slastName, req.body.smobNum, req.body.semail, req.body.pass, req.body.username, req.body.id],(err, results, fields)=>{
@@ -37,8 +36,6 @@ router.post('/staff/edit', (req, res) => {
  });
 
  //delete staff
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/staff/delete', (req, res) => {
     
@@ -63,26 +60,7 @@ function viewStaff(req, res, next){
 }
 
 
-/*//insert program
-var indexController = require('./controllers/index');
-router.get('/', indexController);
-
-router.post('/program', (req, res) => {
-    
-      db.query("INSERT INTO tblprogram ( progname, progdesc,status) VALUES ( ?, ?,'1')",[req.body.progname, req.body.progdesc],(err, results, fields)=>{
-        if (err)
-          console.log(err);
-        else{
-          res.redirect('/program');
-        }
-        });
-      
-  });*/
-
-
 //insert classes
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/classes', (req, res) => {
     
@@ -97,8 +75,6 @@ router.post('/classes', (req, res) => {
   });
 
 //edit classes
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/classes/edit', (req, res) => {
     
@@ -112,9 +88,7 @@ router.post('/classes/edit', (req, res) => {
       
   });
 
- //delete class
-var indexController = require('./controllers/index');
-router.get('/', indexController);
+//delete class
 
 router.post('/classes/delete', (req, res) => {
     
@@ -129,6 +103,7 @@ router.post('/classes/delete', (req, res) => {
  });
 
 //view classes
+
 function viewClass(req, res, next){
   db.query('SELECT * FROM tblclass WHERE status=1',function(err, results, fields){
     if(err) return res.send(err);
@@ -138,8 +113,6 @@ function viewClass(req, res, next){
 }
 
 //insert special
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/specs', (req, res) => {
     
@@ -154,8 +127,6 @@ router.post('/specs', (req, res) => {
   });
 
 //edit special
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/specs/edit', (req, res) => {
     
@@ -169,9 +140,7 @@ router.post('/specs/edit', (req, res) => {
       
   });
 
- //delete special
-var indexController = require('./controllers/index');
-router.get('/', indexController);
+//delete special
 
 router.post('/specs/delete', (req, res) => {
     
@@ -195,8 +164,6 @@ function viewSpecial(req, res, next){
 }
 
 //insert discount
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/discount', (req, res) => {
     
@@ -211,8 +178,6 @@ router.post('/discount', (req, res) => {
   });
 
 //edit discount
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/discount/edit', (req, res) => {
     
@@ -227,8 +192,6 @@ router.post('/discount/edit', (req, res) => {
   });
 
  //delete discount
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/discount/delete', (req, res) => {
     
@@ -263,8 +226,6 @@ function addid(req, res, next){
 }
 
 //insert branch
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/branch',addid, (req, res) => {
     
@@ -284,8 +245,6 @@ router.post('/branch',addid, (req, res) => {
 
 
 //edit branch
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/branch/edit', (req, res) => {
     
@@ -304,8 +263,6 @@ router.post('/branch/edit', (req, res) => {
       });
 
  //delete branch
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/branch/delete', (req, res) => {
     
@@ -345,8 +302,6 @@ function viewBranch(req, res, next){
 
 
 //insert membership
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/category', (req, res) => {
     
@@ -361,8 +316,6 @@ router.post('/category', (req, res) => {
   });
 
 /*edit membership*/
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/category/edit', (req, res) => {
     
@@ -377,8 +330,6 @@ router.post('/category/edit', (req, res) => {
  });
 
  //delete category
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/category/delete', (req, res) => {
     
@@ -402,8 +353,6 @@ function viewCategory(req, res, next){
 }
 
 //insert trainer
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/trains', (req, res) => {
     
@@ -436,8 +385,6 @@ function viewspecialdrop(req, res, next){
 }
 
 //edit trainer
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/trains/edit', (req, res) => {
     
@@ -451,8 +398,6 @@ router.post('/trains/edit', (req, res) => {
   });
 
 //delete trainer
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/trains/delete', (req, res) => {
     
@@ -476,8 +421,6 @@ function viewTrainer(req, res, next){
 }
 
 //insert facility
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/facility', (req, res) => {
     
@@ -492,8 +435,6 @@ router.post('/facility', (req, res) => {
   });
 
 //edit facility
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/facility/edit', (req, res) => {
     
@@ -508,8 +449,6 @@ router.post('/facility/edit', (req, res) => {
   });
 
 //delete facility
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/facility/delete', (req, res) => {
     
@@ -533,8 +472,6 @@ function viewFac(req, res, next){
 }
 
 //insert general fee
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/general', (req, res) => {
     
@@ -549,8 +486,6 @@ router.post('/general', (req, res) => {
   });
 
 //edit general fee
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/general/edit', (req, res) => {
     
@@ -574,8 +509,6 @@ function viewGen(req, res, next){
 }
 
 //insert membership
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/membership', (req, res) => {
     
@@ -608,8 +541,6 @@ function viewclassdrop(req, res, next){
 }
 
 //edit membership
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/membership/edit', (req, res) => {
     
@@ -624,8 +555,6 @@ router.post('/membership/edit', (req, res) => {
   });
 
 //delete membership
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/membership/delete', (req, res) => {
     
@@ -650,8 +579,6 @@ function viewMembership(req, res, next){
 
 
 //insert membership classes
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/memclass', (req, res) => {
     
@@ -666,8 +593,6 @@ router.post('/memclass', (req, res) => {
   });
 
 /*edit membership class*/
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/memclass/edit', (req, res) => {
     
@@ -682,8 +607,6 @@ router.post('/memclass/edit', (req, res) => {
  });
 
  //delete memebrship class
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/memclass/delete', (req, res) => {
     
@@ -745,11 +668,8 @@ function useraddid(req, res, next){
 
 
 //update of pending to regular
-var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/pending/update',useraddid ,(req, res) => {
-    
   if(req.body.newcode===req.body.codenow)
      db.query("UPDATE tbluser SET  signdate=CURDATE(),usertype=2,userpassword=12345 WHERE userid=?",[req.body.newid],(err, results, fields)=>{
       db.query("UPDATE tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid SET u.expiry = case when cl.memclassid = mems.memclass then curdate() + interval mems.memperiod MONTH END where usertype=2 and userid=?",[req.body.newid],(err, results, fields)=>{
@@ -821,9 +741,6 @@ function general(req,res){
 function membership(req,res){
     res.render('admin/maintenance/views/m-membership',{drops: req.viewcatdrop, mems: req.viewMembership, classes:req.viewclassdrop});
 }
-/*function program(req,res){
-    res.render('admin/maintenance/views/m-program', {programs: req.viewProgram});
-}*/
 function specs(req,res){
     res.render('admin/maintenance/views/m-specialization',{specials: req.viewSpecial});
 }
