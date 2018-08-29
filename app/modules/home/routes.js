@@ -868,6 +868,15 @@ function Interregular(req, res) {
   });
 }
 
+function Events(req, res) {
+  res.render('admin/transactions/views/t-event'
+}
+
+function GClasses(req, res) {
+  res.render('admin/transactions/views/t-classes'
+}
+
+
 
 //A-TEAM FITNESS GETS
 
@@ -899,6 +908,8 @@ router.get('/pending', viewUpdate, viewPend, pending);
 router.get('/personal', personal);
 router.get('/regular', viewSusp, viewReg, regular);
 router.get('/interregular', viewSusp, viewInt, Interregular);
+router.get('/events', Events);
+router.get('/GClasses', GClasses);
 /**
  * Here we just export said router on the 'index' property of this module.
  */
