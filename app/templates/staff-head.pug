@@ -1,4 +1,4 @@
-extends ./sub-head
+extends ./staff-sub-head
 
 block main
 	section#container
@@ -8,7 +8,7 @@ block main
 			.fa.fa-bars.tooltips(data-placement='right', data-original-title='Toggle Navigation' style="color:white;")
 		// logo start
 		
-		a.logo(href='/')
+		a.logo(href='/staff')
 			img.img-circle(src='/assets/img/icon.png', style='border:3px solid white; width:30px; margin-right:10px; margin-left:10px;')
 			b  A-Team Fitness
 		// logo end
@@ -40,7 +40,7 @@ block main
 		
 		
 			p.centered
-				a(href='/staffs/dashboard')
+				a(href='/staffs')
 					img.img-circle(src='/assets/img/friends/fr-03.jpg', width='60')
 			h5.centered STAFF
 			li.mt
@@ -61,9 +61,9 @@ block main
 								i.fa.fa-caret-down(style='margin-left:5px;')
 							ul.sub
 								li
-									a(href='/staffs/exclusive/members') Exclusive Members
+									a(href='/staffs/exclusive') Exclusive Members
 								li
-									a(href='/staffs/interbranch/members') Interbranch Members
+									a(href='/staffs/interbranch') Interbranch Members
 								li
 									a(href='/staffs/freezed') Freezed
 						li
@@ -76,7 +76,7 @@ block main
 						i.fa.fa-dumbbell
 						span Classes
 				li.sub-menu
-					a(href='/staffs/event') 
+					a(href='/staffs/events') 
 						i.fa.fa-calendar-alt
 						span Events
 				li.sub-menu

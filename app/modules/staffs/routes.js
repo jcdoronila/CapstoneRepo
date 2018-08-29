@@ -93,33 +93,42 @@ function s_pending(req, res) {
 		pends: req.viewPend
 	});
 }
-
 function s_personal(req, res) {
 	res.render('staffs/transactions/views/t-personal');
 }
-
 function s_regular(req, res) {
 	res.render('staffs/transactions/views/t-regular', {
 		members: req.eMembers
 	});
 }
-
 function s_interbranch(req, res) {
 	res.render('staffs/transactions/views/t-interregular', {
-		members: req.iMembers
+		imembers: req.iMembers
+	});
+}
+function s_classes(req, res) {
+	res.render('staffs/transactions/views/t-classes', {
+		
+	});
+}
+function s_events(req, res) {
+	res.render('staffs/transactions/views/t-event', {
+		
 	});
 }
 
 // ROUTERS
 
-router.get('/', s_dash);
+
 router.get('/reports', s_reports);
 router.get('/user', s_user);
 router.get('/freezed', s_freezed);
 router.get('/payment', s_payment);
 router.get('/pending', viewPend, s_pending);
 router.get('/personal', s_personal);
-router.get('/exclusive/members', viewRegular, s_regular);
-router.get('/interbranch/members', viewInterbranch, s_interbranch);
+router.get('/exclusive', viewRegular, s_regular);
+router.get('/interbranch', viewInterbranch, s_interbranch);
+router.get('/classes', s_classes);
+router.get('/events', s_events);
 
 exports.staffs = router

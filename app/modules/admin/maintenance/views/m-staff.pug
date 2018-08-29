@@ -28,9 +28,13 @@ block main
 									each st in staffs 
 										tr 
 											td #{st.userfname} #{st.userlname}
-											td 
-												span.label.label-success
-													| #{st.statusfront}
+											td
+												if (st.statusfront == 'Active' || 'active')
+													span.label.label-success
+														| #{st.statusfront}
+												else if (st.statusfront == 'Inactive' || 'inactive')
+													span.label.label-danger
+														| #{st.statusfront}
 											td 
 												button.btn.btn-info.btn-xs(type='button', data-toggle='modal', data-target='#viewmodal' data-email=st.useremail data-mobile=st.usermobile)
 													i.fa.fa-search

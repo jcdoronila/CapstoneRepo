@@ -1,4 +1,4 @@
-include ../../../../templates/head
+include ../../../../templates/staff-head
 
 block main
 
@@ -30,11 +30,11 @@ block main
                         i.fa.fa-edit
                         |  Action
                   tbody
-                    each member in members
+                    each imember in imembers
                       tr
-                        td.hidden-phone  #{member.userfname} #{member.userlname}
-                        td #{member.memclassname}-#{member.membershipname}  
-                        td #{member.statusfront}
+                        td.hidden-phone  #{imember.userfname} #{imember.userlname}
+                        td #{imember.memclassname}-#{imember.membershipname}  
+                        td #{imember.statusfront}
                         td
                           button.freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account')
                             i.fa.fa-snowflake
