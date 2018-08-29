@@ -39,13 +39,13 @@ block main
 											td #{pa.expiry}
 											td #{pa.memclassname}-#{pa.membershipname}
 											td
-												button.view.btn.btn-primary.btn-xs
+												button.btn.btn-primary.btn-xs(data-toggle='modal', data-target='.view-modal')
 													i.fa.fa-search
-												button.pay.btn.btn-success.btn-xs(data-id=pa.userid)
+												button.btn.btn-success.btn-xs(data-toggle='modal', data-target='.pay-modal', data-id=pa.userid)
 													i.fa.fa-coins
-												button.suspend.btn.btn-warning.btn-xs
+												button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='')
 													i.fa.fa-exclamation-circle
-												button.del.btn.btn-danger.btn-xs
+												button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='')
 													i.fa.fa-trash
 
 		.view-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -166,21 +166,13 @@ script.
 	$('#payment').addClass('active');
 	});
 
-	$('.view').click(function(){
-		$('.view-modal').modal();
-		});
-	$('.pay').click(function(){
-		$('.pay-modal').modal();
-	});
-
-
 
 script.
 	$('.pay-modal').on('show.bs.modal', function(event){
-		var button = $(event.relatedTarget)      
-		var id = button.data('id')
-		console.log(id)
-		let modal = $(this)     
-		modal.find('.modal-body #id').text(` ${id}`)
-	})
+			var button = $(event.relatedTarget);
+			var id = button.data('id');
+			let modal = $(this);
 
+			modal.find('.modal-body .id').val(`${id}`);
+		})
+	
