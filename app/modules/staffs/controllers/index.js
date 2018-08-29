@@ -11,6 +11,6 @@ module.exports = (req, res) => {
     });
     
     function render() {
-        res.render('staffs/staffgeneral/views/dashboard');
+        res.render('staffs/general/views/dashboard');
     } 
 }
