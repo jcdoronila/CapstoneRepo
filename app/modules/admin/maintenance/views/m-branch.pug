@@ -69,7 +69,7 @@ block main
 															label.control-label Staff In-charge
 															select#staff.form-control(name='user')
 																each dr in drops
-																	option.hidden(value='') Select Staff...
+																	option.hidden(value=NULL) Select Staff...
 																	option(value=''+dr.userid) #{dr.userfname} #{dr.userlname}
 
 									.modal-footer
@@ -166,7 +166,7 @@ script.
 		}) 
 
 
-	script.
+script.
 
 	$('#deletemodal').on('show.bs.modal', function(event){
 		var button = $(event.relatedTarget)      

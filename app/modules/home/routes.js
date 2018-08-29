@@ -263,7 +263,7 @@ router.post('/branch/edit', (req, res) => {
 
 router.post('/branch/delete', (req, res) => {
 
-  db.query("UPDATE tbluser SET branch=    NULL, statusfront='Inactive' WHERE userid=?", [req.body.oldid], (err, results, fields) => {
+  db.query("UPDATE tbluser SET branch=NULL, statusfront='Inactive' WHERE userid=?", [req.body.oldid], (err, results, fields) => {
     db.query(`UPDATE tblbranch SET user= NULL WHERE branchID=?`, [req.body.id], (err, results, fields) => {
       db.query(`DELETE FROM tblbranch WHERE branchID=?`, [req.body.id], (err, results, fields) => {
         if (err)
