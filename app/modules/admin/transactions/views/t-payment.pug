@@ -143,20 +143,20 @@ block main
 					//- MODAL PAYMENT
 		.pay-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.modal-sm
-				.modal-content
-					.modal-header
-						button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-						h4.modal-title 	Payment
-					form(action='POST', method='')
+				form(action='POST', method='')
+					.modal-content
+						.modal-header
+							button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+							h4.modal-title 	Payment
 						.modal-body
 							.container-fluid
 								.row
 									p You are about to pay a member of his bills. Do you wish to proceed?
 								br
 								input.id(type='text' name='id' )
-					.modal-footer
-						button.btn.btn-default(type='button', data-dismiss='modal') Close
-						button.btn.btn-primary(type='button') Pay
+						.modal-footer
+							button.btn.btn-default(type='button', data-dismiss='modal') Close
+							button.btn.btn-primary(type='submit') Pay
 
 include ../../../../templates/foot
 
