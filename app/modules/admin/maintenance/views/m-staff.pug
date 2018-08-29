@@ -29,10 +29,10 @@ block main
 										tr 
 											td #{st.userfname} #{st.userlname}
 											td
-												if (st.statusfront == 'Active' || 'active')
+												if st.statusfront == 'Active'
 													span.label.label-success
 														| #{st.statusfront}
-												else if (st.statusfront == 'Inactive' || 'inactive')
+												else if st.statusfront == 'Inactive'
 													span.label.label-danger
 														| #{st.statusfront}
 											td 
