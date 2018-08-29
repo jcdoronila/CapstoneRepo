@@ -33,16 +33,22 @@ block main
                     each br in intb
                       tr
                         td.hidden-phone  #{br.userfname} #{br.userlname}
-                        td #{br.memclassname}-#{br.membershipname}  
-                        td #{br.statusfront}
+                        td #{br.memclassname}-#{br.membershipname}   
                         td
-                          button.freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account')
+                          if br.statusfront == 'Active'
+                            span.label.label-success
+                              | #{br.statusfront}
+                          else if br.statusfront == 'Inactive'
+                            span.label.label-danger
+                              | #{br.statusfront}     
+                        td
+                          button.freeze.btn.btn-primary.btn-xs(data-toggle='modal', data-target='.freeze-modal', data-id=br.userid)
                             i.fa.fa-snowflake
-                          button.edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit Account')
+                          button.edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='.edit-modal')
                             i.fa.fa-edit
-                          button.train.btn.btn-warning.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Assign Trainer')
+                          button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.assign-modal')
                             i.fa.fa-dumbbell
-                          button.del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Suspend Account')
+                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.suspend-modal')
                             i.fa.fa-exclamation-circle
                         
           
@@ -320,9 +326,10 @@ block main
                   .form-group
                     label.control-label Duration (months)
                     input.form-control(type="number")
+                    input#id(type='text' name='id' )
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') Close
-            button.btn.btn-primary(type='button') Freeze Account
+            button.btn.btn-primary(type='submit') Freeze Account
 
 
 
@@ -331,7 +338,7 @@ block main
 //-----------------------------------------------------------------------------------------------------------
 
 // MODAL 
-.assign.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+.assign-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
   .modal-dialog
     .modal-content
       .modal-header
@@ -390,7 +397,7 @@ block main
               .row
                 br
                 .col-md-12
-                  button#sort.btn.btn-primary(type='button' style="width:100%;") Sort
+                  button.sort.btn.btn-primary(type='button' style="width:100%;") Sort
                   
 // SORTED TRAINER MODAL
 .sorted.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -404,7 +411,7 @@ block main
           .container-fluid
             content-panel
               table.table.table-striped.table-advance.table-hover
-                a#back(data-toggle='modal', data-target='#assign')
+                a#back(data-toggle='modal', data-target='.assign-modal  ')
                   i.fas.fa-angle-double-left 
                   |
                   | 
@@ -473,14 +480,10 @@ block main
 include ../../../../templates/foot
 
 script.
-  
   $('.edit').click(function () {
-  $('.edit-modal').modal();
   $('.student').prop('checked', false);
   });
-  $('.freeze').click(function(){
-    $('.freeze-modal').modal();
-  });
+ 
   $('.student').click(function () {
     if ($(this).is(':checked')) {
       $('.second').show();
@@ -497,31 +500,23 @@ script.
 //-----------------------//
 
 script.
-  $('[data-toggle="popover"]').popover();
-
-script.
-  $('#train').click(function(){
-    $('#assign').modal();
-  })
-
-script.
   $('#back').click(function(){
-  $('#sorted').modal('hide');
+  $('.sorted').modal('hide');
   })
 
 script.
   $('#return').click(function(){
-  $('#sorted').modal();
+  $('.sorted').modal();
   })
 
 script.
   $('.showImg').click(function(){
   $('.showImgModal').modal();
-  $('#sorted').modal('hide');
+  $('.sorted').modal('hide');
   });
 
 script.
-  $("#sort").click(function () {
+  $(".sort").click(function () {
   getArray();
   });
 
@@ -535,8 +530,8 @@ script.
   selected = chkArray.join(',') ;
   if(selected.length > 0){
   //- alert("You have selected " + selected);
-  $('#sorted').modal();
-  $('#assign').modal('hide');
+  $('.sorted').modal();
+  $('.assign-modal').modal('hide');
   }
   else{
   alert("Please select at least one day");
@@ -549,3 +544,13 @@ script.
     $('#memberDrop').addClass('active');
     $('#interbranch').addClass('active');
     });
+
+script.
+  $('.freeze-modal').on('show.bs.modal', function(event){
+      var button = $(event.relatedTarget);
+      var id = button.data('id');
+      let modal = $(this);
+
+      modal.find('.modal-body #id').val(`${id}`);
+    })
+  

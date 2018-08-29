@@ -3,11 +3,31 @@ var db = require('../../lib/database')();
 var router = express.Router();
 var authMiddleware = require('../auth/middlewares/auth');
 var moment = require('moment');
+var nodemailer = require('nodemailer');
+var hbs = require('nodemailer-express-handlebars');
 
 router.use(authMiddleware.hasAuth);
 
 var indexController = require('./controllers/index');
 router.get('/', indexController);
+
+var mailer = nodemailer.createTransport({
+    service: 'gmail',
+    port: 25,
+    secure: true,
+    auth:{
+        user: 'ateamsupmanila@gmail.com',
+        pass: 'ateammanila'
+    },
+    tls:{
+        rejectUnauthorized:false
+    }
+});
+mailer.use('compile', hbs({
+    viewpath: '',
+    extname:'.html'
+}));
+
 
 //insert staff
 
@@ -243,7 +263,7 @@ router.post('/branch/edit', (req, res) => {
 
 router.post('/branch/delete', (req, res) => {
 
-  db.query("UPDATE tbluser SET branch=    NULL, statusfront='Inactive' WHERE userid=?", [req.body.oldid], (err, results, fields) => {
+  db.query("UPDATE tbluser SET branch=NULL, statusfront='Inactive' WHERE userid=?", [req.body.oldid], (err, results, fields) => {
     db.query(`UPDATE tblbranch SET user= NULL WHERE branchID=?`, [req.body.id], (err, results, fields) => {
       db.query(`DELETE FROM tblbranch WHERE branchID=?`, [req.body.id], (err, results, fields) => {
         if (err)
@@ -681,11 +701,35 @@ function viewPay(req, res, next) {
 router.post('/payment',(req, res) => {
     db.query("UPDATE tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid SET u.expiry = case when cl.memclassid = mems.memclass then u.expiry + interval mems.memperiod MONTH END where usertype=2 and userid=?", [req.body.id], (err, results, fields) => {
       db.query("UPDATE tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid SET recentpay=CURDATE() where usertype=2 and userid=?", [req.body.id], (err, results, fields) => {
-        if (err)
-          console.log(err);
-        else {
-          res.redirect('/payment');
-        }
+        db.query("select u.userfname, u.userlname,u.useremail,u.recentpay,m.memfee from tbluser u join tblmemrates m ON u.memrateid=m.memrateid where usertype=2 and userid=?", [req.body.id], (err, results, fields) => {  
+          fullname=(results[0].userfname + " " +results[0].userlname)
+          date=moment(results[0].recentpay).format("LL");
+          fee=results[0].memfee
+          if (err)
+            console.log(err);
+            else {
+              mailer.sendMail({
+              from: 'ateamsupmanila@gmail.com',
+              to:results[0].useremail,
+              subject:'Membership Payment Receipt ',
+              html:
+                  " <table cellpadding='0' cellspacing='0' width='50%' style='margin:0 auto; box-shadow: 0 2px 10px -2px rgba(0, 0, 0, .2);'> <tr> <td bgcolor='gold' style='width:70%; margin:0 auto; box-shadow: 0 2px 10px -2px rgba(0, 0, 0, .2);'> <table cellpadding='0' cellspacing='0' width='100%' style='max-width: 500px;' class='wrapper'> <tr> <td valign='top' style='padding: 0 10px;' class='logo'><a href='http://litmus.com' target='_blank'> <img src='https://i.imgur.com/zeItuiJ.png' width='60' height='60' style='border:4px solid white; border-radius:50%;position:relative; top:15px;display: block; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;'> <span style='float:right; position:relative; color: white; top:-35px; left:-155px; font-size:28px; font-weight:bold;font-family:sans-serif;'> A - TEAM FITNESS</span></a></td></tr></table> </td></tr><tr> <td bgcolor='#333333'> <table cellpadding='0' cellspacing='0' width='100%' style='max-width: 500px;' class='wrapper'> <tr> <td style='padding: 20px 0;'></td></tr></table> </td></tr><tr> <td bgcolor='#ffffff' align='center' style='padding: 0 15px 10px 15px;' class='section-padding'> <table cellpadding='0' cellspacing='0' width='100%' style='max-width: 500px;' class='responsive-table'> <tr> <td> <table width='100%' cellspacing='0' cellpadding='0'> <tr> <td align='left' style='padding: 20px 0 0 0; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: #666666;' class='padding'><br>Hello <b> " +fullname+ " </b>, <br><br>You paid your membership fee recently<b> (" +date+ ").</b>Amounting to a total of <b>PHP "+fee+".00.</b> Regarding this, you will be billed depending on the membership type you are currently applied on. </b><br><br>Contact us if there have been any mistakes on our part.<br><br><br></td></tr></table> </td></tr></table> </td></tr><tr> </tr><tr> <td bgcolor='#333333' align='center' style='padding: 20px 0px;'> <table width='100%' cellspacing='0' cellpadding='0' align='center' style='max-width: 500px;' class='responsive-table'> <tr> <td align='center' style='font-size: 12px; line-height: 18px; font-family: Helvetica, Arial, sans-serif; color:#ffffff;'>Mobile: 0933 412 7526<br>Newton Plaza, 4408 Old. Sta. Mesa St. Sta. Mesa Manila, Philippines<br><a href='#' target='_blank' style='color: #ffffff; text-decoration: none;'>A-Team Fitness.com</a><span style='font-family: Arial, sans-serif; font-size: 12px; color: #444444;'>&nbsp;&nbsp;|&nbsp;&nbsp;</span><a style='color: #ffffff; text-decoration: none;'>by A-Team Fitness team</a></td></tr></table> </td></tr></table>",
+              /*template: 'send', //name ng html file na irerender*/
+              },
+              function(err, response){
+                  if(err){
+                      console.log("BILL NOT SENT");
+                      console.log(err);
+                  }
+                  else{
+                      console.log("BILL SENT!");
+                      }
+                  }
+                  );
+
+              res.redirect('/payment');
+            }
+      });
       });
       });
   })
@@ -824,6 +868,15 @@ function Interregular(req, res) {
   });
 }
 
+function Events(req, res) {
+  res.render('admin/transactions/views/t-event')
+}
+
+function GClasses(req, res) {
+  res.render('admin/transactions/views/t-classes')
+}
+
+
 
 //A-TEAM FITNESS GETS
 
@@ -855,6 +908,8 @@ router.get('/pending', viewUpdate, viewPend, pending);
 router.get('/personal', personal);
 router.get('/regular', viewSusp, viewReg, regular);
 router.get('/interregular', viewSusp, viewInt, Interregular);
+router.get('/events', Events);
+router.get('/t/classes', GClasses);
 /**
  * Here we just export said router on the 'index' property of this module.
  */

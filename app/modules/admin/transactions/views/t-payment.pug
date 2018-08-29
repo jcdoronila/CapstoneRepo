@@ -39,8 +39,8 @@ block main
 											td #{pa.expiry}
 											td #{pa.memclassname}-#{pa.membershipname}
 											td
-												button.btn.btn-primary.btn-xs(data-toggle='modal', data-target='.view-modal')
-													i.fa.fa-search
+												//- button.btn.btn-primary.btn-xs(data-toggle='modal', data-target='.view-modal')
+												//- 	i.fa.fa-search
 												button.btn.btn-success.btn-xs(data-toggle='modal', data-target='.pay-modal', data-id=pa.userid)
 													i.fa.fa-coins
 												button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='')
@@ -153,7 +153,7 @@ block main
 								.row
 									p You are about to pay a member of his bills. Do you wish to proceed?
 								br
-								input.id(type='text' name='id' )
+								input.hidden.id(type='text' name='id' )
 						.modal-footer
 							button.btn.btn-default(type='button', data-dismiss='modal') Close
 							button.btn.btn-primary(type='submit') Pay
