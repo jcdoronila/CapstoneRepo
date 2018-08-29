@@ -2,6 +2,8 @@ var express = require('express');
 var db = require('../../lib/database')();
 var router = express.Router();
 var authMiddleware = require('../auth/middlewares/auth');
+var moment = require('moment');
+
 
 router.use(authMiddleware.hasAuth);
 
@@ -22,7 +24,11 @@ router.post('/staff', (req, res) => {
       
   });
 
+<<<<<<< HEAD
  //edit staff
+=======
+//edit staff
+>>>>>>> 35ccd50fea12c325cdfe419e31025edcc402a48e
 
 router.post('/staff/edit', (req, res) => {
      db.query("UPDATE tbluser SET userfname=?, userlname=?, usermobile=?, useremail=?, userpassword=?, userusername=? WHERE userid=?",[req.body.sfirstName, req.body.slastName, req.body.smobNum, req.body.semail, req.body.pass, req.body.username, req.body.id],(err, results, fields)=>{
@@ -60,6 +66,7 @@ function viewStaff(req, res, next){
 }
 
 
+<<<<<<< HEAD
 /*//insert program
 
 router.post('/program', (req, res) => {
@@ -75,6 +82,8 @@ router.post('/program', (req, res) => {
   });*/
 
 
+=======
+>>>>>>> 35ccd50fea12c325cdfe419e31025edcc402a48e
 //insert classes
 
 router.post('/classes', (req, res) => {
@@ -103,7 +112,11 @@ router.post('/classes/edit', (req, res) => {
       
   });
 
+<<<<<<< HEAD
  //delete class
+=======
+//delete class
+>>>>>>> 35ccd50fea12c325cdfe419e31025edcc402a48e
 
 router.post('/classes/delete', (req, res) => {
     
@@ -118,6 +131,7 @@ router.post('/classes/delete', (req, res) => {
  });
 
 //view classes
+
 function viewClass(req, res, next){
   db.query('SELECT * FROM tblclass WHERE status=1',function(err, results, fields){
     if(err) return res.send(err);
@@ -154,7 +168,11 @@ router.post('/specs/edit', (req, res) => {
       
   });
 
+<<<<<<< HEAD
  //delete special
+=======
+//delete special
+>>>>>>> 35ccd50fea12c325cdfe419e31025edcc402a48e
 
 router.post('/specs/delete', (req, res) => {
     
@@ -263,7 +281,7 @@ router.post('/branch',addid, (req, res) => {
 router.post('/branch/edit', (req, res) => {
     
      db.query(`UPDATE tblbranch SET branchname=?,branchstreetnum=?,branchstreetname=?,branchcity=?,user= ${req.body.user} WHERE branchID=${req.body.id}`,[req.body.branch, req.body.stnum, req.body.st, req.body.city],(err, results, fields)=>{
-      db.query("UPDATE tbluser SET branch=    NULL, statusfront='Inactive' WHERE userid=?",[req.body.oldid],(err, results, fields)=>{
+      db.query("UPDATE tbluser SET branch=NULL, statusfront='Inactive' WHERE userid=?",[req.body.oldid],(err, results, fields)=>{
         db.query("UPDATE tbluser SET branch=?,statusfront='Active'  WHERE userid=?",[req.body.id, req.body.user],(err, results, fields)=>{
           if (err)
             console.log(err);
@@ -675,7 +693,7 @@ function useraddid(req, res, next){
     if(err) return res.send(err)
     req.newuserid=results[0].id
     console.log('puta')
-    console.log(req.newuserid)
+    console.log(req.newuserid) 
     return next();
     })
 }
@@ -684,7 +702,6 @@ function useraddid(req, res, next){
 //update of pending to regular
 
 router.post('/pending/update',useraddid ,(req, res) => {
-    
   if(req.body.newcode===req.body.codenow)
      db.query("UPDATE tbluser SET  signdate=CURDATE(),usertype=2,userpassword=12345 WHERE userid=?",[req.body.newid],(err, results, fields)=>{
       db.query("UPDATE tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid SET u.expiry = case when cl.memclassid = mems.memclass then curdate() + interval mems.memperiod MONTH END where usertype=2 and userid=?",[req.body.newid],(err, results, fields)=>{
@@ -712,13 +729,40 @@ function viewReg(req, res, next){
 
 //view of regular interbranch members
 function viewInt(req, res, next){
-  db.query('select u.userfname,u.userlname ,mems.memrateid,ct.membershipname,cl.memclassname from tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid where usertype=2 and u.branch IS NULL',function(err, results, fields){
+  db.query('select u.* ,mems.memrateid,ct.membershipname,cl.memclassname from tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid where usertype=2 and u.branch IS NULL',function(err, results, fields){
     if(err) return res.send(err);
     req.viewInt = results;
     return next();
   })
 }
 
+//view update regular to suspended
+function viewSusp(req, res,next){
+   db.query("UPDATE tbluser SET statusfront='Inactive', userpassword=NULL where expiry= CURDATE()",(err, results, fields)=>{
+       if (err)
+         console.log(err);
+
+       else{
+          console.log('bbbbbbbbbb')
+            return next()
+        }
+
+;
+       })
+};
+
+//view to payment
+function viewPay(req, res, next){
+  db.query('select u.* ,mems.*,ct.membershipname,cl.memclassname from tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid where usertype=2',function(err, results, fields){
+    if(err) return res.send(err);
+    req.viewPay = results;
+    //moments expiration
+    for(var i = 0; i< req.viewPay.length; i++){
+      req.viewPay[i].expiry = moment(results[i].expiry).format("LL");
+    }  
+    return next();
+  })
+}
 
 
 //A-TEAM FITNESS FUNCTIONS
@@ -756,9 +800,6 @@ function general(req,res){
 function membership(req,res){
     res.render('admin/maintenance/views/m-membership',{drops: req.viewcatdrop, mems: req.viewMembership, classes:req.viewclassdrop});
 }
-/*function program(req,res){
-    res.render('admin/maintenance/views/m-program', {programs: req.viewProgram});
-}*/
 function specs(req,res){
     res.render('admin/maintenance/views/m-specialization',{specials: req.viewSpecial});
 }
@@ -787,7 +828,7 @@ function income(req,res){
     res.render('admin/transactions/views/t-income');
 }
 function payment(req,res){
-    res.render('admin/transactions/views/t-payment');
+    res.render('admin/transactions/views/t-payment',{pays: req.viewPay});
 }
 function pending(req,res){
     res.render('admin/transactions/views/t-pending',{pends: req.viewPend});
@@ -828,11 +869,11 @@ router.get('/t-class', t_class);
 router.get('/t-event', t_event);
 router.get('/freezed', freezed);
 router.get('/income', income);
-router.get('/payment', payment);
+router.get('/payment',viewPay, payment);
 router.get('/pending',viewUpdate,viewPend, pending);
 router.get('/personal', personal);
-router.get('/regular',viewReg,regular) ;
-router.get('/interregular',viewInt ,Interregular);
+router.get('/regular',viewSusp,viewReg,regular) ;
+router.get('/interregular',viewSusp,viewInt ,Interregular);
 /**
  * Here we just export said router on the 'index' property of this module.
  */
