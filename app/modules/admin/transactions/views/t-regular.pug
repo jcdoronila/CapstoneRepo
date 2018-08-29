@@ -22,10 +22,13 @@ block main
                         |  Name
                       th
                         i.fa.fa-home
-                        |  Branch
+                        |  Branch 
                       th
                         i.fa.fa-bookmark
                         |  Membership
+                      th
+                        i.fa.fa-bookmark
+                        |  Status  
                       th
                         i.fa.fa-edit
                         |  Action
@@ -34,7 +37,8 @@ block main
                       tr
                         td.hidden-phone #{re.userfname} #{re.userlname}
                         td  #{re.branchname}
-                        td  #{re.memclassname}-#{re.membershipname}                            
+                        td  #{re.memclassname}-#{re.membershipname}  
+                        td  #{re.statusfront}                      
                         td
                           button#freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account')
                             i.fa.fa-snowflake

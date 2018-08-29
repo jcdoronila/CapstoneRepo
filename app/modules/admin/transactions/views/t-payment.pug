@@ -43,28 +43,27 @@ block main
 											|  Due Date
 										th
 											i.fa.fa-info-circle
-											|  Status
+											|  Membership
 										th
 											i.fa.fa-edit
 											|  Action
 								tbody
-									tr
-										td.hidden-phone John Doe
-										td 09999888776
-										td 5410
-										td 01/01/2018
-										td 
-											span.label.label-danger 
-												| Past Due
-										td
-											button#view.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='View Billing Description')
-												i.fa.fa-search
-											button#pay.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Pay')
-												i.fa.fa-coins
-											button#suspend.btn.btn-warning.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Suspend')
-												i.fa.fa-exclamation-circle
-											button#del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Delete')
-												i.fa.fa-trash
+									each pa in pays
+										tr
+											td.hidden-phone #{pa.userfname} #{pa.userlname}
+											td #{pa.usermobile}
+											td #{pa.memfee}
+											td #{pa.expiry}
+											td #{pa.memclassname}-#{pa.membershipname}
+											td
+												button#view.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='View Billing Description')
+													i.fa.fa-search
+												button#pay.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Pay')
+													i.fa.fa-coins
+												button#suspend.btn.btn-warning.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Suspend')
+													i.fa.fa-exclamation-circle
+												button#del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Delete')
+													i.fa.fa-trash
 
 #view-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 	.modal-dialog.modal-lg

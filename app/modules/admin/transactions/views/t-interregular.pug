@@ -24,13 +24,17 @@ block main
                         i.fa.fa-bookmark
                         |  Membership
                       th
+                        i.fa.fa-bookmark
+                        |  Status
+                      th
                         i.fa.fa-edit
                         |  Action
                   tbody
                     each br in intb
                       tr
                         td.hidden-phone  #{br.userfname} #{br.userlname}
-                        td #{br.memclassname}-#{br.membershipname}   
+                        td #{br.memclassname}-#{br.membershipname}  
+                        td #{br.statusfront}
                         td
                           button#freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account')
                             i.fa.fa-snowflake
