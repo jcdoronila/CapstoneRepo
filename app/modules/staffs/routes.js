@@ -4,7 +4,7 @@ var indexController = require('./controllers/index');
 var db = require('../../lib/database')();
 
 router.use(authMiddleware.staffHasAuth);
-router.get('/', indexController);
+router.get('/dashboard', indexController);
 
 
 //***************************************** */
@@ -68,44 +68,44 @@ function viewInterbranch(req, res, next) {
 
 // GENERAL
 function s_dash(req, res) {
-	res.render('staffs/general/views/dashboard');
+	res.render('staffs/staffgeneral/views/dashboard');
 }
 
 function s_reports(req, res) {
-	res.render('staffs/general/views/reports');
+	res.render('staffs/staffgeneral/views/reports');
 }
 
 function s_user(req, res) {
-	res.render('staffs/general/views/user');
+	res.render('staffs/staffgeneral/views/user');
 }
 
 // TRANSACTIONS
 function s_freezed(req, res) {
-	res.render('staffs/transactions/views/t-freezed');
+	res.render('staffs/stafftransactions/views/freezed');
 }
 
 function s_payment(req, res) {
-	res.render('staffs/transactions/views/t-payment');
+	res.render('staffs/stafftransactions/views/payment');
 }
 
 function s_pending(req, res) {
-	res.render('staffs/transactions/views/t-pending', {
+	res.render('staffs/stafftransactions/views/pending', {
 		pends: req.viewPend
 	});
 }
 
 function s_personal(req, res) {
-	res.render('staffs/transactions/views/t-personal');
+	res.render('staffs/stafftransactions/views/personal');
 }
 
 function s_regular(req, res) {
-	res.render('staffs/transactions/views/t-regular', {
+	res.render('staffs/stafftransactions/views/regular', {
 		members: req.eMembers
 	});
 }
 
 function s_interbranch(req, res) {
-	res.render('staffs/transactions/views/t-interregular', {
+	res.render('staffs/stafftransactions/views/interregular', {
 		members: req.iMembers
 	});
 }
@@ -113,13 +113,13 @@ function s_interbranch(req, res) {
 // ROUTERS
 
 router.get('/', s_dash);
-router.get('/reports', s_reports);
+router.get('/staffreports', s_reports);
 router.get('/user', s_user);
-router.get('/freezed', s_freezed);
-router.get('/payment', s_payment);
-router.get('/pending', viewPend, s_pending);
-router.get('/personal', s_personal);
-router.get('/exclusive/members', viewRegular, s_regular);
-router.get('/interbranch/members', viewInterbranch, s_interbranch);
+router.get('/stafffreezed', s_freezed);
+router.get('/staffpayment', s_payment);
+router.get('/staffpending', viewPend, s_pending);
+router.get('/staffpersonal', s_personal);
+router.get('/staffexclusive', viewRegular, s_regular);
+router.get('/staffinterbranch', viewInterbranch, s_interbranch);
 
 exports.staffs = router

@@ -1,4 +1,4 @@
-include ../../../../templates/head
+include ../../../../templates/staff-head
 
 block main
 
@@ -10,7 +10,7 @@ block main
               .container-fluid
                 table.table.table-striped.table-advance.table-hover
                   h4
-                    | Regular Exclusive Member
+                    | Regular Interbranch Member
                     button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add')
                       i.fa.fa-user-plus
                       |  Add Member
@@ -21,24 +21,20 @@ block main
                         i.fa.fa-user
                         |  Name
                       th
-                        i.fa.fa-home
-                        |  Branch 
-                      th
                         i.fa.fa-bookmark
                         |  Membership
                       th
                         i.fa.fa-bookmark
-                        |  Status  
+                        |  Status
                       th
                         i.fa.fa-edit
                         |  Action
                   tbody
-                    each member in members 
+                    each member in members
                       tr
-                        td.hidden-phone #{member.userfname} #{member.userlname}
-                        td  #{member.branchname}
-                        td  #{member.memclassname}-#{member.membershipname}  
-                        td  #{member.statusfront}                      
+                        td.hidden-phone  #{member.userfname} #{member.userlname}
+                        td #{member.memclassname}-#{member.membershipname}  
+                        td #{member.statusfront}
                         td
                           button.freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account')
                             i.fa.fa-snowflake
@@ -48,7 +44,7 @@ block main
                             i.fa.fa-dumbbell
                           button.del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Suspend Account')
                             i.fa.fa-exclamation-circle
-                          
+                        
           
     // MODAL ADD MEMBER
     #add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -549,7 +545,7 @@ script.
 
 script.
  $(document).ready(function(){
-  $('#transactionDrop').addClass('active');
-  $('#memberDrop').addClass('active');
-  $('#exclusive').addClass('active');
-  });
+    $('#transactionDrop').addClass('active');
+    $('#memberDrop').addClass('active');
+    $('#interbranch').addClass('active');
+    });
