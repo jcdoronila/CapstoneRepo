@@ -3,11 +3,31 @@ var db = require('../../lib/database')();
 var router = express.Router();
 var authMiddleware = require('../auth/middlewares/auth');
 var moment = require('moment');
+var nodemailer = require('nodemailer');
+var hbs = require('nodemailer-express-handlebars');
 
 router.use(authMiddleware.hasAuth);
 
 var indexController = require('./controllers/index');
 router.get('/', indexController);
+
+var mailer = nodemailer.createTransport({
+    service: 'gmail',
+    port: 25,
+    secure: true,
+    auth:{
+        user: 'ateamsupmanila@gmail.com',
+        pass: 'ateammanila'
+    },
+    tls:{
+        rejectUnauthorized:false
+    }
+});
+mailer.use('compile', hbs({
+    viewpath: '',
+    extname:'.html'
+}));
+
 
 //insert staff
 
@@ -681,11 +701,17 @@ function viewPay(req, res, next) {
 router.post('/payment',(req, res) => {
     db.query("UPDATE tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid SET u.expiry = case when cl.memclassid = mems.memclass then u.expiry + interval mems.memperiod MONTH END where usertype=2 and userid=?", [req.body.id], (err, results, fields) => {
       db.query("UPDATE tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid SET recentpay=CURDATE() where usertype=2 and userid=?", [req.body.id], (err, results, fields) => {
-        if (err)
-          console.log(err);
-        else {
-          res.redirect('/payment');
-        }
+        db.query("select u.userfname, u.userlname,u.useremail,u.recentpay,m.memfee from tbluser u join tblmemrates m ON u.memrateid=m.memrateid where usertype=2 and userid=?", [req.body.id], (err, results, fields) => {  
+          fullname=(results[0].userfname + results[0].userlname)
+          date=moment(results[0].recentpay).format("LL");
+          fee=results[0].memfee
+          if (err)
+            console.log(err);
+            else {
+
+              res.redirect('/payment');
+            }
+      });
       });
       });
   })

@@ -34,7 +34,13 @@ block main
                       tr
                         td.hidden-phone  #{br.userfname} #{br.userlname}
                         td #{br.memclassname}-#{br.membershipname}  
-                        td #{br.statusfront}
+                        td
+                          if (br.statusfront == 'Active' || 'active')
+                            span.label.label-success
+                              | #{br.statusfront}
+                          else if (st.statusfront == 'Inactive' || 'inactive')
+                            span.label.label-danger
+                              | #{br.statusfront}    
                         td
                           button.freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account')
                             i.fa.fa-snowflake

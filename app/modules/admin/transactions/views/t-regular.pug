@@ -39,12 +39,12 @@ block main
                         td  #{re.branchname}
                         td  #{re.memclassname}-#{re.membershipname}  
                         td  
-                          if (member.statusfront == 'Active' || 'active')
+                          if (re.statusfront == 'Active' || 'active')
                             span.label.label-success
-                              | #{member.statusfront}
+                              | #{re.statusfront}
                           else if (st.statusfront == 'Inactive' || 'inactive')
                             span.label.label-danger
-                              | #{member.statusfront}                     
+                              | #{re.statusfront}                     
                         td
                           button.freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account')
                             i.fa.fa-snowflake

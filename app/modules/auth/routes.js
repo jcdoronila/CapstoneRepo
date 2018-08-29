@@ -202,10 +202,7 @@ SignupRouter.route('/')
             code = autogen;
                 db.query("INSERT INTO tbluser (userfname, userlname, usergender, userbday, useraddress, usermobile, useremail, userusername, memrateid, branch, specialization, usertype,paymentcode ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 8, ? ) ",[ req.body.fname, req.body.lname, req.body.gen, req.body.bday, req.body.addr, req.body.mobile, req.body.email, req.body.username, req.body.membership, req.body.branch, req.body.specs, autogen], (err, results, fields)=>{
                     db.query('select u.userfname,u.userlname ,mems.memrateid,mems.memfee,ct.membershipname,cl.memclassname from tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid where userid=?',[req.newuserid],(err, results, fields)=>{
-                        req.viewed=results
-                        console.log("assssssssssssddddddd")
-                        console.log(req.viewed) 
-                        console.log(results[0].userfname)   
+                        req.viewed=results 
                             members=(results[0].memclassname +" "+results[0].membershipname) 
                                 if (err) console.log(err);
                                     else{
