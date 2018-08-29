@@ -186,9 +186,8 @@ script.
 			var code = button.data('code')
 			console.log(id)
 
-
-			let modal = $(this)     
-
+			let modal = $(this);     
+			
 			modal.find('.modal-body #id').val(` ${id}`)
 			modal.find('.modal-body #code').val(`${code}`)
 		})
@@ -205,8 +204,8 @@ script.
 		var cl = button.data('cl')
 		var ct = button.data('ct')
 
-		//
 		let modal = $(this)     
+
 		modal.find('.modal-body #gen').text(` ${gen}`)
 		modal.find('.modal-body #bd').text(` ${bd}`)
 		modal.find('.modal-body #add').text(` ${add}`)

@@ -117,7 +117,6 @@ block main
 									.container-fluid
 										.row
 											h5
-
 												b Mobile Number:
 												span#mobile
 												br
@@ -208,11 +207,14 @@ block main
 
 include ../../../../templates/foot
 script.
-	$(document).ready(function()
+	$(document).ready(function(){
 	$('#memdrop').addClass('active')
 	$('#staffs').addClass('active')
 	});
 
+
+
+script.
 	$('#viewmodal').on('show.bs.modal', function(event){
 		let button = $(event.relatedTarget)     
 		let mobile = button.data('mobile')
@@ -222,16 +224,14 @@ script.
 		var bra = button.data('bra')
 		console.log(bra)
 
-		let modal = $(this)     
+		let modal = $(this);     
 		modal.find('.modal-body span#email').text(` ${email}`)  
 		modal.find('.modal-body span#mobile').text(` ${mobile}`)
 		modal.find('.modal-body span#bra').text(` ${bra}`)
 	})
 
-script.
 	$('#editmodal').on('show.bs.modal', function(event){
 		var button = $(event.relatedTarget)      
-
 		var mobile = button.data('mobile')
 		console.log(mobile)
 		var email = button.data('email')
@@ -244,7 +244,8 @@ script.
 		console.log(id)
 		var fullname = fname + ' ' + lname
 
-		let modal = $(this)     
+		let modal = $(this);     
+
 		modal.find('.modal-body #email').val(` ${email}`)  
 		modal.find('.modal-body #mobile').val(` ${mobile}`)
 		modal.find('.modal-body #fname').val(` ${fname}`)

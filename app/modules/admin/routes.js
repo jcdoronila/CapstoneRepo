@@ -673,9 +673,6 @@ function general(req,res){
 function membership(req,res){
     res.render('admin/maintenance/views/m-membership',{drops: req.viewcatdrop, mems: req.viewMembership});
 }
-/*function program(req,res){
-    res.render('admin/maintenance/views/m-program', {programs: req.viewProgram});
-}*/
 function specs(req,res){
     res.render('admin/maintenance/views/m-specialization',{specials: req.viewSpecial});
 }
@@ -684,33 +681,6 @@ function staff(req,res){
 }
 function trainer(req,res){
     res.render('admin/maintenance/views/m-trainer',{drops: req.viewbranchdrop,spes: req.viewspecialdrop, trains: req.viewTrainer});
-}
-
-// TRANSACTIONS
-
-function t_class(req,res){
-    res.render('admin/transactions/views/t-classes');
-}
-function t_event(req,res){
-    res.render('admin/transactions/views/t-event');
-}
-function freezed(req,res){
-    res.render('admin/transactions/views/t-freezed');
-}
-function income(req,res){
-    res.render('admin/transactions/views/t-income');
-}
-function payment(req,res){
-    res.render('admin/transactions/views/t-payment');
-}
-function pending(req,res){
-    res.render('admin/transactions/views/t-pending');
-}
-function personal(req,res){
-    res.render('admin/transactions/views/t-personal');
-}
-function regular(req,res){
-    res.render('admin/transactions/views/t-regular');
 }
 
 //A-TEAM FITNESS GETS
@@ -732,15 +702,7 @@ router.get('/specialization', viewSpecial,specs);
 router.get('/staff', viewStaff,staff );
 router.get('/trainer',viewTrainer,viewspecialdrop,viewbranchdrop, trainer);
 
-//TRANSACTIONS
-router.get('/t-class', t_class);
-router.get('/t-event', t_event);
-router.get('/freezed', freezed);
-router.get('/income', income);
-router.get('/payment', payment);
-router.get('/pending', pending);
-router.get('/personal', personal);
-router.get('/regular', regular);
+
 /**
  * Here we just export said router on the 'index' property of this module.
  */

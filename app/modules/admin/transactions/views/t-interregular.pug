@@ -36,13 +36,13 @@ block main
                         td #{br.memclassname}-#{br.membershipname}  
                         td #{br.statusfront}
                         td
-                          button#freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account')
+                          button.freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account')
                             i.fa.fa-snowflake
-                          button#edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit Account')
+                          button.edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit Account')
                             i.fa.fa-edit
-                          button#train.btn.btn-warning.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Assign Trainer')
+                          button.train.btn.btn-warning.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Assign Trainer')
                             i.fa.fa-dumbbell
-                          button#del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Suspend Account')
+                          button.del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Suspend Account')
                             i.fa.fa-exclamation-circle
                         
           
@@ -174,7 +174,7 @@ block main
             button.btn.btn-default(type='button', data-dismiss='modal') Close
             button.btn.btn-primary(type='button') Add Member
     // MODAL ADD MEMBER
-    #edit-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .edit-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
       .modal-dialog.modal-lg
         .modal-content
           .modal-header
@@ -301,7 +301,7 @@ block main
             button.btn.btn-primary(type='button') Save
 
         // MODAL ADD MEMBER
-    #freeze-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .freeze-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
       .modal-dialog
         .modal-content
           .modal-header
@@ -331,7 +331,7 @@ block main
 //-----------------------------------------------------------------------------------------------------------
 
 // MODAL 
-#assign.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+.assign.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
   .modal-dialog
     .modal-content
       .modal-header
@@ -393,7 +393,7 @@ block main
                   button#sort.btn.btn-primary(type='button' style="width:100%;") Sort
                   
 // SORTED TRAINER MODAL
-#sorted.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+.sorted.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
   .modal-dialog.modal-lg
     .modal-content
       .modal-header
@@ -474,12 +474,12 @@ include ../../../../templates/foot
 
 script.
   
-  $('#edit').click(function () {
-  $('#edit-modal').modal();
+  $('.edit').click(function () {
+  $('.edit-modal').modal();
   $('.student').prop('checked', false);
   });
-  $('#freeze').click(function(){
-    $('#freeze-modal').modal();
+  $('.freeze').click(function(){
+    $('.freeze-modal').modal();
   });
   $('.student').click(function () {
     if ($(this).is(':checked')) {
