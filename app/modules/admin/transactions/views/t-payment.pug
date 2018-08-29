@@ -41,7 +41,7 @@ block main
 											td
 												button.view.btn.btn-primary.btn-xs
 													i.fa.fa-search
-												button.pay.btn.btn-success.btn-xs
+												button.pay.btn.btn-success.btn-xs(data-id=pa.userid)
 													i.fa.fa-coins
 												button.suspend.btn.btn-warning.btn-xs
 													i.fa.fa-exclamation-circle
@@ -153,6 +153,7 @@ block main
 								.row
 									p You are about to pay a member of his bills. Do you wish to proceed?
 								br
+								input.id(type='text' name='id' )
 					.modal-footer
 						button.btn.btn-default(type='button', data-dismiss='modal') Close
 						button.btn.btn-primary(type='button') Pay
@@ -171,4 +172,15 @@ script.
 	$('.pay').click(function(){
 		$('.pay-modal').modal();
 	});
+
+
+
+script.
+	$('.pay-modal').on('show.bs.modal', function(event){
+		var button = $(event.relatedTarget)      
+		var id = button.data('id')
+		console.log(id)
+		let modal = $(this)     
+		modal.find('.modal-body #id').text(` ${id}`)
+	})
 
