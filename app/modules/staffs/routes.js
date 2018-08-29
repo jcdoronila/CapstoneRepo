@@ -4,7 +4,7 @@ var indexController = require('./controllers/index');
 var db = require('../../lib/database')();
 
 router.use(authMiddleware.staffHasAuth);
-router.get('/', indexController);
+router.get('/dashboard', indexController);
 
 
 //***************************************** */
@@ -28,7 +28,7 @@ function viewPend(req, res, next) {
 
 // VIEW
 function viewRegular(req, res, next) {
-  db.query('SELECT u.*, bn.branchname, memrate.memclassname, memrate.membershipname FROM tbluser u INNER JOIN tblbranch AS bn ON bn.branchid = u.branch INNER JOIN (select mr.memrateid, mc.memclassname, tc.membershipname FROM tblmemrates mr INNER JOIN tblmemclass AS mc ON mc.memclassid = mr.memclass INNER JOIN tblcat AS tc ON tc.membershipid = mr.memcat Group by mr.memrateid ) AS MemRate WHERE u.memrateid=memrate.memrateid and usertype=2', function (err, results, fields) {
+  db.query('SELECT u.*, bn.branchname, memrate.memclassname, memrate.membershipname FROM tbluser u INNER JOIN tblbranch AS bn ON bn.branchid = u.branch INNER JOIN (select mr.memrateid, mc.memclassname, tc.membershipname FROM tblmemrates mr INNER JOIN tblmemclass AS mc ON mc.memclassid = mr.memclass INNER JOIN tblcat AS tc ON tc.membershipid = mr.memcat Group by mr.memrateid ) AS MemRate WHERE u.memrateid=memrate.memrateid and usertype=2 and branch=?',[req.session.staff.branch], function (err, results, fields) {
     if (err) return res.send(err);
     req.eMembers = results;
     return next();
@@ -68,40 +68,41 @@ function viewInterbranch(req, res, next) {
 
 // GENERAL
 function s_dash(req, res) {
-	res.render('staffs/general/views/dashboard');
+	res.render('staffs/staffgeneral/views/dashboard');
 }
 
 function s_reports(req, res) {
-	res.render('staffs/general/views/reports');
+	res.render('staffs/staffgeneral/views/reports');
 }
 
 function s_user(req, res) {
-	res.render('staffs/general/views/user');
+	res.render('staffs/staffgeneral/views/user');
 }
 
 // TRANSACTIONS
 function s_freezed(req, res) {
-	res.render('staffs/transactions/views/t-freezed');
+	res.render('staffs/stafftransactions/views/freezed');
 }
 
 function s_payment(req, res) {
-	res.render('staffs/transactions/views/t-payment');
+	res.render('staffs/stafftransactions/views/payment');
 }
 
 function s_pending(req, res) {
-	res.render('staffs/transactions/views/t-pending', {
+	res.render('staffs/stafftransactions/views/pending', {
 		pends: req.viewPend
 	});
 }
 function s_personal(req, res) {
-	res.render('staffs/transactions/views/t-personal');
+	res.render('staffs/stafftransactions/views/personal');
 }
 function s_regular(req, res) {
-	res.render('staffs/transactions/views/t-regular', {
+	res.render('staffs/stafftransactions/views/regular', {
 		members: req.eMembers
 	});
 }
 function s_interbranch(req, res) {
+<<<<<<< HEAD
 	res.render('staffs/transactions/views/t-interregular', {
 		imembers: req.iMembers
 	});
@@ -114,11 +115,16 @@ function s_classes(req, res) {
 function s_events(req, res) {
 	res.render('staffs/transactions/views/t-event', {
 		
+=======
+	res.render('staffs/stafftransactions/views/interregular', {
+		members: req.iMembers
+>>>>>>> e4c7853e0acb426bd925dc25bfbbdd3f5d3e6cf6
 	});
 }
 
 // ROUTERS
 
+<<<<<<< HEAD
 
 router.get('/reports', s_reports);
 router.get('/user', s_user);
@@ -130,5 +136,16 @@ router.get('/exclusive', viewRegular, s_regular);
 router.get('/interbranch', viewInterbranch, s_interbranch);
 router.get('/classes', s_classes);
 router.get('/events', s_events);
+=======
+router.get('/', s_dash);
+router.get('/staffreports', s_reports);
+router.get('/user', s_user);
+router.get('/stafffreezed', s_freezed);
+router.get('/staffpayment', s_payment);
+router.get('/staffpending', viewPend, s_pending);
+router.get('/staffpersonal', s_personal);
+router.get('/staffexclusive', viewRegular, s_regular);
+router.get('/staffinterbranch', viewInterbranch, s_interbranch);
+>>>>>>> e4c7853e0acb426bd925dc25bfbbdd3f5d3e6cf6
 
 exports.staffs = router
