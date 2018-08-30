@@ -28,6 +28,9 @@ block main
                         |  Membership
                       th
                         i.fa.fa-bookmark
+                        |  Membership Expiration
+                      th
+                        i.fa.fa-bookmark
                         |  Status  
                       th
                         i.fa.fa-edit
@@ -38,6 +41,7 @@ block main
                         td.hidden-phone #{re.userfname} #{re.userlname}
                         td  #{re.branchname}
                         td  #{re.memclassname}-#{re.membershipname}  
+                        td  #{re.expiry}
                         td  
                           if re.statusfront == 'Active'
                             span.label.label-success
@@ -46,293 +50,295 @@ block main
                             span.label.label-danger
                               | #{re.statusfront}                     
                         td
-                          button.freeze.btn.btn-primary.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Freeze Account')
+                          button.freeze.btn.btn-primary.btn-xs(data-toggle='modal', data-target='.freeze-modal', data-id=re.userid)
                             i.fa.fa-snowflake
-                          button.edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit Account')
+                          button.edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='.edit-modal')
                             i.fa.fa-edit
-                          button.train.btn.btn-warning.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Assign Trainer')
+                          button.train.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.assign-modal')
                             i.fa.fa-dumbbell
-                          button.del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Suspend Account')
+                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='')
                             i.fa.fa-exclamation-circle
                           
           
-    // MODAL ADD MEMBER
-    #add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-      .modal-dialog.modal-lg
-        .modal-content
-          .modal-header
-            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-            h4#myModalLabel.modal-title Add Member Manually
-          form(action='POST', method='')
-            .modal-body
-              .container-fluid
-                .row
-                  .col-xs-12
-                    h5 Personal Info
-                    hr
-                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
-                  .row
-                    .col-md-6
-                      .form-group
-                        label.control-label First Name
-                        input.form-control(type='text')
-                    .col-md-6
-                      .form-group
-                        label.control-label Last Name
-                        input.form-control(type='text')
-                  .row
-                    .col-md-6
-                      .input-group
-                        .input-group-addon Gender:
-                        label.radio
-                          | Male
-                          input(type='radio', checked='', name='gen')
-                          span.dot
-                        label.radio
-                          | Female
-                          input(type='radio', name='gen')
-                          span.dot
-                    .col-md-6
-                      .form-group
-                        label.control-label Date of Birth
-                        input#datepicker.form-control(type='text')
-                  .row
-                    .col-md-12
-                      .form-group
-                        label.control-label Address
-                        input.form-control(type='text')
-                  .row
-                    .col-md-6
-                      .form-group
-                        label.control-label Mobile Number
-                        input.form-control(type='text', value='+639')
-                    .col-md-6
-                      .form-group
-                        label.control-label Email
-                        input.form-control(type='email')
-                .row
-                  .col-md-12
-                    h5 Login Information
-                    hr
-                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
-                  .row
-                    .col-md-12
-                      .form-group
-                        label.control-label Username
-                        input.form-control(type='text')
-                .row
-                  .col-md-12
-                    h5 More Information
-                    hr
-                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
-                  .row
-                    .col-md-12
-                      .form-group
-                        label.control-label Membership
-                        select.form-control
-                          option Select Membership... 
-                          option Gold Membership - (360 days) - Interbranch
-                          option Silver Membership - (120 days) - Interbranch
-                          option Bronze Membership - (30 days) - Interbranch
-                  .row
-                    .col-md-12(style='color:gray; font-size:10pt')
-                      i
-                        p
-                          | Interbranch - Membership valid to all branches.
-                          br
-                          | Exclusive - Membership valid only to the branch you choose.
-                        p(style='margin:0;') Note: Rates vary on type of membership. "Interbranch" costs more.
-                        br
-                  .row
-                    .col-md-6
-                      .form-group
-                        label.control-label Branch
-                        select#branch.form-control(disabled='')
-                          option Sta. Mesa
-                          option Marikina
-                    .col-md-6
-                      .form-group
-                        label.control-label Interested Area
-                        select.form-control
-                          option Select Interest... 
-                          option Body Building
-                          option Weight Gain
-                          option Weight Loss
-                          option General Fitness
-                  .row
-                    .col-md-12
-                      label.checkbox
-                        | Are you a Student?
-                        input.student(type='checkbox')
-                        span.check
-                      p.first Uncheck if you are unwilling to provide proof.
-                  .row
-                    .col-md-12(style='color:gray; font-size:10pt')
-                      i
-                        .second(style='display: none')
-                          | You can avail a student discount if we can confirm your claim. Give us proof (eg. student ID, registration
-                          | card etc.) through our branch near you. 
-                          br
-                          br
-                          | Or upload a scanned photo of your ID 
-                          input#file.inputfile(type='file')
-                          br
-                          | NOTE:
-                          |  After Submitting this form, We will send you an email containing a code to present to the gym upon payment.
-                        
-          .modal-footer
-            button.btn.btn-default(type='button', data-dismiss='modal') Close
-            button.btn.btn-primary(type='button') Add Member
-    // MODAL ADD MEMBER
-    .edit-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-      .modal-dialog.modal-lg
-        .modal-content
-          .modal-header
-            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-            h4#myModalLabel.modal-title Add Member Manually
-          form(action='POST', method='')
-            .modal-body
-              .container-fluid
-                .row
-                  .col-xs-12
-                    h5 Personal Info
-                    hr
-                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
-                  .row
-                    .col-md-6
-                      .form-group
-                        label.control-label First Name
-                        input.form-control(type='text')
-                    .col-md-6
-                      .form-group
-                        label.control-label Last Name
-                        input.form-control(type='text')
-                  .row
-                    .col-md-6
-                      .input-group
-                        .input-group-addon Gender:
-                        label.radio
-                          | Male
-                          input(type='radio', checked='', name='gen')
-                          span.dot
-                        label.radio
-                          | Female
-                          input(type='radio', name='gen')
-                          span.dot
-                    .col-md-6
-                      .form-group
-                        label.control-label Date of Birth
-                        input#datepicker.form-control(type='text')
-                  .row
-                    .col-md-12
-                      .form-group
-                        label.control-label Address
-                        input.form-control(type='text')
-                  .row
-                    .col-md-6
-                      .form-group
-                        label.control-label Mobile Number
-                        input.form-control(type='text', value='+639')
-                    .col-md-6
-                      .form-group
-                        label.control-label Email
-                        input.form-control(type='email')
-                .row
-                  .col-md-12
-                    h5 Login Information
-                    hr
-                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
-                  .row
-                    .col-md-12
-                      .form-group
-                        label.control-label Username
-                        input.form-control(type='text')
-                .row
-                  .col-md-12
-                    h5 More Information
-                    hr
-                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
-                  .row
-                    .col-md-12
-                      .form-group
-                        label.control-label Membership
-                        select.form-control
-                          option Select Membership... 
-                          option Gold Membership - (360 days) - Interbranch
-                          option Silver Membership - (120 days) - Interbranch
-                          option Bronze Membership - (30 days) - Interbranch
-                  .row
-                    .col-md-12(style='color:gray; font-size:10pt')
-                      i
-                        p
-                          | Interbranch - Membership valid to all branches.
-                          br
-                          | Exclusive - Membership valid only to the branch you choose.
-                        p(style='margin:0;') Note: Rates vary on type of membership. "Interbranch" costs more.
-                        br
-                  .row
-                    .col-md-6
-                      .form-group
-                        label.control-label Branch
-                        select#branch.form-control(disabled='')
-                          option Sta. Mesa
-                          option Marikina
-                    .col-md-6
-                      .form-group
-                        label.control-label Interested Area
-                        select.form-control
-                          option Select Interest... 
-                          option Body Building
-                          option Weight Gain
-                          option Weight Loss
-                          option General Fitness
-                  .row
-                    .col-md-12
-                      label.checkbox
-                        | Are you a Student?
-                        input.student(type='checkbox')
-                        span.check
-                      p.first Uncheck if you are unwilling to provide proof.
-                  .row
-                    .col-md-12(style='color:gray; font-size:10pt')
-                      i
-                        .second(style='display: none')
-                          | You can avail a student discount if we can confirm your claim. Give us proof (eg. student ID, registration
-                          | card etc.) through our branch near you. 
-                          br
-                          br
-                          | Or upload a scanned photo of your ID 
-                          input#file.inputfile(type='file')
-                          br
-                          | NOTE:
-                          |  After Submitting this form, We will send you an email containing a code to present to the gym upon payment.
-          .modal-footer
-            button.btn.btn-default(type='button', data-dismiss='modal') Close
-            button.btn.btn-primary(type='button') Save
-
-        // MODAL ADD MEMBER
-    .freeze-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-      .modal-dialog
-        .modal-content
-          .modal-header
-            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-            h4#myModalLabel.modal-title Freeze Account
-          form(action='POST', method='')
-          .modal-body
-            .container-fluid
+// MODAL ADD MEMBER
+#add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Add Member Manually
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .row
+              .col-xs-12
+                h5 Personal Info
+                hr
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
               .row
-              p Note: Failing to unfreeze account within due date period Will result to termination of membership. Visit one of our branches to 
-                span(style='color:orange;')
-                  |  unfreeze 
-                | your account.
+                .col-md-6
+                  .form-group
+                    label.control-label First Name
+                    input.form-control(type='text')
+                .col-md-6
+                  .form-group
+                    label.control-label Last Name
+                    input.form-control(type='text')
+              .row
+                .col-md-6
+                  .input-group
+                    .input-group-addon Gender:
+                    label.radio
+                      | Male
+                      input(type='radio', checked='', name='gen')
+                      span.dot
+                    label.radio
+                      | Female
+                      input(type='radio', name='gen')
+                      span.dot
+                .col-md-6
+                  .form-group
+                    label.control-label Date of Birth
+                    input#datepicker.form-control(type='text')
               .row
                 .col-md-12
                   .form-group
-                    label.control-label Duration (months)
-                    input.form-control(type="number")
-          .modal-footer
-            button.btn.btn-default(type='button', data-dismiss='modal') Close
-            button.btn.btn-primary(type='button') Freeze Account
+                    label.control-label Address
+                    input.form-control(type='text')
+              .row
+                .col-md-6
+                  .form-group
+                    label.control-label Mobile Number
+                    input.form-control(type='text', value='+639')
+                .col-md-6
+                  .form-group
+                    label.control-label Email
+                    input.form-control(type='email')
+            .row
+              .col-md-12
+                h5 Login Information
+                hr
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+              .row
+                .col-md-12
+                  .form-group
+                    label.control-label Username
+                    input.form-control(type='text')
+            .row
+              .col-md-12
+                h5 More Information
+                hr
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+              .row
+                .col-md-12
+                  .form-group
+                    label.control-label Membership
+                    select.form-control
+                      option Select Membership... 
+                      option Gold Membership - (360 days) - Interbranch
+                      option Silver Membership - (120 days) - Interbranch
+                      option Bronze Membership - (30 days) - Interbranch
+              .row
+                .col-md-12(style='color:gray; font-size:10pt')
+                  i
+                    p
+                      | Interbranch - Membership valid to all branches.
+                      br
+                      | Exclusive - Membership valid only to the branch you choose.
+                    p(style='margin:0;') Note: Rates vary on type of membership. "Interbranch" costs more.
+                    br
+              .row
+                .col-md-6
+                  .form-group
+                    label.control-label Branch
+                    select#branch.form-control(disabled='')
+                      option Sta. Mesa
+                      option Marikina
+                .col-md-6
+                  .form-group
+                    label.control-label Interested Area
+                    select.form-control
+                      option Select Interest... 
+                      option Body Building
+                      option Weight Gain
+                      option Weight Loss
+                      option General Fitness
+              .row
+                .col-md-12
+                  label.checkbox
+                    | Are you a Student?
+                    input.student(type='checkbox')
+                    span.check
+                  p.first Uncheck if you are unwilling to provide proof.
+              .row
+                .col-md-12(style='color:gray; font-size:10pt')
+                  i
+                    .second(style='display: none')
+                      | You can avail a student discount if we can confirm your claim. Give us proof (eg. student ID, registration
+                      | card etc.) through our branch near you. 
+                      br
+                      br
+                      | Or upload a scanned photo of your ID 
+                      input#file.inputfile(type='file')
+                      br
+                      | NOTE:
+                      |  After Submitting this form, We will send you an email containing a code to present to the gym upon payment.
+                    
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') Close
+        button.btn.btn-primary(type='button') Add Member
+
+// MODAL EDIT MEMBER
+.edit-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Add Member Manually
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .row
+              .col-xs-12
+                h5 Personal Info
+                hr
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+              .row
+                .col-md-6
+                  .form-group
+                    label.control-label First Name
+                    input.form-control(type='text')
+                .col-md-6
+                  .form-group
+                    label.control-label Last Name
+                    input.form-control(type='text')
+              .row
+                .col-md-6
+                  .input-group
+                    .input-group-addon Gender:
+                    label.radio
+                      | Male
+                      input(type='radio', checked='', name='gen')
+                      span.dot
+                    label.radio
+                      | Female
+                      input(type='radio', name='gen')
+                      span.dot
+                .col-md-6
+                  .form-group
+                    label.control-label Date of Birth
+                    input#datepicker.form-control(type='text')
+              .row
+                .col-md-12
+                  .form-group
+                    label.control-label Address
+                    input.form-control(type='text')
+              .row
+                .col-md-6
+                  .form-group
+                    label.control-label Mobile Number
+                    input.form-control(type='text', value='+639')
+                .col-md-6
+                  .form-group
+                    label.control-label Email
+                    input.form-control(type='email')
+            .row
+              .col-md-12
+                h5 Login Information
+                hr
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+              .row
+                .col-md-12
+                  .form-group
+                    label.control-label Username
+                    input.form-control(type='text')
+            .row
+              .col-md-12
+                h5 More Information
+                hr
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+              .row
+                .col-md-12
+                  .form-group
+                    label.control-label Membership
+                    select.form-control
+                      option Select Membership... 
+                      option Gold Membership - (360 days) - Interbranch
+                      option Silver Membership - (120 days) - Interbranch
+                      option Bronze Membership - (30 days) - Interbranch
+              .row
+                .col-md-12(style='color:gray; font-size:10pt')
+                  i
+                    p
+                      | Interbranch - Membership valid to all branches.
+                      br
+                      | Exclusive - Membership valid only to the branch you choose.
+                    p(style='margin:0;') Note: Rates vary on type of membership. "Interbranch" costs more.
+                    br
+              .row
+                .col-md-6
+                  .form-group
+                    label.control-label Branch
+                    select#branch.form-control(disabled='')
+                      option Sta. Mesa
+                      option Marikina
+                .col-md-6
+                  .form-group
+                    label.control-label Interested Area
+                    select.form-control
+                      option Select Interest... 
+                      option Body Building
+                      option Weight Gain
+                      option Weight Loss
+                      option General Fitness
+              .row
+                .col-md-12
+                  label.checkbox
+                    | Are you a Student?
+                    input.student(type='checkbox')
+                    span.check
+                  p.first Uncheck if you are unwilling to provide proof.
+              .row
+                .col-md-12(style='color:gray; font-size:10pt')
+                  i
+                    .second(style='display: none')
+                      | You can avail a student discount if we can confirm your claim. Give us proof (eg. student ID, registration
+                      | card etc.) through our branch near you. 
+                      br
+                      br
+                      | Or upload a scanned photo of your ID 
+                      input#file.inputfile(type='file')
+                      br
+                      | NOTE:
+                      |  After Submitting this form, We will send you an email containing a code to present to the gym upon payment.
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') Close
+        button.btn.btn-primary(type='button') Save
+
+    // MODAL ADD MEMBER
+.freeze-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Freeze Account
+      form(action='/freeze', method='POST')
+        .modal-body
+          .container-fluid
+            .row
+            p Note: Failing to unfreeze account within due date period Will result to termination of membership. Visit one of our branches to 
+              span(style='color:orange;')
+                |  unfreeze 
+              | your account.
+            .row
+              .col-md-12
+                .form-group
+                  label.control-label Duration (months)
+                  input.form-control(type="number" name="freezevalue")
+                  input.hidden.id(type="text" name="id")
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Freeze Account
 
 
 
@@ -341,7 +347,7 @@ block main
 //-----------------------------------------------------------------------------------------------------------
 
 // MODAL 
-.assign.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+.assign-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
   .modal-dialog
     .modal-content
       .modal-header
@@ -414,7 +420,7 @@ block main
           .container-fluid
             content-panel
               table.table.table-striped.table-advance.table-hover
-                a#back(data-toggle='modal', data-target='#assign')
+                a#back(data-toggle='modal', data-target='.assign-modal')
                   i.fas.fa-angle-double-left 
                   |
                   | 
@@ -483,13 +489,17 @@ block main
 include ../../../../templates/foot
 
 script.
+  $('.freeze-modal').on('show.bs.modal', function(event){
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    let modal = $(this);
+
+    modal.find('.modal-body .id').val(`${id}`);
+  })
   
+script.
   $('.edit').click(function () {
-  $('.edit-modal').modal();
   $('.student').prop('checked', false);
-  });
-  $('.freeze').click(function(){
-    $('.freeze-modal').modal();
   });
   $('.student').click(function () {
     if ($(this).is(':checked')) {
@@ -501,33 +511,24 @@ script.
     $('.first').hide();
   });
 
-
 //-----------------------//
 //- TRAINING ASSIGNMENT -//
 //-----------------------//
 
 script.
-  $('[data-toggle="popover"]').popover();
-
-script.
-  $('#train').click(function(){
-    $('#assign').modal();
-  })
-
-script.
   $('#back').click(function(){
-  $('#sorted').modal('hide');
+  $('.sorted').modal('hide');
   })
 
 script.
   $('#return').click(function(){
-  $('#sorted').modal();
+  $('.sorted').modal();
   })
 
 script.
   $('.showImg').click(function(){
   $('.showImgModal').modal();
-  $('#sorted').modal('hide');
+  $('.sorted').modal('hide');
   });
 
 script.
@@ -545,8 +546,8 @@ script.
   selected = chkArray.join(',') ;
   if(selected.length > 0){
   //- alert("You have selected " + selected);
-  $('#sorted').modal();
-  $('#assign').modal('hide');
+  $('.sorted').modal();
+  $('.assign-modal').modal('hide');
   }
   else{
   alert("Please select at least one day");

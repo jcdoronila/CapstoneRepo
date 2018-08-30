@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: dbdecaps
+-- Host: localhost    Database: trydb
 -- ------------------------------------------------------
 -- Server version	5.7.21-log
 
@@ -105,6 +105,36 @@ CREATE TABLE `tblfacilities` (
 --
 
 INSERT INTO `tblfacilities` VALUES (1,' Washroom',100,12,'hr');
+
+--
+-- Table structure for table `tblfreeze`
+--
+
+DROP TABLE IF EXISTS `tblfreeze`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblfreeze` (
+  `freezeid` int(11) NOT NULL AUTO_INCREMENT,
+  `userfid` int(11) DEFAULT NULL,
+  `genid` int(11) DEFAULT NULL,
+  `datefrozen` date DEFAULT NULL,
+  `freezedmonths` int(11) DEFAULT NULL,
+  `unfreezedate` date DEFAULT NULL,
+  `intervals` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  PRIMARY KEY (`freezeid`),
+  KEY `userfid_idx` (`userfid`),
+  KEY `genid_idx` (`genid`),
+  CONSTRAINT `genid` FOREIGN KEY (`genid`) REFERENCES `tblgenera` (`generalID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `userfid` FOREIGN KEY (`userfid`) REFERENCES `tbluser` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tblfreeze`
+--
+
+INSERT INTO `tblfreeze` VALUES (2,83,2,'2018-08-30',2,NULL,NULL,100);
 
 --
 -- Table structure for table `tblgenera`
@@ -307,14 +337,14 @@ CREATE TABLE `tbluser` (
   CONSTRAINT `branch` FOREIGN KEY (`branch`) REFERENCES `tblbranch` (`branchID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `memrateid` FOREIGN KEY (`memrateid`) REFERENCES `tblmemrates` (`memrateid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `specialization` FOREIGN KEY (`specialization`) REFERENCES `tblspecial` (`specialID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tbluser`
 --
 
-INSERT INTO `tbluser` VALUES (9,NULL,NULL,'admin','12345',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(36,'  Joshua','  Ganila','ganila@gmail.com',NULL,4,NULL,NULL,'  +639123456789',NULL,NULL,NULL,NULL,NULL,'Inactive',NULL,NULL,NULL,NULL,NULL,NULL),(37,'Jethro','Samson','jethro@gmail.com','12345',3,NULL,5,'+639089765432','El Pueblo A-120 Sta. Mesa Manila','male','Monday,Tuesday,Wednesday','08/02/2018',4,NULL,'Jethpogi',NULL,NULL,NULL,NULL,NULL),(51,'Homer','Cadena','homer.keid@gmail.com','12345',4,NULL,5,'+639123214567',NULL,NULL,NULL,NULL,NULL,'Active','homiecadie',NULL,NULL,NULL,NULL,NULL),(52,'Danielle Nicole','Casadores','Casadores@gmail.com','12345',4,NULL,NULL,'+63909123432',NULL,NULL,NULL,NULL,NULL,'Inactive','Chawot',NULL,NULL,NULL,NULL,NULL),(53,'Rafh','Pabusta','Raf@gmail.com','12345',4,NULL,6,'+63909654567768',NULL,NULL,NULL,NULL,NULL,'Active','Rafhbeh',NULL,NULL,NULL,NULL,NULL),(67,'Josie','Rizal','joshuaburnay@gmail.com','12345',2,NULL,NULL,'+639123214567','Manila City','female',NULL,'11/01/2008',4,'Active','JR',3,'MLJ6p98','2018-08-26','2018-09-26',NULL),(68,'Will','Smith','johnortiz135@gmail.com','12345',2,NULL,5,'+639089765432','Manila City','male',NULL,'11/10/1999',4,'Active','FLY',9,'BakZxU2','2018-08-26','2021-08-26',NULL),(80,'Chris','Bosh','johnortiz135@gmail.com','12345',2,NULL,5,'+63909123432','Miami Florida','male',NULL,'07/25/1990',4,'Active','Bosh',6,'Odfdh46','2018-08-28','2019-08-28','2018-08-30'),(81,'Khalid','Star','tlovince14@gmail.com','12345',2,NULL,NULL,'+639253614789','California, USA','male',NULL,'04/14/2000',4,'Active','Khalid',3,'06lgkG9','2018-08-28','2018-09-28',NULL);
+INSERT INTO `tbluser` VALUES (9,NULL,NULL,'admin','12345',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(36,'  Joshua','  Ganila','ganila@gmail.com','12345',4,NULL,NULL,'  +639123456789',NULL,NULL,NULL,NULL,NULL,'Inactive',NULL,NULL,NULL,NULL,NULL,NULL),(37,'Jethro','Samson','jethro@gmail.com','12345',3,NULL,5,'+639089765432','El Pueblo A-120 Sta. Mesa Manila','male','Monday,Tuesday,Wednesday','08/02/2018',4,NULL,'Jethpogi',NULL,NULL,NULL,NULL,NULL),(51,'Homer','Cadena','homer.keid@gmail.com','12345',4,NULL,5,'+639123214567',NULL,NULL,NULL,NULL,NULL,'Active','homiecadie',NULL,NULL,NULL,NULL,NULL),(52,'Danielle Nicole','Casadores','Casadores@gmail.com','12345',4,NULL,NULL,'+63909123432',NULL,NULL,NULL,NULL,NULL,'Inactive','Chawot',NULL,NULL,NULL,NULL,NULL),(53,'Rafh','Pabusta','Raf@gmail.com','12345',4,NULL,6,'+63909654567768',NULL,NULL,NULL,NULL,NULL,'Active','Rafhbeh',NULL,NULL,NULL,NULL,NULL),(83,'Skusta','Clee','johnortiz135@gmail.com','12345',10,NULL,5,'+6399564987451','Manila City','male',NULL,'11/01/2008',4,'Active','EXB',6,'q7Jr7lm','2018-08-30','2019-04-28',NULL),(84,'Will','Smith','joshuaburnay@gmail.com','12345',2,NULL,NULL,'+6399564987451','Bel-Air , Beverly Hills','male',NULL,'',4,'Active','FLY',7,'RZ8zWcF','2018-08-30','2020-08-30','2018-08-30'),(85,'Tom',' Jones','tlovince14@gmail.com','12345',2,NULL,6,'+639321457897','California, USA','male',NULL,'06/07/1940',4,'Active','Tom',8,'NWfq970','2018-08-31','2019-08-31',NULL);
 
 --
 -- Table structure for table `tbppt`

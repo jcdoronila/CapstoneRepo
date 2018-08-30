@@ -25,6 +25,9 @@ block main
                         |  Membership
                       th
                         i.fa.fa-bookmark
+                        |  Membership Expiration
+                      th
+                        i.fa.fa-bookmark
                         |  Status
                       th
                         i.fa.fa-edit
@@ -33,7 +36,8 @@ block main
                     each br in intb
                       tr
                         td.hidden-phone  #{br.userfname} #{br.userlname}
-                        td #{br.memclassname}-#{br.membershipname}   
+                        td #{br.memclassname}-#{br.membershipname} 
+                        td #{br.expiry}  
                         td
                           if br.statusfront == 'Active'
                             span.label.label-success
@@ -313,23 +317,23 @@ block main
           .modal-header
             button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
             h4#myModalLabel.modal-title Freeze Account
-          form(action='POST', method='')
-          .modal-body
-            .container-fluid
-              .row
-              p Note: Failing to unfreeze account within due date period Will result to termination of membership. Visit one of our branches to 
-                span(style='color:orange;')
-                  |  unfreeze 
-                | your account.
-              .row
-                .col-md-12
-                  .form-group
-                    label.control-label Duration (months)
-                    input.form-control(type="number")
-                    input#id(type='text' name='id' )
-          .modal-footer
-            button.btn.btn-default(type='button', data-dismiss='modal') Close
-            button.btn.btn-primary(type='submit') Freeze Account
+          form(action='/freeze', method='POST')
+            .modal-body
+              .container-fluid
+                .row
+                p Note: Failing to unfreeze account within due date period Will result to termination of membership. Visit one of our branches to 
+                  span(style='color:orange;')
+                    |  unfreeze 
+                  | your account.
+                .row
+                  .col-md-12
+                    .form-group
+                      label.control-label Duration (months)
+                      input.form-control(type="number" name='freezevalue')
+                      input.hidden#id(type='text' name='id' )
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='submit') Freeze Account
 
 
 

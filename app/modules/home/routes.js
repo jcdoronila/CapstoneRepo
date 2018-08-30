@@ -639,7 +639,7 @@ function useraddid(req, res, next) {
 
 router.post('/pending/update', useraddid, (req, res) => {
   if (req.body.newcode === req.body.codenow)
-    db.query("UPDATE tbluser SET  signdate=CURDATE(),usertype=2,userpassword=12345 WHERE userid=?", [req.body.newid], (err, results, fields) => {
+    db.query("UPDATE tbluser SET statusfront='Active', signdate=CURDATE(),usertype=2,userpassword=12345 WHERE userid=?", [req.body.newid], (err, results, fields) => {
       db.query("UPDATE tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid SET u.expiry = case when cl.memclassid = mems.memclass then curdate() + interval mems.memperiod MONTH END where usertype=2 and userid=?", [req.body.newid], (err, results, fields) => {
         if (err)
           console.log(err);
@@ -659,6 +659,9 @@ function viewReg(req, res, next) {
   db.query('SELECT u.*, bn.branchname, memrate.memclassname, memrate.membershipname FROM tbluser u INNER JOIN tblbranch AS bn ON bn.branchid = u.branch INNER JOIN (select mr.memrateid, mc.memclassname, tc.membershipname FROM tblmemrates mr INNER JOIN tblmemclass AS mc ON mc.memclassid = mr.memclass INNER JOIN tblcat AS tc ON tc.membershipid = mr.memcat Group by mr.memrateid ) AS MemRate WHERE u.memrateid=memrate.memrateid and usertype=2', function (err, results, fields) {
     if (err) return res.send(err);
     req.viewReg = results;
+    //moments expiration
+    for (var i = 0; i < req.viewReg.length; i++) {
+      req.viewReg[i].expiry = moment(results[i].expiry).format("LL");}
     return next();
   })
 }
@@ -668,6 +671,9 @@ function viewInt(req, res, next) {
   db.query('select u.* ,mems.memrateid,ct.membershipname,cl.memclassname from tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid where usertype=2 and u.branch IS NULL', function (err, results, fields) {
     if (err) return res.send(err);
     req.viewInt = results;
+    //moments expiration
+    for (var i = 0; i < req.viewInt.length; i++) {
+      req.viewInt[i].expiry = moment(results[i].expiry).format("LL");}
     return next();
   })
 }
@@ -733,6 +739,37 @@ router.post('/payment',(req, res) => {
       });
       });
   })
+  
+
+//freezing
+router.post('/freeze',(req, res) => {
+   db.query("UPDATE tbluser SET usertype=10, expiry=expiry + interval ? MONTH where userid=?", [req.body.freezevalue,req.body.id], (err, results, fields) => {
+      db.query("INSERT INTO tblfreeze (userfid, datefrozen, freezedmonths,genid) VALUES (?, CURDATE(), ?, 2)", [req.body.id,req.body.freezevalue], (err, results, fields) => {
+        db.query("UPDATE tblfreeze f inner join tblgenera g ON f.genid=g.generalID inner join tbluser u ON u.userid=f.userfid set total = fee * freezedmonths Where userid=? ", [req.body.id], (err, results, fields) => {  
+        if (err)
+            console.log(err);
+          else {
+            res.redirect('/freezed');
+          }
+          });
+      });
+    });
+    })
+
+//view freezed accounts
+function viewFre(req, res, next) {
+  db.query('select u.* ,mems.*,ct.membershipname,cl.memclassname,f.* from tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid inner join tblfreeze f ON u.userid=f.userfid where usertype=10', function (err, results, fields) {
+    if (err) return res.send(err);
+    req.viewFre = results;
+    //moments datefrozen
+    for (var i = 0; i < req.viewFre.length; i++) {
+      req.viewFre[i].datefrozen = moment(results[i].datefrozen).format("LL");
+    }
+    return next();
+  })
+}
+
+
 
 
 //A-TEAM FITNESS FUNCTIONS
@@ -833,7 +870,9 @@ function t_event(req, res) {
 }
 
 function freezed(req, res) {
-  res.render('admin/transactions/views/t-freezed');
+  res.render('admin/transactions/views/t-freezed', {
+    fres: req.viewFre
+  });
 }
 
 function income(req, res) {
@@ -901,7 +940,7 @@ router.get('/memclass', viewHie, memclass);
 //TRANSACTIONS
 router.get('/t-class', t_class);
 router.get('/t-event', t_event);
-router.get('/freezed', freezed);
+router.get('/freezed',viewFre, freezed);
 router.get('/income', income);
 router.get('/payment', viewPay, payment);
 router.get('/pending', viewUpdate, viewPend, pending);
