@@ -232,7 +232,7 @@ function addid(req, res, next) {
 //insert branch
 
 router.post('/branch', addid, (req, res) => {
-  db.query("INSERT INTO tblbranch ( branchname,branchstreetname,branchcity,user) VALUES (?, ?, ?, ?, ?)", [req.body.branchname,req.body.street, req.body.city, req.body.user], (err, results, fields) => {
+  db.query("INSERT INTO tblbranch ( branchname,branchstreetname,branchcity,user) VALUES (?, ?, ?, ?)", [req.body.branchname,req.body.street, req.body.city, req.body.user], (err, results, fields) => {
     db.query("UPDATE tbluser SET branch=?,statusfront='Active' WHERE userid=?", [req.newid, req.body.user], (err, results, fields) => {
       if (err)
         console.log(err);
@@ -640,7 +640,7 @@ function useraddid(req, res, next) {
 router.post('/pending/update', useraddid, (req, res) => {
   if (req.body.newcode === req.body.codenow)
     db.query("UPDATE tbluser SET statusfront='Active', signdate=CURDATE(),usertype=2,userpassword=12345 WHERE userid=?", [req.body.newid], (err, results, fields) => {
-      db.query("UPDATE tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid SET u.expiry = case when cl.memclassid = mems.memclass then curdate() + interval mems.memperiod MONTH END where usertype=2 and userid=?", [req.body.newid], (err, results, fields) => {
+      db.query("  and userid=?", [req.body.newid], (err, results, fields) => {
         if (err)
           console.log(err);
         else {
@@ -790,7 +790,7 @@ router.post('/unfreeze',(req, res) => {
 
 //creating event
 router.post('/event',(req, res) => {
-  db.query("INSERT INTO tbleventclass(eventclassname,startdate,enddate,starttime,endtime,slot)", [req.body.event, req.body.start, req.body.end, re.body.startt, req.body.endt, req.body.slot], (err, results, fields) => {
+  db.query("INSERT INTO tbleventclass(eventclassname,startdate,enddate,starttime,endtime,slot)VALUES(?, ?, ?, ?, ?, ?)", [req.body.event, req.body.start, req.body.end, req.body.startt, req.body.endt, req.body.slot], (err, results, fields) => {
     if (err)
         console.log(err);
       else {
@@ -800,6 +800,18 @@ router.post('/event',(req, res) => {
     });
    })
 
+
+//view of regular interbranch members
+function viewEve(req, res, next) {
+  db.query('select * from tbleventclass', function (err, results, fields) {
+    if (err) return res.send(err);
+    req.viewEve = results;
+    //moments expiration
+    // for (var i = 0; i < req.viewInt.length; i++) {
+    //   req.viewInt[i].expiry = moment(results[i].expiry).format("LL");}
+    return next();
+  })
+}
 
 
 
@@ -939,7 +951,9 @@ function Interregular(req, res) {
 }
 
 function Events(req, res) {
-  res.render('admin/transactions/views/t-event')
+  res.render('admin/transactions/views/t-event',{
+    eves: req.viewEve
+  });
 }
 
 function GClasses(req, res) {
@@ -978,7 +992,7 @@ router.get('/pending', viewUpdate, viewPend, pending);
 router.get('/personal', personal);
 router.get('/regular', viewSusp, viewReg, regular);
 router.get('/interregular', viewSusp, viewInt, Interregular);
-router.get('/events', Events);
+router.get('/events',viewEve, Events);
 router.get('/t/classes', GClasses);
 /**
  * Here we just export said router on the 'index' property of this module.

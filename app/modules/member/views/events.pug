@@ -16,41 +16,42 @@ block main
                 .form-control.btn-primary(style="width:40px; position:relative; left:-40px;")
                   i.fa.fa-search
         br
+        each eve in eves
+          .col-lg-4.col-md-4.col-sm-4.mb
+              .content-panel(style="background-color:gray; padding:0; color:white; padding-top: 20px;")
+                h3 #{eve.eventclassname}
+                h6(style="margin:0!important") SAT/SUN - 1:30PM-4:30PM
+                | TUE/FRI - 8:00AM-10:30AM
+                br
+                br
+                br
+                .btn-block.btn-primary#view(style=" padding:5px; font-weight: bold;" data-toggle='modal', data-target='#modal')
+                    | View
+                .content-panel(style="margin:0!important; color:#797979;padding:5px 10px; width:100%;box-shadow:none; border-radius:0;")
+                  br
+                  h6(style="margin:0!important;") 
+                    b Class Description:
+                  | Event Desc
+                  br
+                  br
         br
-        .col-lg-4.col-md-4.col-sm-4.mb
-            .content-panel(style="background-color:gray; padding:0; color:white; padding-top: 20px;")
-              h3 EVENT NAME
-              h6(style="margin:0!important") SAT/SUN - 1:30PM-4:30PM
-              | TUE/FRI - 8:00AM-10:30AM
-              br
-              br
-              br
-              .btn-block.btn-primary#view(style=" padding:5px; font-weight: bold;" data-toggle='modal', data-target='#modal')
-                  | View
-              .content-panel(style="margin:0!important; color:#797979;padding:5px 10px; width:100%;box-shadow:none; border-radius:0;")
-                br
-                h6(style="margin:0!important;") 
-                  b Class Description:
-                | Event Desc
-                br
-                br
-      br
-      br
-      br
+        br
+        br
   
 
 #modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-  .modal-dialog.modal-sm
-    .modal-content
-      .modal-header
-        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-        h4.modal-title KICKBOXING
-      form(action='', method='post')
-      .modal-body  
-        .text-center
-          h3 SLOTS LEFT:
-          h1(style="font-size:72px") 31
-          button.btn.btn-primary#join(type='button') Join        
+  each eve in eves
+    .modal-dialog.modal-sm
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+          h4.modal-title #{eve.eventclassname}
+        form(action='', method='post')
+        .modal-body  
+          .text-center
+            h3 SLOTS LEFT:
+            h1(style="font-size:72px") #{eve.slot}
+            button.btn.btn-primary#join(type='button') Join        
 
   
 include ../../../templates/foot

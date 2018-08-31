@@ -34,10 +34,10 @@ function viewProf(req, res, next) {
 //******************************************************* */
 
 // view
-function viewClass(req, res, next) {
-    db.query('select * from tblclass', function (err, results, fields) {
+function viewEvent(req, res, next) {
+    db.query('select * from tbleventclass', function (err, results, fields) {
         if (err) return res.send(err);
-        req.viewClass = results;
+        req.viewEvent = results;
         return next();
     })
 }
@@ -72,15 +72,16 @@ function profile(req, res, next) {
 
 function events(req, res, next) {
     res.render('member/views/events', {
-        profs: req.viewProf
+        profs: req.viewProf,
+        eves: req.viewEvent
+
     });
     return next();
 }
 
 function classes(req, res, next) {
     res.render('member/views/classes', {
-        profs: req.viewProf,
-        classes: req.viewClass
+        profs: req.viewProf
     });
     return next();
 }
@@ -102,9 +103,9 @@ function trainer(req, res, next) {
 // ------------- GET ---------------//
 router.get('/', viewProf, dashboard);
 router.get('/profile', viewProf, profile);
-router.get('/events', viewProf, events);
+router.get('/events',viewEvent, viewProf, events);
 router.get('/trainers', viewProf, trainer);
-router.get('/classes', viewProf, viewClass, classes);
+router.get('/classes', viewProf, classes);
 router.get('/events', viewProf, events);
 router.get('/billing', viewProf, billing);
 exports.member = router;

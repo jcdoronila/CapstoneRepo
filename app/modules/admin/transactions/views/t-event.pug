@@ -25,9 +25,9 @@ block main
                       th
                         i.fa.fa-calendar-alt
                         |  End Date
-                      th
-                        i.fa.fa-home
-                        |  Location
+                      //- th
+                      //-   i.fa.fa-home
+                      //-   |  Location
                       //th
                         i.fa.fa-check-double
                         |  Availability
@@ -44,26 +44,27 @@ block main
                         i.fa.fa-edit
                         |  Action
                   tbody
-                    tr
-                      td Body Building
-                      td 07/05/2018
-                      td 07/05/2018
-                      td 1185 Sitio Saguipin
-                      //td All
-                      td 8:00AM - 9:00PM
-                      td 51 
-                      //td
-                        .switch(style='width:50px;', data-on-label="<i class=' fa fa-check'></i>", data-off-label="<i class='fa fa-times'></i>")
-                          input(type='checkbox', checked='')
-                      td
-                        button.view.btn.btn-info.btn-xs(data-toggle='modal', data-target='.view-modal')
-                          i.fa.fa-search
-                        button.view.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.add-modal')
-                          i.fa.fa-user-plus
-                        button.edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='.edit-modal')
-                          i.fa.fa-edit
-                        button.del.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.del-modal')
-                          i.fa.fa-trash-alt
+                    each ev in eves
+                      tr
+                        td #{ev.eventclassname}
+                        td #{ev.startdate}
+                        td #{ev.enddate}
+                        //- td 1185 Sitio Saguipin
+                        //td All
+                        td #{ev.starttime} - #{ev.endtime}
+                        td #{ev.slot}
+                        //td
+                          .switch(style='width:50px;', data-on-label="<i class=' fa fa-check'></i>", data-off-label="<i class='fa fa-times'></i>")
+                            input(type='checkbox', checked='')
+                        td
+                          button.view.btn.btn-info.btn-xs(data-toggle='modal', data-target='.view-modal')
+                            i.fa.fa-search
+                          button.view.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.add-modal')
+                            i.fa.fa-user-plus
+                          button.edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='.edit-modal')
+                            i.fa.fa-edit
+                          button.del.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.del-modal')
+                            i.fa.fa-trash-alt
 
 //MODAL
 #add-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
