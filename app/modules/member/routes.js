@@ -42,18 +42,34 @@ function viewClass(req, res, next) {
     })
 }
 
+/* ----------------- T R I G G E R   N O T I F I C A T I O N S ----------------- */
+// function triggerExpiryNotif(req, res, next){
+//   db.query('SELECT * FROM tbluser WHERE curdate() = expiry - interval 7 day', [req.session.member.userid], function(err, results, fields){
+//         if(err) return res.send(err);
+//         if(results[0])
+//         {
+//             db.query('INSERT INTO tblnotifications (strNotifType, txtNotifContent, datNotifInstance, intuserid) VALUES ("?  ", "You only have 7 days left for this subscription, please renew account.", NOW(), req.session.member.userid',(err,results,fields)=>{
+//                 if(err) return res.send(err);
+//             })
+//         }
+//             return next();
+//         })
+// }
 
+/* ----------------- S P R E A D   N O T I F I C A T I O N S ----------------- */
+// function spreadExpiryNotif(req, res, next){
+//   db.query('SELECT * FROM tbluser WHERE curdate() = expiry - interval 7 day', [req.session.member.userid], function(err, results, fields){
+//         if(err) return res.send(err);
+//         if(results[0])
+//         {
+//             for(var i = 0; i <= results.length; i++)
+//             {
 
-
-
-
-
-
-
-
-
-
-
+//             }
+//         }
+//             return next();
+//         })
+// }
 
 // ---------- F U N C T I O N S ---------- //
 function dashboard(req, res, next) {
@@ -70,7 +86,7 @@ function profile(req, res, next) {
     return next();
 }
 
-function events(req, res, next) {
+function eventss(req, res, next) {
     res.render('member/views/events', {
         profs: req.viewProf
     });
@@ -102,9 +118,9 @@ function trainer(req, res, next) {
 // ------------- GET ---------------//
 router.get('/', viewProf, dashboard);
 router.get('/profile', viewProf, profile);
-router.get('/events', viewProf, events);
+router.get('/events', viewProf, eventss); //triggerExpiryNotif
 router.get('/trainers', viewProf, trainer);
 router.get('/classes', viewProf, viewClass, classes);
-router.get('/events', viewProf, events);
+router.get('/events', viewProf, eventss);
 router.get('/billing', viewProf, billing);
 exports.member = router;
