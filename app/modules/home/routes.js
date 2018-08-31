@@ -822,6 +822,18 @@ function viewAss(req, res, next){
   })
 }
 
+//creating event
+router.post('/assign',(req, res) => {
+  db.query("INSERT INTO tbleventclass(eventclassname,startdate,enddate,starttime,endtime,slot)VALUES(?, ?, ?, ?, ?, ?)", [req.body.event, req.body.start, req.body.end, req.body.startt, req.body.endt, req.body.slot], (err, results, fields) => {
+    if (err)
+        console.log(err);
+      else {
+        res.redirect('/events');
+      }
+
+    });
+})
+
 
 
 //A-TEAM FITNESS FUNCTIONS

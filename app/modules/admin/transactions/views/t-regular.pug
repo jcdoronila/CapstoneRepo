@@ -54,7 +54,7 @@ block main
                             i.fa.fa-snowflake
                           button.edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='.edit-modal')
                             i.fa.fa-edit
-                          button.train.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.sorted')
+                          button.train.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.sorted' data-id=re.userid)
                             i.fa.fa-dumbbell
                           button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='')
                             i.fa.fa-exclamation-circle
@@ -420,12 +420,13 @@ block main
           .container-fluid
             content-panel
               table.table.table-striped.table-advance.table-hover
+                input.hidden#id(type='text' name='id')
                 br
                 thead
                   tr
                     th
                       i.fa.fa-user
-                      |  Name
+                      |  Name 
                     th
                       i.fa.fa-genderless
                       |  Gender
@@ -563,3 +564,12 @@ script.
   $('#memberDrop').addClass('active');
   $('#exclusive').addClass('active');
   });
+
+script.
+  $('.sorted').on('show.bs.modal', function(event){
+    var button = $(event.relatedTarget)      
+    var id = button.data('id')
+    console.log(id)
+    let modal = $(this)     
+    modal.find('.modal-body #id').val(` ${id}`)
+  })
