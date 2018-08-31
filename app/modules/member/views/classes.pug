@@ -20,14 +20,16 @@ block main
         each c in classes
           .col-lg-4.col-md-4.col-sm-4.mb
             .content-panel(style="background-color:gray; padding:0; color:white; padding-top: 20px;")
+              h3#slot(style='padding:0; margin:0; position:absolute;top:10px; left:20px;') 31
+              p(style='position:absolute;top:13px; left:50px;') - remaining slots
               h3 #{c.classname}
               h6(style="margin:0!important") SAT/SUN - 1:30PM-4:30PM
               | TUE/FRI - 8:00AM-10:30AM
               br
               br
               br
-              .btn-block.btn-primary#view(style=" padding:5px; font-weight: bold;" data-toggle='modal', data-target='#modal')
-                  | View
+              .btn-block.btn-primary.view(style=" padding:5px; font-weight: bold;" data-toggle='modal', data-target='#modal')
+                  | Join
               .content-panel(style="margin:0!important; color:#797979;padding:5px 10px; width:100%;box-shadow:none; border-radius:0;")
                 br
                 h6(style="margin:0!important;") 
@@ -39,33 +41,65 @@ block main
       br
       br
 
-#modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+.join-prompt.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
   .modal-dialog.modal-sm
     .modal-content
       .modal-header
-        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-        h4.modal-title KICKBOXING
-      form(action='', method='post')
-      .modal-body  
-        .text-center
-          h3 SLOTS LEFT:
-          h1(style="font-size:72px") 31
-          button.btn.btn-primary#join(type='button') Join        
+        button.close#return(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Join
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .row(style='margin-top:15px; margin-bottom:15px;') 
+              .container-fluid
+                h4 Are you sure you would like to join?
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Yes
+
+.resign-prompt.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
+  .modal-dialog.modal-sm
+    .modal-content
+      .modal-header
+        button.close#return(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Resign
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .row(style='margin-top:15px; margin-bottom:15px;') 
+              .container-fluid
+                h4 Are you sure you want to resign?
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Yes
+
+//- #modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+//-   .modal-dialog.modal-sm
+//-     .modal-content
+//-       .modal-header
+//-         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+//-         h4.modal-title KICKBOXING
+//-       form(action='', method='post')
+//-       .modal-body  
+//-         .text-center
+//-           h3 SLOTS LEFT:
+//-           h1(style="font-size:72px") 31
+//-           button.btn.btn-primary#join(type='button') Join        
 
 
 include ../../../templates/foot
 
 script.
- $('#join').click(function() {
-    $('#view').toggleClass('btn-primary');
-    $('#view').toggleClass('btn-danger');
-    if ($('#view').text() == "View"){
-      $('#view').text('Resign');
-      $('#join').text('Resign');
-    }
-    else {
-      $('#view').text('View');
-      $('#join').text('View');
-    }
-    $('#modal').modal('toggle');
-  });
+  $('.view').click(function() {
+      $(this).toggleClass('btn-primary');
+      $(this).toggleClass('btn-danger');
+      if ($(this).text() == "Join"){
+        $(this).text('Resign');
+        $('.join-prompt').modal();
+
+      }
+      else {
+        $(this).text('Join');
+        $('.resign-prompt').modal();
+      }
+    });

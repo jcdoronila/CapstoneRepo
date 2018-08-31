@@ -447,7 +447,7 @@ block main
                       td #{as.userschedule}
                       //- td A-team Marikina
                       td
-                        button.btn.btn-info.btn-theme(type='submit')
+                        a.btn.btn-info.btn-theme#prompt(data-toggle='modal' data-target='.prompt')
                           | Assign
 
 //IMAGE + DESCRIPTION
@@ -489,8 +489,30 @@ block main
                       b Description:
                       |  There are many reasons why people choose to exercise. Whether you want to improve your sport performance, reduce health risks, or look and feel better I can help you achieve your goals. Using a functional, yet fun approach I’ll help give you an edge – an edge in performance, and edge in health, and an edge in life.
                       br
+.prompt.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
+  .modal-dialog.modal-sm
+    .modal-content
+      .modal-header
+        button.close#return(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Assign
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .row(style='margin-top:15px; margin-bottom:15px;') 
+              .container-fluid
+                h4 Are you sure?
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Yes
+
+              
          
 include ../../../../templates/foot
+
+script.
+  $('.prompt').on('shown.bs.modal', function () {
+  $('.sorted').modal('hide');
+  });
 
 script.
   $('.freeze-modal').on('show.bs.modal', function(event){
@@ -499,7 +521,7 @@ script.
     let modal = $(this);
 
     modal.find('.modal-body .id').val(`${id}`);
-  })
+  });
   
 script.
   $('.edit').click(function () {
@@ -558,11 +580,13 @@ script.
   }
   }
 
+
 script.
  $(document).ready(function(){
   $('#transactionDrop').addClass('active');
   $('#memberDrop').addClass('active');
   $('#exclusive').addClass('active');
+  
   });
 
 script.
@@ -570,6 +594,6 @@ script.
     var button = $(event.relatedTarget)      
     var id = button.data('id')
     console.log(id)
-    let modal = $(this)     
+    let modal = $(this);     
     modal.find('.modal-body #id').val(` ${id}`)
   })
