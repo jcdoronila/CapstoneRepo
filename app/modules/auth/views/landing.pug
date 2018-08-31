@@ -175,9 +175,15 @@ html(lang='en')
                     .col-md-12
                       .form-group
                         label.control-label Membership
+<<<<<<< HEAD
                         select.form-control.required(name='membership')
                           each ct in cats
                             option.hidden(value='') Select Membership... 
+=======
+                        select.form-control(name='membership')
+                          each ct in cat
+                            option.hidden Select Membership... 
+>>>>>>> f9423ff8f6d22e9d3bec876e5c5c62afb4f9fd8c
                             option(value='' + ct.memrateid) #{ct.memclassname} - #{ct.membershipname} (#{ct.memperiod} MONTHS)
                   .row
                     .col-md-6
