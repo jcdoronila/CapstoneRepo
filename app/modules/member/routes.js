@@ -12,18 +12,18 @@ router.get('/dashboard', indexController);
 //                      PROFILE
 //******************************************************* */
 
-// view
-function viewProf(req, res, next) {
+// VIEW
+function initial(req, res, next) {
     db.query('select u.* ,mems.memrateid,ct.membershipname,cl.memclassname from tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid where usertype= 2  AND userid = ?', [req.session.member.userid], function (err, results, fields) {
         if (err) return res.send(err);
-        req.viewProf = results;
+        req.initial = results;
         //moments signdate
-        for (var i = 0; i < req.viewProf.length; i++) {
-            req.viewProf[i].signdate = moment(results[i].signdate).format("LL");
+        for (var i = 0; i < req.initial.length; i++) {
+            req.initial[i].signdate = moment(results[i].signdate).format("LL");
         }
         //moments expiration
-        for (var i = 0; i < req.viewProf.length; i++) {
-            req.viewProf[i].expiry = moment(results[i].expiry).format("LL");
+        for (var i = 0; i < req.initial.length; i++) {
+            req.initial[i].expiry = moment(results[i].expiry).format("LL");
         }
         return next();
     })
@@ -33,7 +33,20 @@ function viewProf(req, res, next) {
 //                     CLASSES
 //******************************************************* */
 
-// view
+// VIEW
+function viewClass(req, res, next) {
+    db.query('SELECT * FROM tblclass;', function (err, results, fields) {
+        if (err) return res.send(err);
+        req.viewClass = results;
+        return next();
+    })
+}
+
+//******************************************************* */
+//                     EVENT
+//******************************************************* */
+
+// VIEW
 function viewEvent(req, res, next) {
     db.query('select * from tbleventclass', function (err, results, fields) {
         if (err) return res.send(err);
@@ -58,54 +71,55 @@ function viewEvent(req, res, next) {
 // ---------- F U N C T I O N S ---------- //
 function dashboard(req, res, next) {
     res.render('member/views/dashboard', {
-        profs: req.viewProf
+        profs: req.initial
     })
     return next();
 }
 
 function profile(req, res, next) {
     res.render('member/views/profile', {
-        profs: req.viewProf
+        profs: req.initial
     })
     return next();
 }
 
 function events(req, res, next) {
     res.render('member/views/events', {
-        profs: req.viewProf,
+        profs: req.initial,
         eves: req.viewEvent
 
     });
     return next();
 }
-
+    
 function classes(req, res, next) {
     res.render('member/views/classes', {
-        profs: req.viewProf
+        classes: req.viewClass, 
+        profs: req.initial 
     });
     return next();
 }
 
 function billing(req, res, next) {
     res.render('member/views/billing', {
-        profs: req.viewProf
+        profs: req.initial 
     });
     return next();
 }
 
 function trainer(req, res, next) {
     res.render('member/views/trainer', {
-        profs: req.viewProf
+        profs: req.initial
     });
     return next();
 }
 
 // ------------- GET ---------------//
-router.get('/', viewProf, dashboard);
-router.get('/profile', viewProf, profile);
-router.get('/events',viewEvent, viewProf, events);
-router.get('/trainers', viewProf, trainer);
-router.get('/classes', viewProf, classes);
-router.get('/events', viewProf, events);
-router.get('/billing', viewProf, billing);
+router.get('/', initial, dashboard);
+router.get('/profile', initial, profile);
+router.get('/events',viewEvent, initial, events);
+router.get('/trainers', initial, trainer);
+router.get('/classes', initial, viewClass, classes);
+router.get('/events', initial, events);
+router.get('/billing', initial, billing);
 exports.member = router;
