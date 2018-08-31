@@ -171,7 +171,7 @@ html(lang='en')
                       .form-group
                         label.control-label Membership
                         select.form-control(name='membership')
-                          each ct in cats
+                          each ct in cat
                             option.hidden Select Membership... 
                             option(value='' + ct.memrateid) #{ct.memclassname} - #{ct.membershipname} (#{ct.memperiod} MONTHS)
                   //- .row

@@ -25,6 +25,9 @@ block main
                         i.fa.fa-calendar-alt
                         |  Freezing Date
                       th
+                        i.fa.fa-calendar-alt
+                        |  Freezed Until
+                      th
                         i.fa.fa-edit
                         |  Action
                   tbody
@@ -34,6 +37,7 @@ block main
                         td #{fr.usermobile}
                         td #{fr.memclassname}-#{fr.membershipname}
                         td #{fr.datefrozen}
+                        td #{fr.freezeduntil}
                         td
                           button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.unfreeze-modal' data-id=fr.userid)
                             i.fa.fa-fire
@@ -47,7 +51,7 @@ block main
       .modal-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
         h4#myModalLabel.modal-title Unfreeze Account
-      form(action='/', method='get')
+      form(action='/unfreeze', method='POST')
         .modal-body
           .container-fluid
             .row

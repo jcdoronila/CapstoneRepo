@@ -35,7 +35,7 @@ block main
 											td #{br.branchstreetnum} #{br.branchstreetname} #{br.branchcity}
 											td #{br.userfname} #{br.userlname}
 											td
-												button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Account', data-target='#editmodal' data-id=br.branchID data-name=br.branchname data-sname=br.branchstreetname data-snum=br.branchstreetnum data-city=br.branchcity data-oldid=br.user)
+												button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Account', data-target='#editmodal' data-id=br.branchID data-name=br.branchname data-sname=br.branchstreetname data-city=br.branchcity data-oldid=br.user)
 													i.fa.fa-edit
 												button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently' data-target='#deletemodal' data-id=br.branchID data-oldid=br.user)
 													i.fa.fa-trash-alt
@@ -97,7 +97,7 @@ block main
 													.col-md-8
 														.form-group
 															label.control-label Full Address
-															input#snum.form-control(type='text', placeholder='Street number and address..' name='street')
+															input#sname.form-control(type='text', placeholder='Street number and address..' name='street')
 													.col-md-4
 														.form-group
 															input#city.form-control(style='margin-top:17%;', type='text', placeholder='City..' name='city')

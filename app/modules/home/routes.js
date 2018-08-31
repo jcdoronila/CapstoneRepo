@@ -232,7 +232,7 @@ function addid(req, res, next) {
 //insert branch
 
 router.post('/branch', addid, (req, res) => {
-  db.query("INSERT INTO tblbranch ( branchname,branchstreetnum,branchstreetname,branchcity,user) VALUES (?, ?, ?, ?, ?)", [req.body.branchname, req.body.stnum, req.body.st, req.body.city, req.body.user], (err, results, fields) => {
+  db.query("INSERT INTO tblbranch ( branchname,branchstreetname,branchcity,user) VALUES (?, ?, ?, ?, ?)", [req.body.branchname,req.body.street, req.body.city, req.body.user], (err, results, fields) => {
     db.query("UPDATE tbluser SET branch=?,statusfront='Active' WHERE userid=?", [req.newid, req.body.user], (err, results, fields) => {
       if (err)
         console.log(err);
@@ -246,7 +246,7 @@ router.post('/branch', addid, (req, res) => {
 //edit branch
 
 router.post('/branch/edit', (req, res) => {
-  db.query(`UPDATE tblbranch SET branchname=?,branchstreetnum=?,branchstreetname=?,branchcity=?,user= ${req.body.user} WHERE branchID=${req.body.id}`, [req.body.branch, req.body.stnum, req.body.st, req.body.city], (err, results, fields) => {
+  db.query(`UPDATE tblbranch SET branchname=?,branchstreetname=?,branchcity=?,user= ${req.body.user} WHERE branchID=${req.body.id}`, [req.body.branch, req.body.street, req.body.city], (err, results, fields) => {
     db.query("UPDATE tbluser SET branch=NULL, statusfront='Inactive' WHERE userid=?", [req.body.oldid], (err, results, fields) => {
       db.query("UPDATE tbluser SET branch=?,statusfront='Active'  WHERE userid=?", [req.body.id, req.body.user], (err, results, fields) => {
         if (err)
@@ -746,28 +746,47 @@ router.post('/freeze',(req, res) => {
    db.query("UPDATE tbluser SET usertype=10, expiry=expiry + interval ? MONTH where userid=?", [req.body.freezevalue,req.body.id], (err, results, fields) => {
       db.query("INSERT INTO tblfreeze (userfid, datefrozen, freezedmonths,genid) VALUES (?, CURDATE(), ?, 2)", [req.body.id,req.body.freezevalue], (err, results, fields) => {
         db.query("UPDATE tblfreeze f inner join tblgenera g ON f.genid=g.generalID inner join tbluser u ON u.userid=f.userfid set total = fee * freezedmonths Where userid=? ", [req.body.id], (err, results, fields) => {  
-        if (err)
-            console.log(err);
-          else {
-            res.redirect('/freezed');
-          }
+          db.query("UPDATE tblfreeze f join tbluser u on f.userfid=u.userid SET freezeduntil=signdate + interval ? MONTH Where userid=? ", [req.body.freezevalue,req.body.id], (err, results, fields) => {  
+            if (err)
+              console.log(err);
+            else {
+              res.redirect('/freezed');
+            }
           });
+        });
       });
     });
     })
 
 //view freezed accounts
 function viewFre(req, res, next) {
-  db.query('select u.* ,mems.*,ct.membershipname,cl.memclassname,f.* from tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid inner join tblfreeze f ON u.userid=f.userfid where usertype=10', function (err, results, fields) {
+  db.query('select u.* ,mems.*,ct.membershipname,cl.memclassname,f.* from tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid inner join tblfreeze f ON u.userid=f.userfid where usertype=10 and minus is NULL', function (err, results, fields) {
     if (err) return res.send(err);
     req.viewFre = results;
     //moments datefrozen
     for (var i = 0; i < req.viewFre.length; i++) {
       req.viewFre[i].datefrozen = moment(results[i].datefrozen).format("LL");
     }
+    //moments freezeduntil
+    for (var i = 0; i < req.viewFre.length; i++) {
+      req.viewFre[i].freezeduntil = moment(results[i].freezeduntil).format("LL");
+    }
     return next();
   })
 }
+
+//unfreezing
+router.post('/unfreeze',(req, res) => {
+  db.query("UPDATE tblfreeze SET minus=DATEDIFF(freezeduntil,datefrozen) where userfid=?", [req.body.id], (err, results, fields) => {
+    db.query("UPDATE tblfreeze f join tbluser u on f.userfid=u.userid SET usertype=2, expiry=expiry - interval minus day where userid=?", [req.body.id], (err, results, fields) => {
+      if (err)
+          console.log(err);
+        else {
+          res.redirect('/freezed');
+        }
+      });
+    });
+   })
 
 
 
