@@ -5,7 +5,6 @@ append head
       margin-right:10px;
     }
 
-
 block main
    section#main-content
        section.wrapper.site-min-height
@@ -40,50 +39,42 @@ block main
                 section.wrapper
                   aside.col-lg-12.mt
                     section.panel
+                      .container-fluid
+                        table.table.table-striped.table-advance.table-hover
+                          h4
+                            | Walk Ins
+                            button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='.add-walkins-modal')
+                              i.fa.fa-home
+                              |  Add Walk in
+                          thead
+                            tr
+                              th
+                                i.fa.fa-user
+                                |  Name
+                              th
+                                i.fa.fa-phone
+                                |  Contact
+                              th
+                                i.fa.fa-edit
+                                | Action
+                          tbody      
+                            tr
+                              td NAME
+                              td CONTACT
+                              td
+                                button#facility.btn.btn-info.btn-xs(data-toggle='modal', data-target='.add-facility-modal')
+                                  i.fa.fa-shower
+                                button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='.edit-walkins-modal')
+                                  i.fa.fa-edit
+                                button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='')
+                                  i.fa.fa-trash-alt
+              .row
+                section.wrapper
+                  aside.col-lg-12.mt
+                    section.panel
                       .panel-body
                         #calendar.has-toolbar
-              //- .row
-              //-   section.wrapper(style='margin-top:0;')
-              //-     .border-head
-              //-       h3 Revenue
-              //-     .custom-bar-chart
-              //-       ul.y-axis
-              //-         li
-              //-           span 10.000
-              //-         li
-              //-           span 8.000
-              //-         li
-              //-           span 6.000
-              //-         li
-              //-           span 4.000
-              //-         li
-              //-           span 2.000
-              //-         li
-              //-           span 0
-              //-       .bar
-              //-         .title JAN
-              //-         .value.tooltips(data-original-title='8.500', data-toggle='tooltip', data-placement='top') 85%
-              //-       .bar
-              //-         .title FEB
-              //-         .value.tooltips(data-original-title='5.000', data-toggle='tooltip', data-placement='top') 50%
-              //-       .bar
-              //-         .title MAR
-              //-         .value.tooltips(data-original-title='6.000', data-toggle='tooltip', data-placement='top') 60%
-              //-       .bar
-              //-         .title APR
-              //-         .value.tooltips(data-original-title='4.500', data-toggle='tooltip', data-placement='top') 45%
-              //-       .bar
-              //-         .title MAY
-              //-         .value.tooltips(data-original-title='3.200', data-toggle='tooltip', data-placement='top') 32%
-              //-       .bar
-              //-         .title JUN
-              //-         .value.tooltips(data-original-title='6.200', data-toggle='tooltip', data-placement='top') 62%
-              //-       .bar
-              //-         .title JUL
-              //-         .value.tooltips(data-original-title='7.500', data-toggle='tooltip', data-placement='top') 75%
-
             .col-lg-3.ds
-              
               h3 
                 span.li_heart 
                 |  Membership
@@ -102,7 +93,6 @@ block main
                   img.img-circle(src='assets/img/ui-divya.jpg', width='35px', height='35px', align='')
                 .details
                   h6  Bronze Membership
-
               h3 
                 span.li_calendar 
                 |  Class List
@@ -122,4 +112,93 @@ block main
                 .details
                   h6 General Training
 
+.add-walkins-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Add Walk-ins used
+      form(action='/freeze', method='POST')
+        .modal-body
+          .container-fluid
+            .row
+              .col-md-6
+                .form-group
+                  label.control-label Full Name
+                  input.form-control(type="text" name="fname" placeholder='First Name')
+              .col-md-6
+                .form-group
+                  label.control-labe(style="color:white") Full Name
+                  input.form-control(type="text" name="lname" placeholder='Last Name')
+            .row
+              .col-md-12
+                .form-group
+                  label.control-label Contact
+                  input.form-control(type="text" name="contact")
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Add Walkins
+
+.edit-walkins-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Add Walk-ins used
+      form(action='/freeze', method='POST')
+        .modal-body
+          .container-fluid
+            .row
+              .col-md-6
+                .form-group
+                  label.control-label Full Name
+                  input.form-control(type="text" name="fname" placeholder='First Name')
+              .col-md-6
+                .form-group
+                  label.control-labe(style="color:white") Full Name
+                  input.form-control(type="text" name="lname" placeholder='Last Name')
+            .row
+              .col-md-12
+                .form-group
+                  label.control-label Contact
+                  input.form-control(type="text" name="contact")
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Add Walkins
+
+
+.add-facility-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Add Walk-ins used
+      .modal-body
+        .container-fluid
+          table.table.table-advance.table-hover
+            h4
+              | Add Used Facilities
+              a.btn.btn-theme(style='margin-left: 5px;' href='/facility')
+                i.fa.fa-home
+                |  Add Facility 
+            thead 
+              tr
+                th
+                  i.fa.fa-shower
+                  |  Name
+                th
+                  i.fa.fa-edit
+                  | Action
+            tbody      
+              tr
+                td NAME
+                td 
+                  input(type="number" style='width:40px;!important')
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') Close
+        button.btn.btn-primary(type='submit') Save
+
 include ../../../templates/foot.pug
+
+ 
+

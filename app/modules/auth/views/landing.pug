@@ -103,7 +103,7 @@ html(lang='en')
           .modal-header
             button.close(type='button', data-dismiss='modal', aria-label='Close')
               span(aria-hidden='true') ×
-          form(method='POST', action='/signup')
+          form.needs-validation(method='POST', action='/signup' novalidate)
             h2(style='color:black; margin-left:30px;') Sign Up
             .modal-body
               .container-fluid
@@ -116,11 +116,11 @@ html(lang='en')
                     .col-md-6
                       .form-group
                         label#fname.control-label First Name
-                        input.form-control(type='text' name='fname')
+                        input.form-control(type='text' name='fname' required)
                     .col-md-6
                       .form-group
                         label.control-label Last Name
-                        input.form-control(type='text' name='lname')
+                        input.form-control(type='text' name='lname' required)
                   .row
                     .col-md-6
                       .input-group
@@ -136,31 +136,36 @@ html(lang='en')
                     .col-md-6
                       .form-group
                         label.control-label Date of Birth
-                        input.date.form-control(type='text' name='bday')
+                        input.date.form-control(type='text' name='bday'  required)
                   .row
-                    .col-md-12
+                    .col-md-9
                       .form-group
                         label.control-label Address
-                        input.form-control(type='text' name='addr')
+                        input.form-control(type='text' name='str' placeholder='Street Name..' required)
+                    .col-md-3 
+                      .form-group
+                        label.control-label(style="color:white") Address
+                        input.form-control(type='text' name='city' placeholder='City..' required)
                   .row
                     .col-md-6
                       .form-group
                         label.control-label Mobile Number
-                        input.form-control(type='text', value='+639' name='mobile')
+                        input.form-control(type='text', placeholder='09xxxxxxxxx' name='mobile' required)
                     .col-md-6
                       .form-group
                         label.control-label Email
-                        input.form-control(type='email' name='email')
+                        input.form-control(type='email' name='email' required)
                 .row
                   .col-md-12
                     h5 Login Information
                     hr
                 .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                
                   .row
                     .col-md-12
                       .form-group
                         label.control-label Username
-                        input.form-control(type='text' name='username')
+                        input.form-control(type='text' name='username' required)
                 .row
                   .col-md-12
                     h5 More Information
@@ -170,61 +175,44 @@ html(lang='en')
                     .col-md-12
                       .form-group
                         label.control-label Membership
-                        select.form-control(name='membership')
+                        select.form-control.required(name='membership')
                           each ct in cats
-                            option.hidden Select Membership... 
+                            option.hidden(value='') Select Membership... 
                             option(value='' + ct.memrateid) #{ct.memclassname} - #{ct.membershipname} (#{ct.memperiod} MONTHS)
-                  //- .row
-                  //-   .col-md-5
-                  //-     .form-group
-                  //-       label.control-label Type of Membership
-                  //-       select#type.form-control(name='type' value='NULL')
-                  //-         each ct in cats
-                  //-           option(value='' + ct.memrateid) #{ct.memclassname} - #{ct.membershipname} (#{ct.memperiod} Days)
-                    .col-md-7(style='color:gray; font-size:10pt')
-                      i
-                        p
-                          | Interbranch - Membership valid to all branches.
-                          br
-                          | Exclusive - Membership valid only to the branch you choose.
-                        p(style='margin:0;') Note: Rates vary on type of membership. "Interbranch" costs more.
                   .row
                     .col-md-6
                       .form-group
                         label.control-label Branch
-                        select#branch.form-control(name='branch')
+                        select#branch.form-control.required(name='branch')
                           each br in bras
                             option.hidden(value='') Select Branch...
                             option(value='' + br.branchID) #{br.branchname}
-                      i
                         p
                           | Only For Exclusive membership for interbranch leave it unfilled        
                     .col-md-6
                       .form-group
                         label.control-label Interested Area
-                        select.form-control(name='specs')
+                        select.form-control.required(name='specs')
                           each sp in specs
                             option.hidden(value='') Select Interest... 
                             option(value='' + sp.specialID) #{sp.specialname}
-                    .col-md-5
-                      label.checkbox
-                        | Are you a Student?
-                        input#student(type='checkbox')
-                        span.check
-                      p#1 Uncheck if you are unwilling to provide proof.
-                    .col-md-7(style='color:gray; font-size:10pt')
-                      i
-                        p#2(style='display: none')
-                          | You can avail a student discount if we can confirm your claim. Give us proof (eg. student ID, registration
-                          | card etc.) through our branch near you.
-                          br
-                          br
-                          | Or upload a scanned photo of your ID (NOTE: We may not accept it if we think it's fraud. In case
-                          |                         that happens please consult us personally)
-                          input#file.inputfile(type='file')
-                          br
-                          b NOTE:
-                          |  We will not accept your request until you are verified.
+                        label.checkbox
+                          | Are you a Student?
+                          input#student(type='checkbox')
+                          span.check
+                        p#1 Uncheck if you are unwilling to provide proof.
+                    .col-md-12(style='color:gray; font-size:10pt')
+                      p#2(style='display: none')
+                        | You can avail a student discount if we can confirm your claim. Give us proof (eg. student ID, registration
+                        | card etc.) through our branch near you.
+                        br
+                        br
+                        | Or upload a scanned photo of your ID (NOTE: We may not accept it if we think it's fraud. In case
+                        |                         that happens please consult us personally)
+                        input#file.inputfile(type='file')
+                        br
+                        b NOTE:
+                        |  We will not accept your request until you are verified.
             .modal-footer
               button.btn.btn-default(type='button', data-dismiss='modal') Cancel
               button#submit.btn.btn-primary( type='submit') Register
@@ -267,6 +255,7 @@ html(lang='en')
     a.go-top(href='#back-top')
       i.fa.fa-angle-up
     //- // javscript js
+    
 
     script(src='../../../../landing/js/jquery.js')
     script(src='../../../../assets/js/bootstrap-datepicker.js')
@@ -275,10 +264,15 @@ html(lang='en')
     script(src='../../../../landing/js/wow.min.js')
     script(src='../../../../landing/js/smoothscroll.js')
     script(src='../../../../landing/js/custom.js')
+    script(src='../../../../assets/js/jquery.validate.js')
 
     link(rel='stylesheet', type='text/css', href='../../../../landing/js/gritter/css/jquery.gritter.css')
     script(type='text/javascript', src='../../../../landing/js/gritter/js/jquery.gritter.js')
     script(type='text/javascript', src='../../../../landing/js/gritter-conf.js')
+
+    script.
+     
+
     script.
       $(document).ready(function () {
       $("#login").on("show", function () {
@@ -306,5 +300,18 @@ html(lang='en')
       $("#1").show();
       }
       });
+      });
+
+      $('.needs-validation').validate({
+        rules:{
+          username: {
+            minlength: 4
+            },
+        },
+        messages:{
+          username:{
+            minlength: 'Username shouldn\'t be less than four characters'
+          }
+        }
       });
       });
