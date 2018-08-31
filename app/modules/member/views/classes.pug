@@ -26,9 +26,8 @@ block main
               br
               br
               br
-              .btn-block.btn-primary(style=" padding:5px; font-weight: bold;")
-                i.fa.fa-search(style="padding-right:10px; ")
-                | View
+              .btn-block.btn-primary#view(style=" padding:5px; font-weight: bold;" data-toggle='modal', data-target='#modal')
+                  | View
               .content-panel(style="margin:0!important; color:#797979;padding:5px 10px; width:100%;box-shadow:none; border-radius:0;")
                 br
                 h6(style="margin:0!important;") 
@@ -40,4 +39,33 @@ block main
       br
       br
 
+#modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog.modal-sm
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4.modal-title KICKBOXING
+      form(action='', method='post')
+      .modal-body  
+        .text-center
+          h3 SLOTS LEFT:
+          h1(style="font-size:72px") 31
+          button.btn.btn-primary#join(type='button') Join        
+
+
 include ../../../templates/foot
+
+script.
+ $('#join').click(function() {
+    $('#view').toggleClass('btn-primary');
+    $('#view').toggleClass('btn-danger');
+    if ($('#view').text() == "View"){
+      $('#view').text('Resign');
+      $('#join').text('Resign');
+    }
+    else {
+      $('#view').text('View');
+      $('#join').text('View');
+    }
+    $('#modal').modal('toggle');
+  });

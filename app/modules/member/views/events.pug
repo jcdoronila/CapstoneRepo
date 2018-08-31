@@ -18,21 +18,26 @@ block main
         br
         br
         .col-lg-4.col-md-4.col-sm-4.mb
-          .content-panel.pn(style="background-color:gray; padding:0; color:white; padding-top: 20px;")
-            h3 KICK BOXING
-            h6(style="margin:0!important") SAT/SUN - 1:30PM-4:30PM
-            | TUE/FRI - 8:00AM-10:30AM
-            .btn-block.btn-primary(style="position:relative; top:25px; padding:5px; font-weight: bold;" data-toggle="modal" data-target="#modal")
-              i.fa.fa-search(style="padding-right:10px; ")
-              | View
-            .content-panel(style="margin:0!important; height: 90px; color:#797979;padding:6px 10px; position:relative; width:100%;top:25px;box-shadow:none; border-radius:0;")
+            .content-panel(style="background-color:gray; padding:0; color:white; padding-top: 20px;")
+              h3 EVENT NAME
+              h6(style="margin:0!important") SAT/SUN - 1:30PM-4:30PM
+              | TUE/FRI - 8:00AM-10:30AM
               br
-              h6(style="margin:0!important;") 
-                b Class Description:
-              | Fighting types lang pwede mag-enroll dito mga deputa kayo haha emoji
+              br
+              br
+              .btn-block.btn-primary#view(style=" padding:5px; font-weight: bold;" data-toggle='modal', data-target='#modal')
+                  | View
+              .content-panel(style="margin:0!important; color:#797979;padding:5px 10px; width:100%;box-shadow:none; border-radius:0;")
+                br
+                h6(style="margin:0!important;") 
+                  b Class Description:
+                | Event Desc
+                br
+                br
       br
       br
       br
+  
 
 #modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
   .modal-dialog.modal-sm
@@ -45,7 +50,22 @@ block main
         .text-center
           h3 SLOTS LEFT:
           h1(style="font-size:72px") 31
-          button.btn.btn-primary(type='button') Join        
+          button.btn.btn-primary#join(type='button') Join        
 
   
 include ../../../templates/foot
+
+script.
+ $('#join').click(function() {
+    $('#view').toggleClass('btn-primary');
+    $('#view').toggleClass('btn-danger');
+    if ($('#view').text() == "View"){
+      $('#view').text('Resign');
+      $('#join').text('Resign');
+    }
+    else {
+      $('#view').text('View');
+      $('#join').text('View');
+    }
+    $('#modal').modal('toggle');
+  });
