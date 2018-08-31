@@ -788,6 +788,18 @@ router.post('/unfreeze',(req, res) => {
     });
    })
 
+//creating event
+router.post('/event',(req, res) => {
+  db.query("INSERT INTO tbleventclass(eventclassname,startdate,enddate,starttime,endtime,slot)", [req.body.event, req.body.start, req.body.end, re.body.startt, req.body.endt, req.body.slot], (err, results, fields) => {
+    if (err)
+        console.log(err);
+      else {
+        res.redirect('/events');
+      }
+
+    });
+   })
+
 
 
 
