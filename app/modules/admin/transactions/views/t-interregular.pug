@@ -50,7 +50,7 @@ block main
                             i.fa.fa-snowflake
                           button.edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='.edit-modal')
                             i.fa.fa-edit
-                          button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.assign-modal')
+                          button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.sorted')
                             i.fa.fa-dumbbell
                           button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.suspend-modal')
                             i.fa.fa-exclamation-circle
@@ -415,30 +415,42 @@ block main
           .container-fluid
             content-panel
               table.table.table-striped.table-advance.table-hover
-                a#back(data-toggle='modal', data-target='.assign-modal  ')
-                  i.fas.fa-angle-double-left 
-                  |
-                  | 
-                  b Back
+                //- a#back(data-toggle='modal', data-target='.assign-modal  ')
+                //-   i.fas.fa-angle-double-left 
+                //-   |
+                //-   | 
+                //-   b Back
                 br
                 thead
                   tr
                     th
                       i.fa.fa-user
-                      |  Trainer
+                      |  Name
+                    th
+                      i.fa.fa-genderless
+                      |  Gender
+                    th
+                      i.fa.fa-calendar-alt
+                      |  Schedule
+                    //- th
+                    //-   i.fa.fa-home
+                    //-   |  Branch
                     th
                       i.fa.fa-edit
                       |  Action
                 tbody
+                
                   tr
-                    td John Doe 
+                    td John Doe
                       a.showImg
                         span(style='margin-left:20px; cursor:pointer;')  
                           i.fa.fa-image 
                           small  Show Details
-                    
+                    td Male
+                    td Monday
+                    //- td A-team Marikina
                     td
-                      button.btn.btn-info.btn-theme(href='/personal')
+                      button.btn.btn-info.btn-theme(type='submit')
                         | Assign
 
 //IMAGE + DESCRIPTION
