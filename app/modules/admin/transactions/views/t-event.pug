@@ -11,7 +11,7 @@ block main
                 table.table.table-striped.table-advance.table-hover
                   h4
                     | All Events
-                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add')
+                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add-modal')
                       i.fa.fa-plus
                       |  Add Event
                   thead
@@ -56,15 +56,17 @@ block main
                         .switch(style='width:50px;', data-on-label="<i class=' fa fa-check'></i>", data-off-label="<i class='fa fa-times'></i>")
                           input(type='checkbox', checked='')
                       td
-                        button#view.btn.btn-info.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='View')
+                        button.view.btn.btn-info.btn-xs(data-toggle='modal', data-target='.view-modal')
                           i.fa.fa-search
-                        button#edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit')
+                        button.view.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.add-modal')
+                          i.fa.fa-user-plus
+                        button.edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='.edit-modal')
                           i.fa.fa-edit
-                        button#del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Remove')
+                        button.del.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.del-modal')
                           i.fa.fa-trash-alt
 
 //MODAL
-#add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+#add-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
   .modal-dialog
     .modal-content
       .modal-header
@@ -129,7 +131,7 @@ block main
           button.btn.btn-primary(type='button') Add Event
 
 //MODAL
-#view-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+.view-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
   .modal-dialog
     .modal-content
       .modal-header
@@ -165,7 +167,7 @@ block main
 
           
 //MODAL
-#edit-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+.edit-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
   .modal-dialog
     .modal-content
       .modal-header
@@ -228,6 +230,35 @@ block main
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') Close
             button.btn.btn-primary(type='button') Save Event
+
+//- ADD WALKIN
+.add-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Add a non-member participant
+      form(action='', method='post')
+        .modal-body
+          .container-fluid
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+              .row
+                .col-md-6
+                  .form-group
+                    label.control-label First Name
+                    input.form-control(type='text')
+                .col-md-6
+                  .form-group
+                    label.control-label Last Name
+                    input.form-control(type='text')
+              .row
+                .col-md-12
+                  .form-group
+                    label.control-label Contact Info
+                    input.form-control(type='text')
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Close
+            button.btn.btn-primary(type='button') Add participant
               
 include ../../../../templates/foot
 
@@ -237,13 +268,4 @@ script.
     $('#event').addClass('active');
     });
 
-
-  $('.date').datepicker({
-    startDate: "today"
-  });
-  $('#edit').click(function(){
-    $('#edit-modal').modal();
-  });
-   $('#view').click(function(){
-    $('#view-modal').modal();
-  });
+script.

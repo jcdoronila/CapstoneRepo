@@ -35,16 +35,47 @@ block main
                         td #{fr.memclassname}-#{fr.membershipname}
                         td #{fr.datefrozen}
                         td
-                          button.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Unfreeze Account')
+                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.unfreeze-modal' data-id=fr.userid)
                             i.fa.fa-fire
-                          button.btn.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently')
+                          button.btn.btn-xs(data-toggle='modal',)
                             i.fa.fa-trash-alt
-              // /content-panel
+              
+// MODAL FREEZE MEMBER
+.unfreeze-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Unfreeze Account
+      form(action='/', method='get')
+        .modal-body
+          .container-fluid
+            .row
+            .col-md-12
+              h4 Are you sure? This will continue your subscription from <b>TODAY</b>.
+              input.id(type="text" name="id")
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Freeze Account
+
 include ../../../../templates/foot
+
 
 script.
   $(document).ready(function(){
     $('#transactionDrop').addClass('active');
     $('#memberDrop').addClass('active');
     $('#freezed').addClass('active');
+
+    var date = Date();
     });
+
+script.
+  $('.unfreeze-modal').on('show.bs.modal', function(event){
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    let modal = $(this);
+
+    modal.find('.modal-body .id').val(`${id}`);
+  })
+  
