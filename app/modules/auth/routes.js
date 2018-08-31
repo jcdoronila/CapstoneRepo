@@ -187,7 +187,7 @@ function useraddid(req, res, next){
     console.log(req.newuserid)
     return next();
     })
-}
+} 
 
 
 SignupRouter.route('/')
@@ -199,8 +199,9 @@ SignupRouter.route('/')
         var db = require('../../lib/database')();
             var autogen= codegen();
             fullname =(req.body.fname +" "+ req.body.lname);
+            addr=(req.body.str+" "+req.body.city)
             code = autogen;
-                db.query("INSERT INTO tbluser (userfname, userlname, usergender, userbday, useraddress, usermobile, useremail, userusername, memrateid, branch, specialization, usertype,paymentcode ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 8, ? ) ",[ req.body.fname, req.body.lname, req.body.gen, req.body.bday, req.body.addr, req.body.mobile, req.body.email, req.body.username, req.body.membership, req.body.branch, req.body.specs, autogen], (err, results, fields)=>{
+                db.query("INSERT INTO tbluser (userfname, userlname, usergender, userbday, useraddress, usermobile, useremail, userusername, memrateid, branch, specialization, usertype,paymentcode ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 8, ? ) ",[ req.body.fname, req.body.lname, req.body.gen, req.body.bday, addr, req.body.mobile, req.body.email, req.body.username, req.body.membership, req.body.branch, req.body.specs, autogen], (err, results, fields)=>{
                     db.query('select u.userfname,u.userlname ,mems.memrateid,mems.memfee,ct.membershipname,cl.memclassname from tbluser u inner join tblmemrates mems ON u.memrateid=mems.memrateid inner join tblcat ct ON mems.memcat=ct.membershipID inner join tblmemclass cl ON mems.memclass= cl.memclassid where userid=?',[req.newuserid],(err, results, fields)=>{
                         members=(results[0].memclassname +" "+results[0].membershipname)
                         fee=results[0].memfee
