@@ -352,7 +352,7 @@ router.post('/trains', (req, res) => {
     if (err)
       console.log(err);
     else {
-      res.redirect('/trainer');
+      res.redirect('/trains');
     }
   });
 });
@@ -813,6 +813,15 @@ function viewEve(req, res, next) {
   })
 }
 
+//view trainer asign
+function viewAss(req, res, next){
+  db.query('SELECT * from tbluser where usertype=3',function(err, results, fields){
+    if(err) return res.send(err);
+    req.viewAss = results;
+    return next();
+  })
+}
+
 
 
 //A-TEAM FITNESS FUNCTIONS
@@ -940,13 +949,15 @@ function personal(req, res) {
 
 function regular(req, res) {
   res.render('admin/transactions/views/t-regular', {
-    regs: req.viewReg
+    regs: req.viewReg,
+    ass: req.viewAss
   });
 }
 
 function Interregular(req, res) {
   res.render('admin/transactions/views/t-interregular', {
-    intb: req.viewInt
+    intb: req.viewInt,
+    ass: req.viewAss
   });
 }
 
@@ -990,8 +1001,8 @@ router.get('/income', income);
 router.get('/payment', viewPay, payment);
 router.get('/pending', viewUpdate, viewPend, pending);
 router.get('/personal', personal);
-router.get('/regular', viewSusp, viewReg, regular);
-router.get('/interregular', viewSusp, viewInt, Interregular);
+router.get('/regular',viewAss, viewSusp, viewReg, regular);
+router.get('/interregular',viewAss, viewSusp, viewInt, Interregular);
 router.get('/events',viewEve, Events);
 router.get('/t/classes', GClasses);
 /**

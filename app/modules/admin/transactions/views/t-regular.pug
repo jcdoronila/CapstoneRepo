@@ -415,7 +415,7 @@ block main
       .modal-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
         h4#myModalLabel.modal-title Assign Member to a Trainer
-      form(action='POST', method='')
+      form(action='/assign', method='POST')
         .modal-body
           .container-fluid
             content-panel
@@ -432,25 +432,22 @@ block main
                     th
                       i.fa.fa-calendar-alt
                       |  Schedule
-                    th
-                      i.fa.fa-home
-                      |  Branch
+                    //- th
+                    //-   i.fa.fa-home
+                    //-   |  Branch
                     th
                       i.fa.fa-edit
                       |  Action
                 tbody
-                  tr
-                    td John Doe 
-                      a.showImg
-                        span(style='margin-left:20px; cursor:pointer;')  
-                          i.fa.fa-image 
-                          small  Show Details
-                    td Male
-                    td Monday, Tuesday, Wednesday
-                    td A-team Marikina
-                    td
-                      button.btn.btn-info.btn-theme(href='/personal')
-                        | Assign
+                  each as in ass
+                    tr
+                      td #{as.userfname} #{as.userlname}
+                      td #{as.usergender}
+                      td #{as.userschedule}
+                      //- td A-team Marikina
+                      td
+                        button.btn.btn-info.btn-theme(type='submit')
+                          | Assign
 
 //IMAGE + DESCRIPTION
 .showImgModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
