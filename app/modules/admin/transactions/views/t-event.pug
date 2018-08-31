@@ -72,7 +72,7 @@ block main
       .modal-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
         h4#myModalLabel.modal-title Schedule an Event
-      form(action='', method='post')
+      form(action='/event', method='POST')
         .modal-body
           .container-fluid
             .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
@@ -80,16 +80,16 @@ block main
                 .col-md-12
                   .form-group
                     label.control-label Event Name
-                    input.form-control(type='text')
+                    input.form-control(type='text' name='event')
               .row
                 .col-md-6
                   .form-group
                     label.control-label Start Date
-                    input.form-control.date(type='text')
+                    input.form-control.date(type='text' name='start')
                 .col-md-6
                   .form-group
                     label.control-label End Date
-                    input.form-control.date(type='text')
+                    input.form-control.date(type='text' name='end')
               //.row
                 .col-md-12
                   .form-group
@@ -109,11 +109,11 @@ block main
                 .col-md-6
                   .form-group
                     label.control-label Start Time
-                    input.form-control(type='time')
+                    input.form-control(type='time' name='startt')
                 .col-md-6
                   .form-group
                     label.control-label End Time
-                    input.form-control(type='time')
+                    input.form-control(type='time' name='endt')
               //.row
                 .col-md-6
                   .form-group
@@ -128,7 +128,7 @@ block main
                     input.form-control(type='number' name='slot')
         .modal-footer
           button.btn.btn-default(type='button', data-dismiss='modal') Close
-          button.btn.btn-primary(type='button') Add Event
+          button.btn.btn-primary(type='submit') Add Event
 
 //MODAL
 .view-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -181,17 +181,17 @@ block main
                 .col-md-12
                   .form-group
                     label.control-label Event Name
-                    input.form-control(type='text')
+                    input.form-control(type='text' name='event')
               .row
                 .col-md-6
                   .form-group
                     label.control-label Start Date
-                    input.form-control.date(type='text')
+                    input.form-control.date(type='text' name='start')
                 .col-md-6
                   .form-group
                     label.control-label End Date
-                    input.form-control.date(type='text')
-              .row
+                    input.form-control.date(type='text' name='end')
+              //.row
                 .col-md-12
                   .form-group
                     label.control-label Location
@@ -200,22 +200,22 @@ block main
                       option Specific 
                       option Interbranch
                       option Sta. Mesa
-                      option Marikina  
+                      option Marikina
               .row
                 .col-md-12
                   .form-group
-                    label.control-label Specify Location
-                    input.form-control(type="text" disabled)
+                    label.control-label Slots
+                    input.form-control(type="number" name='slot')
               .row
                 .col-md-6
                   .form-group
                     label.control-label Start Time
-                    input.form-control.time(type='text')
+                    input.form-control(type='time' name='startt')
                 .col-md-6
                   .form-group
                     label.control-label End Time
-                    input.form-control.time(type='text')
-              .row
+                    input.form-control(type='time' name='endt')
+              //.row
                 .col-md-6
                   .form-group
                     label.control-label Availability
@@ -227,9 +227,9 @@ block main
                   .form-group
                     label.control-label Slot
                     input.form-control(type='number' name='slot')
-          .modal-footer
-            button.btn.btn-default(type='button', data-dismiss='modal') Close
-            button.btn.btn-primary(type='button') Save Event
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Save
 
 //- ADD WALKIN
 .add-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
