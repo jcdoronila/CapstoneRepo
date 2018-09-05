@@ -307,10 +307,19 @@ html(lang='en')
           username: {
             minlength: 4
             },
+          mobile:{
+            maxlength: 11,
+            minlength: 11
+            },
+            
         },
         messages:{
           username:{
             minlength: 'Username shouldn\'t be less than four characters'
+          },
+          mobile:{
+            maxlength: 'Mobile number should be exactly 11 digits',
+            minlength: 'Mobile number should be exactly 11 digits'
           }
         }
       });
