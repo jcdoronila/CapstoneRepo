@@ -1,0 +1,105 @@
+include ../../../../templates/head
+
+block main
+
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  thead
+                    tr
+                      th
+                        i.fa.fa-user
+                        |  Member
+                      th
+                        i.fa.fa-phone
+                        |  Trainer
+                      th
+                        i.fa.fa-bookmark
+                        |  Action
+                  tbody
+                    tr
+                      td [trainer]
+                      td [member]
+                      td
+                        button.btn.btn-success.btn-xs(data-toggle='modal', data-target='.start-modal')
+                          | START
+                        button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.cancel-modal')
+                          | CANCEL
+                          
+              
+// MODAL START
+.start-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4.modal-title Starting Session Prompt
+      form(action='', method='')
+        .modal-body
+          .row
+            .col-md-12
+              center
+                input.id(type="text" name="id")
+                h4 Start the current <b>training session</b> now?
+                button.btn.btn-success(type='button') Yes
+                button.btn.btn-danger(type='button', data-dismiss='modal') No
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+// MODAL CANCEL
+.cancel-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4.modal-title Cancelation Prompt
+      form(action='', method='')
+        .modal-body
+          .row
+            .col-md-12
+              center
+                input.id(type="text" name="id")
+                h4 Cancel the current <b>training session</b> ? This means either one, or both of them is unable to attend the session.
+                button.btn.btn-success.cancel(type='button', data-toggle='modal', data-target='.absent-modal') Yes
+                button.btn.btn-danger(type='button', data-dismiss='modal') No
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+// MODAL ABSENT
+.absent-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4.modal-title Attendance Prompt
+      form(action='', method='')
+        .modal-body
+          .row
+            .col-md-12
+              center
+                input.id(type="text" name="id")
+                h4 Who's absent on today's training Session?
+                button.btn.btn-default(type='button') Trainer
+                button.btn.btn-default(type='button') Member
+                button.btn.btn-default(type='button') Both
+
+
+
+
+include ../../../../templates/foot
+
+
+script.
+  $(document).ready(function(){
+    $('#transactionDrop').addClass('active');
+    $('#trainSession').addClass('active');
+    });
+
+script.
+  $('.cancel').click(function(){
+    $('.cancel-modal').modal('hide');
+  })

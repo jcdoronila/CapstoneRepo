@@ -1,0 +1,136 @@
+include ../../../../templates/head
+
+block main
+
+    section#main-content
+      section.wrapper.site-min-height
+        .row.mt
+          .col-md-12
+            .content-panel
+              .container-fluid
+                table.table.table-striped.table-advance.table-hover
+                  h4 Walk Ins
+                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='.add-walkins-modal')
+                      i.fa.fa-home
+                      |  Add Walk in
+                  thead
+                    tr
+                      th
+                        i.fa.fa-user
+                        |  Name
+                      th
+                        i.fa.fa-phone
+                        |  Contact
+                      th
+                        i.fa.fa-edit
+                        | Action
+                  tbody      
+                    tr
+                      td NAME
+                      td CONTACT
+                      td
+                        button#facility.btn.btn-info.btn-xs(data-toggle='modal', data-target='.add-facility-modal')
+                          i.fa.fa-shower
+                        button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='.edit-walkins-modal')
+                          i.fa.fa-edit
+                        button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='')
+                          i.fa.fa-trash-alt
+              
+
+.add-walkins-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Add Walk-ins used
+      form(action='/freeze', method='POST')
+        .modal-body
+          .container-fluid
+            .row
+              .col-md-6
+                .form-group
+                  label.control-label Full Name
+                  input.form-control(type="text" name="fname" placeholder='First Name')
+              .col-md-6
+                .form-group
+                  label.control-labe(style="color:white") Full Name
+                  input.form-control(type="text" name="lname" placeholder='Last Name')
+            .row
+              .col-md-12
+                .form-group
+                  label.control-label Contact
+                  input.form-control(type="text" name="contact")
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Add Walkins
+
+.edit-walkins-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Add Walk-ins used
+      form(action='/freeze', method='POST')
+        .modal-body
+          .container-fluid
+            .row
+              .col-md-6
+                .form-group
+                  label.control-label Full Name
+                  input.form-control(type="text" name="fname" placeholder='First Name')
+              .col-md-6
+                .form-group
+                  label.control-labe(style="color:white") Full Name
+                  input.form-control(type="text" name="lname" placeholder='Last Name')
+            .row
+              .col-md-12
+                .form-group
+                  label.control-label Contact
+                  input.form-control(type="text" name="contact")
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Add Walkins
+
+.add-facility-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Add Walk-ins used
+      .modal-body
+        .container-fluid
+          table.table.table-advance.table-hover
+            h4
+              | Add Used Facilities
+              a.btn.btn-theme(style='margin-left: 5px;' href='/facility')
+                i.fa.fa-home
+                |  Add Facility 
+            thead 
+              tr
+                th
+                  i.fa.fa-shower
+                  |  Name
+                th
+                  i.fa.fa-edit
+                  | Counter
+            tbody      
+              tr
+                td Sauna
+                td 
+                  input(type="number" style='width:60px;!important; padding-left: 20px; border: 1px solid #eee;' min='0' max='9')
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') Close
+        button.btn.btn-primary(type='submit') Save
+
+      
+include ../../../../templates/foot
+
+
+script.
+  $(document).ready(function(){
+    $('#transactionDrop').addClass('active');
+    $('#trainSession').addClass('active');
+    });
+
+script.
+  

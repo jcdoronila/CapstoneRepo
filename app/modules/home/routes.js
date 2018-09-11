@@ -979,6 +979,15 @@ function Events(req, res) {
   });
 }
 
+function walkins(req, res) {
+  res.render('admin/transactions/views/t-walkins',{
+  });
+}
+function trainSessions(req, res) {
+  res.render('admin/transactions/views/t-training-sessions',{
+  });
+}
+
 function GClasses(req, res) {
   res.render('admin/transactions/views/t-classes')
 }
@@ -1016,6 +1025,8 @@ router.get('/personal', personal);
 router.get('/regular',viewAss, viewSusp, viewReg, regular);
 router.get('/interregular',viewAss, viewSusp, viewInt, Interregular);
 router.get('/events',viewEve, Events);
+router.get('/walkins', walkins);
+router.get('/trainsessions', trainSessions);
 router.get('/t/classes', GClasses);
 /**
  * Here we just export said router on the 'index' property of this module.
