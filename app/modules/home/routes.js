@@ -348,7 +348,7 @@ function viewCategory(req, res, next) {
 //insert trainer
 
 router.post('/trains', (req, res) => {
-  db.query("INSERT INTO tbluser ( userfname, userlname,userbday,usergender,useraddress,usermobile,useremail,userschedule,usertype,branch,specialization,userpassword,userusername) VALUES ( ?, ?, ?, ?, ?, ? ,?, ?, 3, ?, ?, ?, ?)", [req.body.fname, req.body.lname, req.body.bday, req.body.gen, req.body.addr, req.body.mobile, req.body.email, req.body.sched.toString(), req.body.branchid, req.body.specialid, req.body.password, req.body.username], (err, results, fields) => {
+  db.query("INSERT INTO tbltrainer ( trainerfname, trainerlname, trainerbday,trainergender,traineraddress,trainermobile,traineremail,trainerschedule,trainerbranch,trainerspecialization,trainerpassword,trainerusername) VALUES ( ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?)", [req.body.fname, req.body.lname, req.body.bday, req.body.gen, req.body.addr, req.body.mobile, req.body.email, req.body.sched.toString(), req.body.branchid, req.body.specialid, req.body.password, req.body.username], (err, results, fields) => {
     if (err)
       console.log(err);
     else {
@@ -378,11 +378,11 @@ function viewspecialdrop(req, res, next) {
 //edit trainer
 
 router.post('/trains/edit', (req, res) => {
-  db.query("UPDATE tbluser SET userfname=?, userlname=?,userbday=?,usergender=?,useraddress=?,usermobile=?,useremail=?,userschedule=?,branch=?,specialization=?,userpassword=?,userusername=? WHERE userid=?", [req.body.fname, req.body.lname, req.body.bday, req.body.gen, req.body.addr, req.body.mobile, req.body.email, req.body.sched.toString(), req.body.branchid, req.body.specialid, req.body.password, req.body.username, req.body.id], (err, results, fields) => {
+  db.query("UPDATE tbltrainer SET trainerfname=?, trainerlname=?,trainerbday=?,trainergender=?,traineraddress=?,trainermobile=?,traineremail=?,trainerschedule=?,trainerbranch=?,trainerspecialization=?,trainerpassword=?,trainerusername=? WHERE trainerid=?", [req.body.fname, req.body.lname, req.body.bday, req.body.gen, req.body.addr, req.body.mobile, req.body.email, req.body.sched.toString(), req.body.branchid, req.body.specialid, req.body.pass, req.body.username, req.body.id], (err, results, fields) => {
     if (err)
       console.log(err);
     else {
-      res.redirect('/trainer');
+      res.redirect('/trains');
     }
   });
 });
@@ -390,7 +390,7 @@ router.post('/trains/edit', (req, res) => {
 //delete trainer
 
 router.post('/trains/delete', (req, res) => {
-  db.query("DELETE FROM tbluser WHERE userid=?", [req.body.id], (err, results, fields) => {
+  db.query("DELETE FROM tbltrainer WHERE trainerid=?", [req.body.id], (err, results, fields) => {
     if (err)
       console.log(err);
     else {
@@ -401,7 +401,7 @@ router.post('/trains/delete', (req, res) => {
 
 //view Trainers
 function viewTrainer(req, res, next) {
-  db.query('SELECT u.*, b.*,s.* FROM tbluser u inner JOIN tblbranch b on u.branch=b.branchID JOIN tblspecial s ON s.specialID =u.specialization where u.usertype=3 ', function (err, results, fields) {
+  db.query('SELECT u.*, b.*,s.* FROM tbltrainer u inner JOIN tblbranch b on u.trainerbranch=b.branchID JOIN tblspecial s ON s.specialID =u.trainerspecialization', function (err, results, fields) {
     if (err) return res.send(err);
     req.viewTrainer = results;
     return next();
@@ -813,9 +813,9 @@ function viewEve(req, res, next) {
   })
 }
 
-//view trainer asign
+//view trainer assign
 function viewAss(req, res, next){
-  db.query('SELECT * from tbluser where usertype=3',function(err, results, fields){
+  db.query('SELECT * from tbltrainer',function(err, results, fields){
     if(err) return res.send(err);
     req.viewAss = results;
     return next();
@@ -823,7 +823,7 @@ function viewAss(req, res, next){
 }
 
 //creating event
-router.post('/assign',(req, res) => {
+router.post('/event',(req, res) => {
   db.query("INSERT INTO tbluce(eventclassname,startdate,enddate,starttime,endtime,slot)VALUES(?, ?, ?, ?, ?, ?)", [req.body.event, req.body.start, req.body.end, req.body.startt, req.body.endt, req.body.slot], (err, results, fields) => {
     if (err)
         console.log(err);
@@ -834,7 +834,16 @@ router.post('/assign',(req, res) => {
     });
 })
 
+//views on personal training
+function viewPer(req, res, next){
+  db.query('SELECT * from tbluser where usertype=2',function(err, results, fields){
+    if(err) return res.send(err);
+    req.viewPer = results;
+    return next();
+  })
+}
 
+//cre
 
 //A-TEAM FITNESS FUNCTIONS
 

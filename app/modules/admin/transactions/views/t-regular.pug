@@ -420,7 +420,6 @@ block main
           .container-fluid
             content-panel
               table.table.table-striped.table-advance.table-hover
-                input.hidden#id(type='text' name='id')
                 br
                 thead
                   tr
@@ -441,14 +440,15 @@ block main
                       |  Action
                 tbody
                   each as in ass
-                    tr
-                      td #{as.userfname} #{as.userlname}
-                      td #{as.usergender}
-                      td #{as.userschedule}
-                      //- td A-team Marikina
-                      td
-                        a.btn.btn-info.btn-theme#prompt(data-toggle='modal' data-target='.prompt')
-                          | Assign
+                    each re in regs
+                      tr
+                        td #{as.trainerfname} #{as.trainerlname}
+                        td #{as.trainergender}
+                        td #{as.trainerschedule}
+                        //- td A-team Marikina
+                        td
+                          a.btn.btn-info.btn-theme#prompt(data-toggle='modal' data-target='.prompt' data-id=as.trainerid data-userid=re.userid)
+                            | Assign
 
 //IMAGE + DESCRIPTION
 .showImgModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
@@ -501,6 +501,8 @@ block main
             .row(style='margin-top:15px; margin-bottom:15px;') 
               .container-fluid
                 h4 Are you sure?
+                input#id(type='text' name='trainerid')
+                input#userid(type='text' name='id')
         .modal-footer
           button.btn.btn-default(type='button', data-dismiss='modal') Close
           button.btn.btn-primary(type='submit') Yes
@@ -590,10 +592,11 @@ script.
   });
 
 script.
-  $('.sorted').on('show.bs.modal', function(event){
+  $('.prompt').on('show.bs.modal', function(event){
     var button = $(event.relatedTarget)      
     var id = button.data('id')
-    console.log(id)
+    var userid = button.data('userid')
     let modal = $(this);     
     modal.find('.modal-body #id').val(` ${id}`)
+    modal.find('.modal-body #userid').val(`${userid}`)
   })

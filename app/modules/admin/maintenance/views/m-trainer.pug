@@ -31,13 +31,14 @@ block main
                   tbody
                     each tr in trains 
                       tr
-                        td #{tr.userfname} #{tr.userlname}
-                        td #{tr.userbday}
-                        td #{tr.userschedule}
+                        td #{tr.trainerfname} #{tr.trainerlname}
+                        td #{tr.trainerbday}
+                        td #{tr.trainerschedule}
                         td
-                          button#view.btn.btn-info.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='View Trainer', data-target='#viewmodal' data-sched=tr.userschedule data-mob=tr.usermobile data-bra=tr.branchname data-spe=tr.specialname data-email=tr.useremail data-addr=tr.useraddress data-gen=tr.usergender)
+                          button#view.btn.btn-info.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='View Trainer', data-target='#viewmodal' data-sched=tr.trainerschedule data-mob=tr.trainermobile data-bra=tr.branchname data-spe=tr.specialname data-email=tr.traineremail data-addr=tr.traineraddress data-gen=tr.trainergender)
                             i.fa.fa-search
-                          button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Trainer', data-target='#editmodal' data-fname=tr.userfname data-mob=tr.usermobile  data-lname=tr.userlname data-email=tr.useremail data-addr=tr.useraddress data-bday=tr.userbday data-id=tr.userid)
+                          button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Trainer', data-target='#editmodal' data-fname=tr.trainerfname data-mob=tr.trainermobile  data-lname=tr.trainerlname data-email=tr.traineremail data-addr=tr.traineraddress data-bday=tr.trainerbday data-id=tr.trainerid 
+                          data-username=tr.trainerusername data-pass=tr.trainerpassword)
                             i.fa.fa-edit
                           button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently' data-target='#deletemodal' data-id=tr.userid)
                             i.fa.fa-trash-alt
@@ -331,18 +332,18 @@ block main
                     .col-md-6
                       .form-group
                         label.control-label Username
-                        input.form-control(type='text')
+                        input.form-control(type='text' name='username')#username
                     .col-md-6
                       .form-group
                         label.control-label Password
-                        input.form-control(type='password')
+                        input.form-control(type='password' name='pass')#password
                   .row
                     .col-md-4
                       label(for='file') Display Image
                       input#file.inputfile(type='file')
             .modal-footer
               button.btn.btn-default(type='button', data-dismiss='modal') Close
-              button.btn.btn-primary(type='submit') Add Trainer
+              button.btn.btn-primary(type='submit') Save
 
     // MODAL DELETE
     #deletemodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -388,13 +389,13 @@ script.
 
 
         let modal = $(this)  
-        modal.find('.modal-body #bra').text(` ${bra}`)   
-        modal.find('.modal-body #mob').text(` ${mob}`)
-        modal.find('.modal-body #sched').text(` ${sched}`)
+        modal.find('.modal-body #bra').text(`${bra}`)   
+        modal.find('.modal-body #mob').text(`${mob}`)
+        modal.find('.modal-body #sched').text(`${sched}`)
         modal.find('.modal-body #spe').text(` ${spe}`)
-        modal.find('.modal-body #addr').text(` ${addr}`)
-        modal.find('.modal-body #email').text(` ${email}`)
-        modal.find('.modal-body #gen').text(` ${gen}`)
+        modal.find('.modal-body #addr').text(`${addr}`)
+        modal.find('.modal-body #email').text(`${email}`)
+        modal.find('.modal-body #gen').text(`${gen}`)
     }) 
 
 
@@ -413,17 +414,20 @@ script.
         var fname = button.data('fname')
         var lname = button.data('lname')
         var id = button.data('id')
+        var username = button.data('username')
+        var password = button.data('password')
 
         let modal = $(this)  
 
-        modal.find('.modal-body #mob').val(` ${mob}`)
-        modal.find('.modal-body #fname').val(` ${fname}`)
-        modal.find('.modal-body #lname').val(` ${lname}`)
-        modal.find('.modal-body #addr').val(` ${addr}`)
-        modal.find('.modal-body #email').val(` ${email}`)
-        modal.find('.modal-body #bday').val(` ${bday}`)
+        modal.find('.modal-body #mob').val(`${mob}`)
+        modal.find('.modal-body #fname').val(`${fname}`)
+        modal.find('.modal-body #lname').val(`${lname}`)
+        modal.find('.modal-body #addr').val(`${addr}`)
+        modal.find('.modal-body #email').val(`${email}`)
+        modal.find('.modal-body #bday').val(`${bday}`)
         modal.find('.modal-body #id').val(` ${id}`)
-
+        modal.find('.modal-body #username').val(`${username}`)
+        modal.find('.modal-body #password').val(`${password}`)
     }) 
 
 script.

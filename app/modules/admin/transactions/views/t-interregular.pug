@@ -50,7 +50,7 @@ block main
                             i.fa.fa-snowflake
                           button.edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='.edit-modal')
                             i.fa.fa-edit
-                          button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.sorted')
+                          button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.sorted' data-id=br.id)
                             i.fa.fa-dumbbell
                           button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.suspend-modal')
                             i.fa.fa-exclamation-circle
@@ -409,23 +409,18 @@ block main
     .modal-content
       .modal-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-        h4#myModalLabel.modal-title Assign Member to Sorted Trainers
-      form(action='POST', method='')
+        h4#myModalLabel.modal-title Assign Member to a Trainer
+      form(action='/assign', method='POST')
         .modal-body
           .container-fluid
             content-panel
               table.table.table-striped.table-advance.table-hover
-                //- a#back(data-toggle='modal', data-target='.assign-modal  ')
-                //-   i.fas.fa-angle-double-left 
-                //-   |
-                //-   | 
-                //-   b Back
                 br
                 thead
                   tr
                     th
                       i.fa.fa-user
-                      |  Name
+                      |  Name 
                     th
                       i.fa.fa-genderless
                       |  Gender
@@ -439,19 +434,16 @@ block main
                       i.fa.fa-edit
                       |  Action
                 tbody
-                
-                  tr
-                    td John Doe
-                      a.showImg
-                        span(style='margin-left:20px; cursor:pointer;')  
-                          i.fa.fa-image 
-                          small  Show Details
-                    td Male
-                    td Monday
-                    //- td A-team Marikina
-                    td
-                      a.btn.btn-info.btn-theme#prompt(data-toggle='modal' data-target='.prompt')
-                        | Assign
+                  each as in ass
+                    each br in intb  
+                      tr
+                        td #{as.trainerfname} #{as.trainerlname}
+                        td #{as.trainergender}
+                        td #{as.trainerschedule}
+                        //- td A-team Marikina
+                        td
+                          a.btn.btn-info.btn-theme#prompt(data-toggle='modal' data-target='.prompt' data-id=as.trainerid data-userid=br.userid)
+                            | Assign
 
 //IMAGE + DESCRIPTION
 .showImgModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
@@ -505,6 +497,8 @@ block main
             .row(style='margin-top:15px; margin-bottom:15px;') 
               .container-fluid
                 h4 Are you sure?
+                input#id(type='text' name='trainerid')
+                input#userid(type='text' name='id')
         .modal-footer
           button.btn.btn-default(type='button', data-dismiss='modal') Close
           button.btn.btn-primary(type='submit') Yes
@@ -592,4 +586,13 @@ script.
 
       modal.find('.modal-body #id').val(`${id}`);
     })
-  
+
+script.
+  $('.prompt').on('show.bs.modal', function(event){
+    var button = $(event.relatedTarget)      
+    var id = button.data('id')
+    var userid = button.data('userid')
+    let modal = $(this);     
+    modal.find('.modal-body #id').val(` ${id}`)
+    modal.find('.modal-body #userid').val(`${userid}`)
+  })

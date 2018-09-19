@@ -178,7 +178,7 @@ html(lang='en')
                         select.form-control.required(name='membership')
                           each ct in cat
                             option.hidden(value='') Select Membership... 
-                            option(value='' + ct.memrateid) #{ct.memclassname} - #{ct.membershipname} (#{ct.memperiod} MONTHS)
+                            option(value='' + ct.memrateid) #{ct.memclassname} - #{ct.membershipname} (#{ct.memperiod} MONTHS) - ₱ #{ct.memfee} 
                   .row
                     .col-md-6
                       .form-group
@@ -198,7 +198,7 @@ html(lang='en')
                             option(value='' + sp.specialID) #{sp.specialname}
                         label.checkbox
                           | Are you a Student?
-                          input#student(type='checkbox')
+                          input#student(type='checkbox' value='.10')
                           span.check
                         p#1 Uncheck if you are unwilling to provide proof.
                     .col-md-12(style='color:gray; font-size:10pt')

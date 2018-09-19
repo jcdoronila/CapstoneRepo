@@ -95,78 +95,54 @@ loginRouter.route('/')
 
         db.query(`SELECT * FROM tbluser WHERE useremail="${req.body.userID}" OR userusername="${req.body.userID}"`, (err, results, fields) => {
             if (err) throw err;
+            if (results.length === 0)
+            {
+            db.query(`SELECT * FROM tbltrainer WHERE traineremail="${req.body.userID}" OR trainerusername="${req.body.userID}"`, (err, results, fields) => {
+            if (err) throw err;
             if (results.length === 0) return res.redirect('/login?henlo');
+            var trainer = results[0];
+            if (trainer.trainerpassword !== req.body.password) return res.redirect('/login?incorrect');
+                else{
+                    delete trainer.password;
+                    req.session.trainer = trainer;
+                    return res.redirect('/trainer');
+                }
 
+            }); 
+            }
+            else
+            {
             var user = results[0];
-
             if (user.userpassword !== req.body.password) return res.redirect('/login?incorrect');
-            // delete user.password;
-            
-            // req.session.user = user;
-
-            // return res.redirect('/');
-            
-            // switch(user.usertype)
-            // {
-            //     case 1: delete user.password;
-            //             req.session.user = user;
-            //             console.log(req.session);
-            //             return res.redirect('/');
-            //             break;
-            //     case 2: delete user.password;
-            //             req.session.trainer = user;
-            //             console.log(req.session);
-            //             return res.redirect('/trainer');
-            //             break;
-            //     case 3: delete user.password;
-            //             req.session.user = user;
-            //             console.log(req.session);
-            //             return res.redirect('/member');
-            //             break;
-            //     case 4: delete user.password;
-            //             req.session.staff = user;
-            //             console.log(req.session);
-            //             return res.redirect('/staffs');
-            //             break;
-            // }
             if (user.usertype == 1)
             {
                 delete user.password;
                 req.session.user = user;
-                console.log(req.session);
                 return res.redirect('/');
             }
-            else if (user.usertype == 3)
+/*            else if (user.usertype == 3)
             {
                 delete user.password;
                 req.session.trainer = user;
                 console.log(req.session);
                 return res.redirect('/trainer');
-            }
+            }*/
             else if (user.usertype == 2)
             {
                 delete user.password;
                 req.session.member = user;
-                console.log(req.session);
                 return res.redirect('/member');
             }
             else if (user.usertype == 4)
             {
                 delete user.password;
                 req.session.staff = user;
-                console.log(req.session);
                 return res.redirect('/staffs');
-            }
-
-
-            // if (user.strPassword == req.body.password || user.strType == "admin") res.redirect('/login?incorrect');
-            // delete user.password;
-            
-            // req.session.user = user;
-
-            // return res.redirect('/admin');
+            }  
+        }
 
         });
+   
     });
 
 
