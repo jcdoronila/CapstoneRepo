@@ -16,17 +16,18 @@ block main
                   th Membership
                   th Action
               tbody
-                tr
-                  td 
-                  td
-                  td
-                  td
-                    button.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#view')
-                      i.fa.fa-search
-                    button.btn.btn-success.btn-xs(data-toggle='modal', data-target='#accept')
-                      i.fa.fa-check
-                    button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='#decline')
-                      i.fa.fa-times
+                  each pe in pends
+                    tr
+                      td #{pe.userfname} #{pe.userlname}
+                      td #{pe.usergender}
+                      td #{pe.memclassname}-#{pe.membershipname}
+                      td
+                        button.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#view')
+                          i.fa.fa-search
+                        button.btn.btn-success.btn-xs(data-toggle='modal', data-target='#accept')
+                          i.fa.fa-check
+                        button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='#decline')
+                          i.fa.fa-times
   // Modal
   #view.modal.fade(tabindex='-1', role='dialog', aria-labelledby='view', aria-hidden='true')
     .modal-dialog(role='document')
