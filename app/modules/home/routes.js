@@ -834,9 +834,9 @@ router.post('/event',(req, res) => {
     });
 })
 
-//views on personal training
+//view trainer-client partners
 function viewPer(req, res, next){
-  db.query('SELECT * from tbluser where usertype=2',function(err, results, fields){
+  db.query('select u.*, t.*, j.* from tbluser u join tbppt j on j.memid=u.userid inner join tbltrainer t on j.trainid=t.trainerid',function(err, results, fields){
     if(err) return res.send(err);
     req.viewPer = results;
     return next();
@@ -845,15 +845,18 @@ function viewPer(req, res, next){
 
 //assigning trainers
 router.post('/assign',(req, res) => {
-  db.query("INSERT INTO tbppt(memid,trainid,status)VALUES(?, ?, 2)", [req.body.memberid, req.body.trainerid], (err, results, fields) => {
+  db.query("INSERT INTO tbppt(memid,trainid,status,statusfront)VALUES(?, ?, 2,'Pending')", [req.body.memberid, req.body.trainerid], (err, results, fields) => {
     if (err)
         console.log(err);
       else {
-        res.redirect('/interregular');
+        res.redirect('/personal');
       }
 
     });
 })
+
+
+
 
 //A-TEAM FITNESS FUNCTIONS
 
@@ -975,7 +978,9 @@ function pending(req, res) {
 }
 
 function personal(req, res) {
-  res.render('admin/transactions/views/t-personal');
+  res.render('admin/transactions/views/t-personal',{
+    pers: req.viewPer
+  });
 }
 
 function regular(req, res) {
@@ -1041,7 +1046,7 @@ router.get('/freezed',viewFre, freezed);
 router.get('/income', income);
 router.get('/payment', viewPay, payment);
 router.get('/pending', viewUpdate, viewPend, pending);
-router.get('/personal', personal);
+router.get('/personal', viewPer,personal);
 router.get('/regular',viewAss, viewSusp, viewReg, regular);
 router.get('/interregular',viewAss, viewSusp, viewInt, Interregular);
 router.get('/events',viewEve, Events);
