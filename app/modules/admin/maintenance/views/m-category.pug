@@ -42,7 +42,7 @@ block main
           .modal-header
             button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
             h4#myModalLabel.modal-title Add Membership Category
-          form(action='/category', method='POST')
+          form(action='/category', method='POST' autocomplete='off')
             .modal-body
               .container-fluid
                 .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
@@ -50,7 +50,7 @@ block main
                     .col-md-12
                       .form-group
                         label.control-label Category Name
-                        input.form-control(type='text' name='catname')
+                        input.form-control(type='text' name='catname' required)
                   .row
                     .col-md-12
                       label.control-label Description

@@ -52,10 +52,10 @@ block main
           .modal-header
             button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
             h4#myModalLabel.modal-title Add Rate
-          form(action='/membership', method='POST')
+          form(action='/membership', method='POST' autocomplete='off')
             .modal-body
               .container-fluid
-                .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+                .container-fluid(style='padding:1rem 4rem 1rem 4rem;' required)
                   .row
                     .col-md-12
                       .form-group
@@ -63,7 +63,7 @@ block main
                     .col-md-12
                       .form-group
                         label.control-label Membership Class
-                        select#branch.form-control(name='class')
+                        select#branch.form-control(name='class' required)
                           each cl in classes
                             option.hidden Choose Membership Class... 
                             option(value=''+cl.memclassid) #{cl.memclassname}
@@ -71,7 +71,7 @@ block main
                     .col-md-12
                       .form-group
                         label.control-label Membership Category
-                        select#branch.form-control(name='category')
+                        select#branch.form-control(name='category' required)
                           each dr in drops
                             option.hidden Choose Category... 
                             option(value=''+dr.membershipID) #{dr.membershipname}
@@ -79,11 +79,11 @@ block main
                     .col-md-6
                       .form-group
                         label.control-label Membership Amount (₱)
-                        input.form-control(type='number' name='memfee')
+                        input.form-control(type='number' name='memfee' required)
                     .col-md-6
                       .form-group
                         label.control-label Membership Duration (Month/s)
-                        input.form-control(type='number' name='memdura')
+                        input.form-control(type='number' name='memdura' required)
             .modal-footer
               button.btn.btn-default(type='button', data-dismiss='modal') Close
               button.btn.btn-primary(type='submit') Add Rate

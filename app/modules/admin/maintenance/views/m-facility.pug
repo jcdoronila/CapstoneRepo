@@ -51,7 +51,7 @@ block main
 				.modal-header
 					button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 					h4#myModalLabel.modal-title Add Facility
-				form(action='/facility', method='POST')
+				form(action='/facility', method='POST' autocomplete='off')
 					.modal-body
 						.container-fluid
 							.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
@@ -59,15 +59,15 @@ block main
 									.col-md-12
 										.form-group
 											label.control-label Facility Name
-											input.form-control(type='text' name='facname')
+											input.form-control(type='text' name='facname' required)
 									.col-md-6
 										.form-group
 											label.control-label Duration
-											input.form-control(type='number', min='1' name='dura')
+											input.form-control(type='number', min='1' name='dura' required)
 									.col-md-6
 										.form-group
 											label.control-label Unit of Measure
-											select#branch.form-control(name='uom')
+											select#branch.form-control(name='uom' required)
 												option.hidden Choose Unit...
 												option(value='secs') Seconds
 												option(value='min') Minutes
@@ -76,7 +76,7 @@ block main
 									.col-md-12
 										.form-group
 											label.control-label Price (₱)
-											input.form-control(type='number', min='0' name='price')
+											input.form-control(type='number', min='0' name='price' required)
 					.modal-footer
 						button.btn.btn-default(type='button', data-dismiss='modal') Close
 						button.btn.btn-primary(type='submit') Add Facility

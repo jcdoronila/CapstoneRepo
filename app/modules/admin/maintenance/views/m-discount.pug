@@ -42,8 +42,12 @@ block main
                         td #{ds.enddate}
                         td #{ds.discount}
                         td
-                          span.label.label-success
-                            | #{ds.status}                 
+                          if ds.status == 'Active'
+                            span.label.label-success
+                              | #{ds.status}  
+                          else if ds.status == 'Inactive'    
+                            span.label.label-danger
+                              | #{ds.status}            
                         td
                           button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Edit Account', data-target='#editmodal' data-id=ds.promoID data-name=ds.promoname data-sdate=ds.startdate data-edate=ds.enddate data-disc=ds.discount)
                             i.fa.fa-edit
@@ -57,7 +61,7 @@ block main
           .modal-header
             button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
             h4#myModalLabel.modal-title Add Promo
-          form(action='/discount', method='POST')
+          form(action='/discount', method='POST' autocomplete='off')
             .modal-body
               .container-fluid
                 .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
@@ -65,21 +69,21 @@ block main
                     .col-md-12
                       .form-group
                         label.control-label Promo Name
-                        input#name.form-control(type='text' name='promoname')
+                        input#name.form-control(type='text' name='promoname' required)
                   .row
                     .col-md-6
                       .form-group
                         label.control-label Start Date
-                        input#sdate.form-control.date(type='text' name='startdate')
+                        input#sdate.form-control.datee(type='text' name='startdate' required)
                     .col-md-6
                       .form-group
                         label.control-label End Date
-                        input.form-control.date(type='text' name='enddate')
+                        input.form-control.datee(type='text' name='enddate' required)
                   .row
                     .col-md-6
                       .form-group
                         label.control-label Discount (%)
-                        input#disc.form-control(type='number', min='0' name='discount')
+                        input#disc.form-control(type='number', min='0' name='discount' required)
                     .col-md-6
                       .form-group
                         label.control-label Status
@@ -112,11 +116,11 @@ block main
                     .col-md-6
                       .form-group
                         label.control-label Start Date
-                        input#sdate.form-control.date(type='text' name='startdate')
+                        input#sdate.form-control.datee(type='text' name='startdate')
                     .col-md-6
                       .form-group
                         label.control-label End Date
-                        input#edate.form-control.date(type='text' name='enddate')
+                        input#edate.form-control.datee(type='text' name='enddate')
                   .row
                     .col-md-6
                       .form-group
@@ -164,7 +168,6 @@ script.
 
     $('#editmodal').on('show.bs.modal', function(event){
         var button = $(event.relatedTarget)      
-       
 
         //id
         var id = button.data('id')
@@ -173,8 +176,6 @@ script.
         var sdate = button.data('sdate')
         var disc = button.data('disc')
         console.log(disc)
-
-        
 
 
         let modal = $(this)     
@@ -189,13 +190,22 @@ script.
     $('#deletemodal').on('show.bs.modal', function(event){
         var button = $(event.relatedTarget)      
        
-
         //id
         var id = button.data('id')
         console.log(id)
-
 
         let modal = $(this)     
 
         modal.find('.modal-body #id').val(` ${id}`)
     })
+
+script.
+  $(".datee").datepicker({
+    changeMonth: true,
+    changeYear: true,
+    todayHighlight: true,
+    maxViewMode: 2,
+    startView: 0,
+    autoclose: true,
+    startDate: "today"
+    });
