@@ -34,11 +34,11 @@ block main
                       td John Paul
                       //- td Sta. Mesa 
                       td
-                        button#view.btn.btn-info.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='View Account')
+                        button#view.btn.btn-info.btn-xs(data-toggle='modal', data-target='#view-modal')
                           i.fa.fa-search
-                        button#edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit Account')
+                        button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='#edit-modal-reason')
                           i.fa.fa-edit
-                        button#del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently')
+                        button#del.btn.btn-danger.btn-xs(data-toggle='modal', data-target='')
                           i.fa.fa-trash-alt
             // /content-panel
       
@@ -166,7 +166,7 @@ block main
                     br
         .modal-footer
           button.btn.btn-default(type='button', data-dismiss='modal') Close
-          button#vedit.btn.btn-primary(type='button') Edit
+          button#vedit.btn.btn-primary(type='button' data-target='#edit-modal-reason' data-toggle='modal') Edit
       
 // MODAL edit MEM|PT ASS
 #edit-modal-reason.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -185,7 +185,7 @@ block main
                   textarea.form-control(rows='3')
       .modal-footer
         //type submit dapat to
-        button.send.btn.btn-primary(type='button') Send
+        button.send.btn.btn-primary(type='button' data-toggle='modal' data-target='#edit-modal') Send
 
 #edit-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
   .modal-dialog
@@ -410,19 +410,12 @@ script.
     $('#pt').addClass('active');
     });
 
-
-  $('#view').click(function(){
-    $('#view-modal').modal();
-  })
-  $('#edit').click(function(){
-    $('#edit-modal-reason').modal();
-  })
+ 
   $('#vedit').click(function(){
-      $('#edit-modal-reason').modal();
       $('#view-modal').modal('hide');
   })
+
   $('.send').click(function(){
-    $('#edit-modal').modal();
     $('#edit-modal-reason').modal('hide');
   })
 

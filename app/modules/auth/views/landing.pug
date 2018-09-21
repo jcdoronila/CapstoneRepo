@@ -11,8 +11,19 @@ html(lang='en')
     link(rel='stylesheet', href='../../../../landing/css/vegas.min.css')
     link(rel='stylesheet', href='../../../../landing/css/style.css')
     link(rel='stylesheet', href='../../../../assets/css/bootstrap-datepicker.css')
-    
     link(href='https://fonts.googleapis.com/css?family=Rajdhani:400,500,700', rel='stylesheet', type='text/css')
+
+  style.
+    label.error{
+      color:#ff6961;  
+    }
+    input.form-control.error{
+      border:1px solid #ff6961;
+    }
+    select.form-control.error{
+      border:1px solid #ff6961;
+    }
+
   body
     // preloader section
     section.preloader
@@ -103,7 +114,7 @@ html(lang='en')
           .modal-header
             button.close(type='button', data-dismiss='modal', aria-label='Close')
               span(aria-hidden='true') ×
-          form.needs-validation(method='POST', action='/signup' novalidate)
+          form.needs-validation(method='POST', action='/signup', autocomplete='off' novalidate)
             h2(style='color:black; margin-left:30px;') Sign Up
             .modal-body
               .container-fluid
@@ -115,7 +126,7 @@ html(lang='en')
                   .row
                     .col-md-6
                       .form-group
-                        label#fname.control-label First Name
+                        label#fname.control-label.required First Name
                         input.form-control(type='text' name='fname' required)
                     .col-md-6
                       .form-group
@@ -288,7 +299,14 @@ html(lang='en')
       }
       });
 
-      $(".date").datepicker();
+      $(".date").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        todayHighlight: true,
+        maxViewMode: 2,
+        startView: 2,
+        autoclose: true
+      });
 
       $(function () {
       $("#student").click(function () {

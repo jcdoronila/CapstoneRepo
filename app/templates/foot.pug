@@ -29,6 +29,8 @@ script(src='/assets/js/sparkline-chart.js')
 script(src='/assets/js/multiple-select.js')
 script(src='/assets/js/moment.js')
 script(src='/assets/js/jquery.validate.js')
+script(src='/assets/js/bootstrap-timepicker.js')
+
 
 //- burogeso
 script.
@@ -46,10 +48,16 @@ script.
   autoclose: true
   });
 
-  $('.time').timepicker({
-  'minTime': '8:00am',
-  'maxTime': '10:00pm',
+  //- $('.time').timepicker({
+  //- 'minTime': '8:00am',
+  //- 'maxTime': '10:00pm',
+  //- });
+   $('.time').timepicker({
+      minuteStep: 5,
+      showInputs: false,
+      disableFocus: true
   });
+
   $('.ms').multipleSelect();
   });
 
