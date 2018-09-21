@@ -59,7 +59,7 @@ block main
                           button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.suspend-modal')
                             i.fa.fa-exclamation-circle
                           button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.delete-modal')
-                            i.fa.fa-trash-alt
+                            i.fa.fa-trash-alt 
                           
           
 // MODAL ADD MEMBER
@@ -487,8 +487,10 @@ block main
                         td #{as.trainerschedule}
                         //- td A-team Marikina
                         td
-                          a.btn.btn-info.btn-theme#prompt(data-toggle='modal' data-target='.prompt' data-id=as.trainerid data-userid=re.userid)
-                            | Assign
+                          form(method='POST' action='/assign')
+                            input.hidden#id(type='text' name='memberid')
+                            input.hidden(type='text' name='trainerid' value=as.trainerid)
+                            button.btn.btn-primary(type='submit') Assign
 
 //IMAGE + DESCRIPTION
 .showImgModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
@@ -633,6 +635,16 @@ script.
 
 script.
   $('.prompt').on('show.bs.modal', function(event){
+    var button = $(event.relatedTarget)      
+    var id = button.data('id')
+    var userid = button.data('userid')
+    let modal = $(this);     
+    modal.find('.modal-body #id').val(` ${id}`)
+    modal.find('.modal-body #userid').val(`${userid}`)
+  })
+
+script.
+  $('.sorted').on('show.bs.modal', function(event){
     var button = $(event.relatedTarget)      
     var id = button.data('id')
     var userid = button.data('userid')
