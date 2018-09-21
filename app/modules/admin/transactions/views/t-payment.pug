@@ -39,8 +39,8 @@ block main
 											td #{pa.expiry}
 											td #{pa.memclassname}-#{pa.membershipname}
 											td
-												//- button.btn.btn-primary.btn-xs(data-toggle='modal', data-target='.view-modal')
-												//- 	i.fa.fa-search
+												button.btn.btn-primary.btn-xs(data-toggle='modal', data-target='.view-modal' data-fname=pa.fname)
+													i.fa.fa-search
 												button.btn.btn-success.btn-xs(data-toggle='modal', data-target='.pay-modal', data-id=pa.userid)
 													i.fa.fa-coins
 												button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='')
@@ -174,5 +174,14 @@ script.
 			let modal = $(this);
 
 			modal.find('.modal-body .id').val(`${id}`);
+		})
+
+script.
+	$('.view-modal').on('show.bs.modal', function(event){
+			var button = $(event.relatedTarget);
+			var fname = button.data('fname');
+			let modal = $(this);
+
+			modal.find('.modal-body .fname').text(`${fname}`);
 		})
 	
