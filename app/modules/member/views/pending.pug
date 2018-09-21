@@ -1,0 +1,30 @@
+include ../../../templates/mem-head
+
+block main   
+  .container
+    .content
+      .row.centered
+        h1(style="font-size:200px;")
+          i.fa.fa-exclamation-circle 
+        h3 Your Application is currently PENDING. PLease wait for a confirmation from the trainer you applied for. 
+        h3
+          a(type="button" data-toggle='modal', data-target='.prompt-modal')
+            | Cancel Application?
+
+.prompt-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
+  .modal-dialog.modal-sm
+    .modal-content
+      .modal-header
+        button.close#return(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Prompt
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            center
+              .row 
+                h5 Are you sure? 
+              .row 
+                button.btn.btn-primary(type='submit') Yes
+                button.btn.btn-default(type='button' data-dismiss='modal') Close
+
+include ../../../templates/foot

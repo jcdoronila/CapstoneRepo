@@ -114,6 +114,27 @@ function trainer(req, res, next) {
     return next();
 }
 
+function pending(req, res, next) {
+    res.render('member/views/pending', {
+        profs: req.initial
+    });
+    return next();
+}
+
+function accepted(req, res, next) {
+    res.render('member/views/accepted', {
+        profs: req.initial
+    });
+    return next();
+}
+
+function changeTrainer(req, res, next) {
+    res.render('member/views/change-trainer', {
+        profs: req.initial
+    });
+    return next();
+}
+
 // ------------- GET ---------------//
 router.get('/', initial, dashboard);
 router.get('/profile', initial, profile);
@@ -122,4 +143,7 @@ router.get('/trainers', initial, trainer);
 router.get('/classes', initial, viewClass, classes);
 router.get('/events', initial, events);
 router.get('/billing', initial, billing);
+router.get('/pending', initial, pending);
+router.get('/accepted', initial, accepted);
+router.get('/changeTrainer', initial, changeTrainer);
 exports.member = router;

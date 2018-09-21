@@ -1,0 +1,32 @@
+include ../../../templates/mem-head
+
+block main   
+  .container
+    .content
+      .row.centered
+        h1(style="font-size:200px;")
+          i.fa.fa-check 
+        h3 You are currently applied to <b>John Doe</b>.
+        h3
+          a(type="button" data-toggle='modal', data-target='.prompt')
+            | Change Personal Trainer?
+
+.prompt.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Change Trainer
+      form(action='POST', method='')
+        .modal-body
+          .container-fluid
+            .row
+              .col-md-12
+                .form-group
+                  h4 Reason for Changing trainer:
+                  textarea.form-control(rows='3')
+      .modal-footer
+        //type submit dapat to
+        button.send.btn.btn-primary(type='button') Send
+
+include ../../../templates/foot
