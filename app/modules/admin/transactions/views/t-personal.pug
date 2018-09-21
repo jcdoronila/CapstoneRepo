@@ -22,6 +22,9 @@ block main
                       th
                         i.fa.fa-user-friends
                         |  Trainer In-charge
+                      th
+                        i.fa.fa-user-friends
+                        |  Status
                       //- th
                       //-   i.fa.fa-home
                       //-   |  Branch
@@ -29,17 +32,19 @@ block main
                         i.fa.fa-edit
                         |  Action
                   tbody
-                    tr
-                      td John Doe
-                      td John Paul
-                      //- td Sta. Mesa 
-                      td
-                        button#view.btn.btn-info.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='View Account')
-                          i.fa.fa-search
-                        button#edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit Account')
-                          i.fa.fa-edit
-                        button#del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently')
-                          i.fa.fa-trash-alt
+                    each pr in pers
+                      tr
+                        td #{pr.userfname} #{pr.userlname}
+                        td #{pr.trainerfname} #{pr.trainerlname}
+                        td #{pr.statusfront}
+                        //- td Sta. Mesa 
+                        td
+                          button#view.btn.btn-info.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='View Account')
+                            i.fa.fa-search
+                          button#edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit Account')
+                            i.fa.fa-edit
+                          button#del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently')
+                            i.fa.fa-trash-alt
             // /content-panel
       
 // MODAL ADD MEM|PT ASS
@@ -166,7 +171,6 @@ block main
                     br
         .modal-footer
           button.btn.btn-default(type='button', data-dismiss='modal') Close
-          button#vedit.btn.btn-primary(type='button') Edit
       
 // MODAL edit MEM|PT ASS
 #edit-modal-reason.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
