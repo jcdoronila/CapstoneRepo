@@ -50,7 +50,7 @@ block main
                             i.fa.fa-snowflake
                           button.edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='.edit-modal')
                             i.fa.fa-edit
-                          button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.sorted' data-id=br.id)
+                          button.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.sorted' data-id=br.userid)
                             i.fa.fa-dumbbell
                           button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.suspend-modal')
                             i.fa.fa-exclamation-circle
@@ -477,16 +477,16 @@ block main
                       |  Action
                 tbody
                   each as in ass
-                    each br in intb  
                       tr
-                        td #{as.trainerfname} #{as.trainerlname}
-                        td #{as.trainergender}
-                        td #{as.trainerschedule}
-                        //- td A-team Marikina
-                        td
-                          a.btn.btn-info.btn-theme#prompt(data-toggle='modal' data-target='.prompt' data-id=as.trainerid data-userid=br.userid)
-                            | Assign
-
+                      td #{as.trainerfname} #{as.trainerlname}
+                      td #{as.trainergender}
+                      td #{as.trainerschedule}
+                      //- td A-team Marikina
+                      td
+                        form(method='POST' action='/assign')
+                        input.hidden#id(type='text' name='memberid')
+                        input.hidden#trainid(type='text' name='trainerid' value=as.trainerid)
+                        button.btn.btn-primary(type='submit') Assign
 //IMAGE + DESCRIPTION
 .showImgModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
   .modal-dialog.modal-lg
@@ -539,8 +539,8 @@ block main
             .row(style='margin-top:15px; margin-bottom:15px;') 
               .container-fluid
                 h4 Are you sure?
-                input#id(type='text' name='trainerid')
-                input#userid(type='text' name='id')
+                input#id(type='text' name='memberid')
+                input#trainid(type='text' name='trainerid' )
         .modal-footer
           button.btn.btn-default(type='button', data-dismiss='modal') Close
           button.btn.btn-primary(type='submit') Yes
@@ -630,7 +630,7 @@ script.
     })
 
 script.
-  $('.prompt').on('show.bs.modal', function(event){
+  $('.sorted').on('show.bs.modal', function(event){
     var button = $(event.relatedTarget)      
     var id = button.data('id')
     var userid = button.data('userid')
@@ -638,3 +638,14 @@ script.
     modal.find('.modal-body #id').val(` ${id}`)
     modal.find('.modal-body #userid').val(`${userid}`)
   })
+
+script.
+  $('.prompt').on('show.bs.modal', function(event){
+    var button = $(event.relatedTarget)      
+    var id = button.data('id')
+    var memid = button.data('userid')
+    let modal = $(this);     
+    modal.find('.modal-body #id').val(` ${id}`)
+    modal.find('.modal-body #memid').val(`${memid}`)
+  })
+
