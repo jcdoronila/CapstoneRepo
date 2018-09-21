@@ -790,7 +790,7 @@ router.post('/unfreeze',(req, res) => {
 
 //creating event
 router.post('/event',(req, res) => {
-  db.query("INSERT INTO tbleventclass(eventclassname,startdate,enddate,starttime,endtime,slot)VALUES(?, ?, ?, ?, ?, ?)", [req.body.event, req.body.start, req.body.end, req.body.startt, req.body.endt, req.body.slot], (err, results, fields) => {
+  db.query("INSERT INTO tbleventclass(eventclassname,startdate,enddate,starttime,endtime,slot,type)VALUES(?, ?, ?, ?, ?, ?, 2)", [req.body.event, req.body.start, req.body.end, req.body.startt, req.body.endt, req.body.slot], (err, results, fields) => {
     if (err)
         console.log(err);
       else {
@@ -801,9 +801,9 @@ router.post('/event',(req, res) => {
    })
 
 
-//view of regular interbranch members
+//view of events
 function viewEve(req, res, next) {
-  db.query('select * from tbleventclass', function (err, results, fields) {
+  db.query('select * from tbleventclass where type=2', function (err, results, fields) {
     if (err) return res.send(err);
     req.viewEve = results;
     //moments expiration
@@ -823,7 +823,7 @@ function viewAss(req, res, next){
 }
 
 //creating event
-router.post('/event',(req, res) => {
+/*router.post('/event',(req, res) => {
   db.query("INSERT INTO tbluce(eventclassname,startdate,enddate,starttime,endtime,slot)VALUES(?, ?, ?, ?, ?, ?)", [req.body.event, req.body.start, req.body.end, req.body.startt, req.body.endt, req.body.slot], (err, results, fields) => {
     if (err)
         console.log(err);
@@ -832,7 +832,7 @@ router.post('/event',(req, res) => {
       }
 
     });
-})
+})*/
 
 //view trainer-client partners
 function viewPer(req, res, next){
