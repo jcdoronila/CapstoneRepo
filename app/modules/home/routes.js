@@ -843,7 +843,17 @@ function viewPer(req, res, next){
   })
 }
 
-//cre
+//assigning trainers
+router.post('/assign',(req, res) => {
+  db.query("INSERT INTO tbppt(memid,trainid,status)VALUES(?, ?, 2)", [req.body.memberid, req.body.trainerid], (err, results, fields) => {
+    if (err)
+        console.log(err);
+      else {
+        res.redirect('/interregular');
+      }
+
+    });
+})
 
 //A-TEAM FITNESS FUNCTIONS
 
