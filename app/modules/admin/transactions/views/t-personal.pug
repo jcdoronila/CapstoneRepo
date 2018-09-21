@@ -11,7 +11,7 @@ block main
                 table.table.table-striped.table-advance.table-hover
                   h4
                     | Member to PT Trainer Manual Assignment
-                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='.add')
+                    button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='.sorted')
                       i.fa.fa-user-friends
                       |  Assign PT
                   thead
@@ -39,11 +39,11 @@ block main
                         td #{pr.statusfront}
                         //- td Sta. Mesa 
                         td
-                          button#view.btn.btn-info.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='View Account')
+                          button#view.btn.btn-info.btn-xs(data-toggle='modal', data-target='#view-modal')
                             i.fa.fa-search
-                          button#edit.btn.btn-success.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Edit Account')
+                          button#edit.btn.btn-success.btn-xs(data-toggle='modal', data-target='#edit-modal-reason')
                             i.fa.fa-edit
-                          button#del.btn.btn-danger.btn-xs(data-toggle='popover', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently')
+                          button#del.btn.btn-danger.btn-xs(data-toggle='modal', data-target='')
                             i.fa.fa-trash-alt
             // /content-panel
       
