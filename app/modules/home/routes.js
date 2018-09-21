@@ -628,8 +628,8 @@ function useraddid(req, res, next) {
   db.query('SELECT (userid+1)id FROM tbluser ORDER BY userid DESC LIMIT 1 ', function (err, results, fields) {
     if (err) return res.send(err)
     req.newuserid = results[0].id
-    console.log('puta')
-    console.log(req.newuserid)
+    // console.log('puta')
+    // console.log(req.newuserid)
     return next();
   })
 }
@@ -945,6 +945,11 @@ function memclass(req, res) {
   });
 }
 
+function rfid(req, res) {
+  res.render('admin/maintenance/views/m-rfid')
+}
+
+
 // TRANSACTIONS
 
 function t_class(req, res) {
@@ -1019,6 +1024,7 @@ function GClasses(req, res) {
 
 
 
+
 //A-TEAM FITNESS GETS
 
 //GENERAL
@@ -1038,6 +1044,7 @@ router.get('/specialization', viewSpecial, specs);
 router.get('/staff', viewStaff, staff);
 router.get('/trains', viewTrainer, viewspecialdrop, viewbranchdrop, trains);
 router.get('/memclass', viewHie, memclass);
+router.get('/rfid', rfid);
 
 //TRANSACTIONS
 router.get('/t-class', t_class);

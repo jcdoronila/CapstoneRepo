@@ -55,6 +55,22 @@ function viewEvent(req, res, next) {
     })
 }
 
+router.post('/events/Join',(req,res) => {
+   
+    const query= `UPDATE tbleventclass SET slot=? WHERE eventclassid=?`
+
+    db.query(query,[req.body.quantity_events],[req.body.id],(err,out)=>{
+        console.log(query)
+        if(err)
+        {
+            res.send({query:query})
+        }
+        else
+        {
+            res.redirect('/events')
+        }
+    })
+})
 
 
 

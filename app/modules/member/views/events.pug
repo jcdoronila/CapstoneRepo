@@ -20,6 +20,7 @@ block main
           .col-lg-4.col-md-4.col-sm-4.mb
             .content-panel(style="background-color:gray; padding:0; color:white; padding-top: 20px;")
               h3#slot(style='padding:0; margin:0; position:absolute;top:10px; left:20px;') #{eve.slot}
+              input.slot(type='hidden' value=`${eve.slot}` id=`${eve.eventclassid}`)
               p(style='position:absolute;top:13px; left:50px;') - remaining slots
               h3 #{eve.eventclassname}
               h6(style="margin:0!important") SAT/SUN - 1:30PM-4:30PM
@@ -27,7 +28,7 @@ block main
               br
               br
               br
-              .btn-block.btn-primary.view(style=" padding:5px; font-weight: bold;" data-toggle='modal', data-target='#modal')
+              button.btn-block.btn-primary.join(style=" padding:5px; font-weight: bold;" type='button' value=`${eve.eventclassid}`)
                   | Join
               .content-panel(style="margin:0!important; color:#797979;padding:5px 10px; width:100%;box-shadow:none; border-radius:0;")
                 br
@@ -47,15 +48,16 @@ block main
       .modal-header
         button.close#return(type='button', data-dismiss='modal', aria-hidden='true') ×
         h4#myModalLabel.modal-title Join
-      form(action='POST', method='')
+      form(action='', method='')
         .modal-body
           .container-fluid
             .row(style='margin-top:15px; margin-bottom:15px;') 
               .container-fluid
                 h4 Are you sure you would like to join?
+                input#id(type='text' name='id')
         .modal-footer
           button.btn.btn-default(type='button', data-dismiss='modal') Close
-          button.btn.btn-primary(type='submit') Yes
+          button.btn.btn-primary.confirm(type='button') Yes
 
 .resign-prompt.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
   .modal-dialog.modal-sm
@@ -71,20 +73,60 @@ block main
                 h4 Are you sure you want to resign?
         .modal-footer
           button.btn.btn-default(type='button', data-dismiss='modal') Close
-          button.btn.btn-primary(type='submit') Yes
+          button.btn.btn-primary(type='button') Yes
   
 include ../../../templates/foot
 
 script.
- $('.view').click(function() {
-    $(this).toggleClass('btn-primary');
-    $(this).toggleClass('btn-danger');
-    if ($(this).text() == "Join"){
-      $(this).text('Resign');
-      $('.join-prompt').modal();
-    }
-    else {
-      $(this).text('Join');
-      $('.resign-prompt').modal();
-    }
+  //-  $('.join').click(function() {
+  //-     $(this).toggleClass('btn-primary');
+  //-     $(this).toggleClass('btn-danger');
+  //-     if ($(this).text() == "Join"){
+  //-       $(this).text('Resign');
+  //-       $('.join-prompt').modal();
+  //-     }
+  //-     else {
+  //-       $(this).text('Join');
+  //-       $('.resign-prompt').modal();
+  //-     }
+  //-   });
+
+  
+script.
+  $(document).ready(function(){
+    $('.join').click(function(){
+      var id = $(this).val()
+      $('.join-prompt').modal('show')
+      var quantity_event = $(`.slot[id='${id}']`).val()
+      quantity_event = parseInt(quantity_event)-1
+      
+      console.log(quantity_event+" new Quantity")
+      $('.confirm').click(function(){
+        $.post('/events/Join',{
+          id,quantity_event
+        }).done(function(data){
+          console.log()
+        })
+        })
+      })
+    })
+
+  //- $('.join-prompt').on('show.bs.modal', function(event){
+  //-   var button = $(event.relatedTarget)      
+  //-   var id = button.data('id')
+  //-   let modal = $(this)     
+  //-   modal.find('.modal-body #id').val(` ${id}`)
+
+    //- $('.j').click(function(){
+    //- $(this).$('.join').removeClass('btn-primary');
+    //- $(this).$('.join').addClass('btn-danger');
+    //- })
+
+
+  
+
+script.
+  $(document).ready(function(){
+  $('#memdrop').addClass('active');
+  $('#branch').addClass('active');
   });

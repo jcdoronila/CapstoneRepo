@@ -1,0 +1,161 @@
+include ../../../../templates/head
+
+block main
+	section#main-content
+		section.wrapper.site-min-height
+			.row.mt
+				.col-md-12
+					.content-panel
+						.container-fluid
+							table.table.table-striped.table-advance.table-hover
+								h4
+									| All RFIDs
+									button.btn.btn-theme(style='margin-left: 5px;', type='button', data-toggle='modal', data-target='#add')
+										i.fa.fa-home
+										|  Add RFID
+								thead
+									tr
+										th
+											i.fa.fa-bookmark
+											|  RFID No.
+										th
+											i.fa.fa-user
+											|  Owner
+										th
+											i.fa.fa-bookmark
+											|  Status
+										th
+											i.fa.fa-edit
+											|  Action
+								tbody
+								           
+										tr
+											td 0111234567
+											td 
+												span.label.label-warning
+													|  Not Set
+											td 
+												span.label.label-danger
+													|  Inactive
+											td
+												button#edit.btn.btn-success.btn-xs(data-toggle='modal' data-target='#editmodal')
+													i.fa.fa-edit
+												button.btn.btn-danger.btn-xs(data-toggle='modal' data-target='#deletemodal')
+													i.fa.fa-trash-alt
+
+#add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+	.modal-dialog
+		.modal-content
+			.modal-header
+				button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+				h4#myModalLabel.modal-title Add RFID
+			form(action='/branch', method='POST' autocomplete='off')
+				.modal-body
+					.container-fluid
+						.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+							.row
+								.col-md-12
+									.form-group
+										center
+											h3 Scan Card
+											img(src="/assets/img/loading.gif", alt="" height='200px;' style="margin-top:20px;")
+											//- input.form-control(type='text' name='branchname' placeholder='hide mo to, dito lalabas yung RFID TAS AUTO ENTER SABI MO')
+											
+// MODAL EDIT Branch
+#editmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+	.modal-dialog
+		.modal-content
+			.modal-header
+				button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+				h4#myModalLabel.modal-title Edit RFID
+			form(action='/branch/edit', method='POST')
+				.modal-body
+					.container-fluid
+						.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+							input.hidden#id(type='text' name='id')
+							input.hidden#oldid(type='text' name='oldid')
+							.row
+								.col-md-12
+									.form-group
+										label.control-label RFID number
+										input#name.form-control(type='text' name='branch')
+
+				.modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Close
+					button.btn.btn-primary(type='submit') Save
+
+// MODAL DELETE
+#deletemodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+	.modal-dialog
+		.modal-content
+			.modal-header
+				button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+				h4#myModalLabel.modal-title Delete RFID
+			form(action='/branch/delete', method='POST')
+				.modal-body
+					.container-fluid
+						.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+							.row
+								.col-md-12
+									.form-group
+										center
+											h4 Delete this RFID?
+											input.hidden#id(type='text' name='id')
+										
+
+				.modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Close
+					button.btn.btn-default(type='submit') Delete
+
+include ../../../../templates/foot
+
+script.
+	$(document).ready(function(){
+	$('#memdrop').addClass('active');
+	$('#branch').addClass('active');
+	});
+	
+script.
+
+	$('#editmodal').on('show.bs.modal', function(event){
+	var button = $(event.relatedTarget)      
+
+
+	var name = button.data('name')
+	var sname = button.data('sname')
+	var id = button.data('id')
+	var snum=button.data('snum')
+	var city=button.data('city')
+	var oldid=button.data('oldid')
+
+	let modal = $(this)  
+	modal.find('.modal-body #name').val(` ${name}`)
+	modal.find('.modal-body #sname').val(` ${sname}`)
+	modal.find('.modal-body #city').val(` ${city}`)
+	modal.find('.modal-body #snum').val(` ${snum}`)
+	modal.find('.modal-body #id').val(` ${id}`)
+	modal.find('.modal-body #oldid').val(` ${oldid}`)
+		}) 
+
+
+script.
+
+	$('#deletemodal').on('show.bs.modal', function(event){
+		var button = $(event.relatedTarget)      
+
+	//id
+	var id = button.data('id')
+	console.log(id)
+	var oldid=button.data('oldid')
+
+
+	let modal = $(this)     
+
+	modal.find('.modal-body #id').val(` ${id}`)
+	modal.find('.modal-body #oldid').val(` ${oldid}`)
+	})
+
+	$(document).ready(function(){
+	$('#memdrop').addClass('active');
+	$('#branch').addClass('active');
+	});
