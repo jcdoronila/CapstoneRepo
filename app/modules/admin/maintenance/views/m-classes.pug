@@ -70,7 +70,7 @@ block main
           .modal-header
             button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
             h4#myModalLabel.modal-title Add Class
-          form(action='/classes', method='POST')
+          form(action='/classes', method='POST' autocomplete='off' )
             .modal-body
               .container-fluid
                 .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
@@ -78,7 +78,7 @@ block main
                     .col-md-12
                       .form-group
                         label.control-label Class Name
-                        input.form-control(type='text' name='classname')
+                        input.form-control(type='text' name='classname' required)
                   .row
                     .col-md-12
                       label.control-label Description
@@ -103,7 +103,7 @@ block main
                     .col-md-12
                       .form-group
                         label.control-label Class Name
-                        input#name.form-control(type='text' name='classname')
+                        input#name.form-control(type='text' name='classname' )
                   .row
                     .col-md-12
                       label.control-label Description

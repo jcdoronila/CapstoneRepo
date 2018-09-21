@@ -56,8 +56,10 @@ block main
                             i.fa.fa-edit
                           button.train.btn.btn-warning.btn-xs(data-toggle='modal', data-target='.sorted' data-id=re.userid)
                             i.fa.fa-dumbbell
-                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='')
+                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.suspend-modal')
                             i.fa.fa-exclamation-circle
+                          button.btn.btn-danger.btn-xs(data-toggle='modal', data-target='.delete-modal')
+                            i.fa.fa-trash-alt
                           
           
 // MODAL ADD MEMBER
@@ -339,6 +341,44 @@ block main
         .modal-footer
           button.btn.btn-default(type='button', data-dismiss='modal') Close
           button.btn.btn-primary(type='submit') Freeze Account
+
+   
+.suspend-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Suspend Account
+      form(action='/', method='POST')
+        .modal-body
+          .container-fluid
+            .row
+              center
+                h4 Are you sure you want to <b>SUSPEND</b> this account?
+                input.hidden#id(type='text' name='' )
+                br
+                button.btn.btn-primary(type='submit') Yes
+                button.btn.btn-default(type='button', data-dismiss='modal') No
+
+  // MODAL ADD MEMBER
+.delete-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h4#myModalLabel.modal-title Delete Account
+      form(action='/', method='POST')
+        .modal-body
+          .container-fluid
+            .row
+              center
+                h4 Are you sure you want to <b>DELETE</b> this account?
+                input.hidden#id(type='text' name='' )
+                br
+                button.btn.btn-primary(type='submit') Yes
+                button.btn.btn-default(type='button', data-dismiss='modal') No
+                
+          
 
 
 

@@ -53,7 +53,7 @@ block main
 						.modal-header
 							button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 							h4#myModalLabel.modal-title Register a Staff
-						form(action='/staff', method='POST')
+						form.needs-validation(action='/staff', method='POST', autocomplete='off' novalidate )
 							.modal-body
 								.container-fluid
 									.row
@@ -65,20 +65,20 @@ block main
 											.col-md-6
 												.form-group
 													label.control-label First Name
-													input.form-control(type='text' name='sfirstName')
+													input.form-control(type='text' name='sfirstName' required)
 											.col-md-6
 												.form-group
 													label.control-label Last Name
-													input.form-control(type='text' name='slastName')
+													input.form-control(type='text' name='slastName' required)
 										.row
 											.col-md-6
 												.form-group
 													label.control-label Mobile Number
-													input.form-control(type='text', name='smobNum', value='+63')
+													input.form-control(type='text', name='smobNum', placeholder='09xxxxxxxxxx' required)
 											.col-md-6
 												.form-group
 													label.control-label Email
-													input.form-control(type='email', name='semail')
+													input.form-control(type='email', name='semail' required)
 									.row
 										.col-md-12
 											h5 Login Information
@@ -88,11 +88,11 @@ block main
 											.col-md-6
 												.form-group
 													label.control-label Username
-													input.form-control(type='text' name='username')
+													input.form-control(type='text' name='username' required)
 											.col-md-6
 												.form-group
 													label.control-label Password
-													input.form-control(type='password' name='pass')
+													input.form-control(type='password' name='pass' required)
 										.row
 											.col-md-4
 												| Upload your Image 
@@ -210,13 +210,33 @@ block main
 								button.btn.btn-default(type='submit') Delete
 
 include ../../../../templates/foot
+
 script.
 	$(document).ready(function(){
-	$('#memdrop').addClass('active')
-	$('#staffs').addClass('active')
+	$('#memdrop').addClass('active');
+	$('#staffs').addClass('active');
+
+	$('.needs-validation').validate({
+		rules:{
+			username: {
+				minlength: 4
+				},
+			smobNum:{
+				maxlength: 11,
+				minlength: 11
+				},
+		},
+		messages:{
+			username:{
+				minlength: 'Username shouldn\'t be less than four characters'
+			},
+			smobNum:{
+				maxlength: 'Mobile number should be exactly 11 digits',
+				minlength: 'Mobile number should be exactly 11 digits'
+			}
+		}
 	});
-
-
+	});
 
 script.
 	$('#viewmodal').on('show.bs.modal', function(event){
