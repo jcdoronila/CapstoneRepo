@@ -5,7 +5,7 @@ module.exports = (req, res) => {
     }
 
     var db = require('../../../lib/database')();
-    db.query('SELECT * FROM tbluser WHERE tbluser.usertype = 2 AND userid = ?', [req.session.member.userid], function(err,results,fields) {
+    db.query('SELECT * FROM tbluser WHERE usertype = 2 AND userid = ?', [req.session.member.userid], function(err,results,fields) {
         if (err) return res.send(err);
         render(results);
     });
