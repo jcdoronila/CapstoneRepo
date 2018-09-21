@@ -98,6 +98,7 @@ CREATE TABLE `tbleventclass` (
   `endtime` time DEFAULT NULL,
   `slot` int(11) DEFAULT NULL,
   `eventclassname` varchar(60) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
   PRIMARY KEY (`eventclassid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -106,7 +107,7 @@ CREATE TABLE `tbleventclass` (
 -- Dumping data for table `tbleventclass`
 --
 
-INSERT INTO `tbleventclass` VALUES (1,'08/31/2018','09/01/2018','09:00:00','18:00:00',20,'Body Building'),(2,'09/07/2018','09/28/2018','04:00:00','22:00:00',15,'MMA Meet UP');
+INSERT INTO `tbleventclass` VALUES (1,'08/31/2018','09/01/2018','09:00:00','18:00:00',20,'Body Building',2),(2,'09/07/2018','09/28/2018','04:00:00','22:00:00',15,'MMA Meet UP',2);
 
 --
 -- Table structure for table `tblfacilities`
@@ -448,18 +449,20 @@ CREATE TABLE `tbppt` (
   `memid` int(11) DEFAULT NULL,
   `trainid` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
+  `statusfront` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`PTid`),
   KEY `memid_idx` (`memid`),
   KEY `trainid_idx` (`trainid`),
   CONSTRAINT `memid` FOREIGN KEY (`memid`) REFERENCES `tbluser` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `trainid` FOREIGN KEY (`trainid`) REFERENCES `tbltrainer` (`trainerid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tbppt`
 --
 
+INSERT INTO `tbppt` VALUES (22,85,4,2,'Pending'),(23,84,3,2,'Pending');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
