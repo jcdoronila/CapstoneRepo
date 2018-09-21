@@ -194,7 +194,7 @@ html(lang='en')
                     .col-md-6
                       .form-group
                         label.control-label Branch
-                        select#branch.form-control.required(name='branch')
+                        select#branch.form-control.required(name='branch' disabled)
                           each br in bras
                             option.hidden(value='') Select Branch...
                             option(value='' + br.branchID) #{br.branchname}

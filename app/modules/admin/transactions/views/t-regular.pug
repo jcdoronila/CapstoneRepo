@@ -69,23 +69,23 @@ block main
       .modal-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
         h4#myModalLabel.modal-title Add Member Manually
-      form(action='POST', method='')
+      form(action='', method='post', autocomplete='off')
         .modal-body
           .container-fluid
             .row
               .col-xs-12
                 h5 Personal Info
                 hr
-            .container-fluid(style='padding:1rem 4rem 1rem 4rem;')
+            .container-fluid(style='padding:1rem 4rem 1rem 4rem;' )
               .row
                 .col-md-6
                   .form-group
                     label.control-label First Name
-                    input.form-control(type='text')
+                    input.form-control(type='text' required)
                 .col-md-6
                   .form-group
                     label.control-label Last Name
-                    input.form-control(type='text')
+                    input.form-control(type='text' required)
               .row
                 .col-md-6
                   .input-group
@@ -101,21 +101,21 @@ block main
                 .col-md-6
                   .form-group
                     label.control-label Date of Birth
-                    input.date.form-control(type='text')
+                    input.date.form-control(type='text' required)
               .row
                 .col-md-12
                   .form-group
                     label.control-label Address
-                    input.form-control(type='text')
+                    input.form-control(type='text' required)
               .row
                 .col-md-6
                   .form-group
                     label.control-label Mobile Number
-                    input.form-control(type='text', placeholder='09xxxxxxxxx')
+                    input.form-control(type='text', placeholder='09xxxxxxxxx' required)
                 .col-md-6
                   .form-group
                     label.control-label Email
-                    input.form-control(type='email')
+                    input.form-control(type='email' required)
             .row
               .col-md-12
                 h5 Login Information
@@ -125,7 +125,7 @@ block main
                 .col-md-12
                   .form-group
                     label.control-label Username
-                    input.form-control(type='text')
+                    input.form-control(type='text' required)
             .row
               .col-md-12
                 h5 More Information
@@ -188,7 +188,7 @@ block main
                     
       .modal-footer
         button.btn.btn-default(type='button', data-dismiss='modal') Close
-        button.btn.btn-primary(type='button') Add Member
+        button.btn.btn-primary(type='submit') Add Member
 
 // MODAL EDIT MEMBER
 .edit-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -499,12 +499,12 @@ block main
       .modal-header
         button.close#return(type='button', data-dismiss='modal', aria-hidden='true') ×
         h4#myModalLabel.modal-title Trainer Details
-      form(action='POST', method='')
+      form(action='POST', method='', autocomplete='off', )
         .modal-body
           .container-fluid
             .row(style='margin-top:15px; margin-bottom:15px;') 
               .col-md-6
-                img(src="../../../../../assets/img/trainer/trainer.jpg", alt="" width='100%', style='max-width:720px;border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;')
+                img(src="/assets/img/ui-sherman.jpg", alt="" width='100%', style='max-width:720px;border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;')
               .col-md-6
                 .row
                     h5
@@ -631,6 +631,28 @@ script.
   $('#memberDrop').addClass('active');
   $('#exclusive').addClass('active');
   
+  $('.needs-validation').validate({
+    rules:{
+      username: {
+        minlength: 4
+        },
+      mobile:{
+        maxlength: 11,
+        minlength: 11
+        },
+        
+    },
+    messages:{
+      username:{
+        minlength: 'Username shouldn\'t be less than four characters'
+      },
+      mobile:{
+        maxlength: 'Mobile number should be exactly 11 digits',
+        minlength: 'Mobile number should be exactly 11 digits'
+      }
+    }
+  });
+  
   });
 
 script.
@@ -652,3 +674,4 @@ script.
     modal.find('.modal-body #id').val(` ${id}`)
     modal.find('.modal-body #userid').val(`${userid}`)
   })
+
