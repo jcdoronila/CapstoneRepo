@@ -410,7 +410,7 @@ block main
       .modal-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
         h4#myModalLabel.modal-title Assign Member to a Trainer
-      form(action='/assign', method='POST')
+      form(method='POST' action='/assign')
         .modal-body
           .container-fluid
             content-panel
@@ -442,9 +442,9 @@ block main
                       //- td A-team Marikina
                       td
                         form(method='POST' action='/assign')
-                        input.hidden#id(type='text' name='memberid')
-                        input.hidden#trainid(type='text' name='trainerid' value=as.trainerid)
-                        button.btn.btn-primary(type='submit') Assign
+                          input.hidden#id(type='text' name='memberid')
+                          input.hidden(type='text' name='trainerid' value=as.trainerid)
+                          button.btn.btn-primary(type='submit') Assign
 //IMAGE + DESCRIPTION
 .showImgModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='overflow: auto;')
   .modal-dialog.modal-lg
