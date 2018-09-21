@@ -23,7 +23,6 @@ router.post('/staff', (req, res) => {
 
  //edit staff
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/staff/edit', (req, res) => {
      db.query("UPDATE tbluser SET userfname=?, userlname=?, usermobile=?, useremail=?, userpassword=?, userusername=? WHERE userid=?",[req.body.sfirstName, req.body.slastName, req.body.smobNum, req.body.semail, req.body.pass, req.body.username, req.body.id],(err, results, fields)=>{
@@ -38,7 +37,6 @@ router.post('/staff/edit', (req, res) => {
 
  //delete staff
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/staff/delete', (req, res) => {
     
@@ -65,7 +63,6 @@ function viewStaff(req, res, next){
 
 //insert program
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/program', (req, res) => {
     
@@ -82,7 +79,6 @@ router.post('/program', (req, res) => {
 
 //insert classes
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/classes', (req, res) => {
     
@@ -98,7 +94,6 @@ router.post('/classes', (req, res) => {
 
 //edit classes
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/classes/edit', (req, res) => {
     
@@ -114,7 +109,6 @@ router.post('/classes/edit', (req, res) => {
 
  //delete class
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/classes/delete', (req, res) => {
     
@@ -139,7 +133,6 @@ function viewClass(req, res, next){
 
 //insert special
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/specs', (req, res) => {
     
@@ -155,7 +148,6 @@ router.post('/specs', (req, res) => {
 
 //edit special
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/specs/edit', (req, res) => {
     
@@ -171,7 +163,6 @@ router.post('/specs/edit', (req, res) => {
 
  //delete special
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/specs/delete', (req, res) => {
     
@@ -196,7 +187,6 @@ function viewSpecial(req, res, next){
 
 //insert discount
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/discount', (req, res) => {
     
@@ -212,7 +202,6 @@ router.post('/discount', (req, res) => {
 
 //edit discount
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/discount/edit', (req, res) => {
     
@@ -228,7 +217,6 @@ router.post('/discount/edit', (req, res) => {
 
  //delete discount
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/discount/delete', (req, res) => {
     
@@ -253,7 +241,6 @@ function viewDiscount(req, res, next){
 
 //insert branch
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/branch',addid, (req, res) => {
     
@@ -283,7 +270,6 @@ function addid(req, res, next){
 
 //edit branch
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/branch/edit', (req, res) => {
     
@@ -303,7 +289,6 @@ router.post('/branch/edit', (req, res) => {
 
  //delete branch
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/branch/delete', (req, res) => {
     
@@ -344,7 +329,6 @@ function viewBranch(req, res, next){
 
 //insert membership
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/category', (req, res) => {
     
@@ -360,7 +344,6 @@ router.post('/category', (req, res) => {
 
 /*edit membership*/
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/category/edit', (req, res) => {
     
@@ -376,7 +359,6 @@ router.post('/category/edit', (req, res) => {
 
  //delete category
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/category/delete', (req, res) => {
     
@@ -401,7 +383,6 @@ function viewCategory(req, res, next){
 
 //insert trainer
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/trainer', (req, res) => {
     
@@ -435,7 +416,6 @@ function viewspecialdrop(req, res, next){
 
 //edit trainer
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/trainer/edit', (req, res) => {
     
@@ -450,7 +430,6 @@ router.post('/trainer/edit', (req, res) => {
 
 //delete trainer
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/trainer/delete', (req, res) => {
     
@@ -475,7 +454,6 @@ function viewTrainer(req, res, next){
 
 //insert facility
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/facility', (req, res) => {
     
@@ -491,7 +469,6 @@ router.post('/facility', (req, res) => {
 
 //edit facility
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/facility/edit', (req, res) => {
     
@@ -507,7 +484,6 @@ router.post('/facility/edit', (req, res) => {
 
 //delete facility
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/facility/delete', (req, res) => {
     
@@ -532,7 +508,6 @@ function viewFac(req, res, next){
 
 //insert general fee
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/general', (req, res) => {
     
@@ -548,7 +523,6 @@ router.post('/general', (req, res) => {
 
 //edit general fee
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/general/edit', (req, res) => {
     
@@ -573,7 +547,6 @@ function viewGen(req, res, next){
 
 //insert membership
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/membership', (req, res) => {
     
@@ -598,7 +571,6 @@ function viewcatdrop(req, res, next){
 
 //edit membership
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/membership/edit', (req, res) => {
     
@@ -614,7 +586,6 @@ router.post('/membership/edit', (req, res) => {
 
 //delete membership
 var indexController = require('./controllers/index');
-router.get('/', indexController);
 
 router.post('/membership/delete', (req, res) => {
     

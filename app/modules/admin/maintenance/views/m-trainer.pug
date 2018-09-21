@@ -43,14 +43,14 @@ block main
                           button.btn.btn-danger.btn-xs(data-toggle='modal', data-trigger='hover', data-placement='top', data-content='Remove Account Permanently' data-target='#deletemodal' data-id=tr.userid)
                             i.fa.fa-trash-alt
                             
-    // MODAL ADD MEMBER
+    // MODAL ADD 
     #add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
       .modal-dialog.modal-lg
         .modal-content
           .modal-header
             button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
             h4#myModalLabel.modal-title Register a Trainer
-          form(action='/trains', method='POST')
+          form.needs-validation(action='/trains', method='POST', autocomplete='off' novalidate)
             .modal-body
               .container-fluid
                 .row
@@ -373,6 +373,29 @@ script.
     $(document).ready(function(){
     $('#memdrop').addClass('active');
     $('#trainer').addClass('active');
+
+    $('.needs-validation').validate({
+        rules:{
+          username: {
+            minlength: 4
+            },
+          mobile:{
+            maxlength: 11,
+            minlength: 11
+            },
+            
+        },
+        messages:{
+          username:{
+            minlength: 'Username shouldn\'t be less than four characters'
+          },
+          mobile:{
+            maxlength: 'Mobile number should be exactly 11 digits',
+            minlength: 'Mobile number should be exactly 11 digits'
+          }
+        }
+      });
+
     });
 
     $('#viewmodal').on('show.bs.modal', function(event){

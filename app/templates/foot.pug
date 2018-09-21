@@ -28,17 +28,24 @@ script(src='/assets/js/bootstrap-switch.js')
 script(src='/assets/js/sparkline-chart.js')
 script(src='/assets/js/multiple-select.js')
 script(src='/assets/js/moment.js')
-
+script(src='/assets/js/jquery.validate.js')
 
 //- burogeso
 script.
   $(document).ready(function () {
   $('.table-striped').DataTable();
+  
   $('[data-toggle="popover"]').popover();
+
   $(".date").datepicker({
   changeMonth: true,
-  changeYear: true
+  changeYear: true,
+  todayHighlight: true,
+  maxViewMode: 2,
+  startView: 2,
+  autoclose: true
   });
+
   $('.time').timepicker({
   'minTime': '8:00am',
   'maxTime': '10:00pm',

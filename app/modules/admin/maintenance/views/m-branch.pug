@@ -46,7 +46,7 @@ block main
 								.modal-header
 									button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 									h4#myModalLabel.modal-title Add Branch
-								form(action='/branch', method='POST')
+								form(action='/branch', method='POST' autocomplete='off')
 									.modal-body
 										.container-fluid
 											.container-fluid(style='padding:1rem 4rem 1rem 4rem;')
@@ -54,21 +54,21 @@ block main
 													.col-md-12
 														.form-group
 															label.control-label Franchise Name
-															input.form-control(type='text' name='branchname')
+															input.form-control(type='text' name='branchname' required)
 												.row
 													.col-md-8
 														.form-group
 															label.control-label Full Address
-															input#snum.form-control(type='text', placeholder='Street number and address..' name='street')
+															input#snum.form-control(type='text', placeholder='Street number and address..' name='street' required)
 													.col-md-4
 														.form-group
-															input.form-control(style='margin-top:17%;', type='text', placeholder='City..' name='city')
+															input.form-control(style='margin-top:17%;', type='text', placeholder='City..' name='city' required)
 													.col-md-12
 														.form-group
 															label.control-label Staff In-charge
-															select#staff.form-control(name='user')
+															select#staff.form-control(name='user' required)
 																each dr in drops
-																	option.hidden(value=NULL) Select Staff...
+																	option.hidden(value='') Select Staff...
 																	option(value=''+dr.userid) #{dr.userfname} #{dr.userlname}
 
 									.modal-footer

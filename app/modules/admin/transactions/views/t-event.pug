@@ -86,11 +86,11 @@ block main
                 .col-md-6
                   .form-group
                     label.control-label Start Date
-                    input.form-control.date(type='text' name='start')
+                    input.form-control.datee(type='text' name='start')
                 .col-md-6
                   .form-group
                     label.control-label End Date
-                    input.form-control.date(type='text' name='end')
+                    input.form-control.datee(type='text' name='end')
               //.row
                 .col-md-12
                   .form-group
@@ -187,11 +187,11 @@ block main
                 .col-md-6
                   .form-group
                     label.control-label Start Date
-                    input.form-control.date(type='text' name='start')
+                    input.form-control.datee(type='text' name='start')
                 .col-md-6
                   .form-group
                     label.control-label End Date
-                    input.form-control.date(type='text' name='end')
+                    input.form-control.datee(type='text' name='end')
               //.row
                 .col-md-12
                   .form-group
@@ -261,6 +261,9 @@ block main
             button.btn.btn-default(type='button', data-dismiss='modal') Close
             button.btn.btn-primary(type='button') Add participant
               
+
+
+
 include ../../../../templates/foot
 
 script.
@@ -270,3 +273,11 @@ script.
     });
 
 script.
+  $(".datee").datepicker({
+    changeMonth: true,
+    changeYear: true,
+    todayHighlight: true,
+    maxViewMode: 2,
+    startView: 0,
+    autoclose: true
+    });

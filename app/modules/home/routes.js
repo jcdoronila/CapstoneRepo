@@ -992,6 +992,7 @@ function walkins(req, res) {
   res.render('admin/transactions/views/t-walkins',{
   });
 }
+
 function trainSessions(req, res) {
   res.render('admin/transactions/views/t-training-sessions',{
   });
